@@ -38,9 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'authentication.apps.AuthenticationConfig',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -125,6 +130,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 # JWT Token Authentication
 # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html
 SIMPLE_JWT = {
@@ -147,3 +153,11 @@ REST_AUTH = {
     "USE_JWT": True, # is required because we're using djangorestframework-simplejwt
     "JWT_AUTH_HTTPONLY": False, # should be off, otherwise dj-rest-auth won't send out refresh tokens
 }
+
+# django-allauth depends on Django's 'sites' framework
+SITE_ID = 1
+
+# Turn off the email verification functionality
+# Email verification should be turned off because this project isn't configured to send out emails yet. We also don't have the endpoints that would allow users to verify their email addresse yet.
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = 'none'
