@@ -1,9 +1,24 @@
+"use client";
+
 import React from "react";
+
+import { useRouter } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
+
 import Link from "next/link";
 
 type Props = {};
 
 function Login({}: Props) {
+  const router = useRouter();
+  const { data: session, status } = useSession();
+
+  // If the user is authenticated redirect to `/dashboard`
+  if (session) {
+    router.push("dashboard");
+    return;
+  }
+
   return (
     <>
       <h1 className="mb-10 text-center text-2xl font-bold leading-9 tracking-tight">
@@ -37,7 +52,14 @@ function Login({}: Props) {
           />
         </label>
 
-        <button type="submit" className="btn btn-primary btn-block md:btn-auto">
+        <button
+          type="submit"
+          className="btn btn-primary btn-block md:btn-auto"
+          onClick={() => signIn(undefined, { callbackUrl: "/dashboard" })}
+        >
+          {status == "loading" && (
+            <span className="loading loading-spinner"></span>
+          )}{" "}
           Log in
         </button>
       </form>
