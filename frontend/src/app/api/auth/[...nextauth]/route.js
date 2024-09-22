@@ -28,8 +28,8 @@ export const authOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: {label: "Username", type: "text"},
-        password: {label: "Password", type: "password"}
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
       },
       // The data returned from this function is passed forward as the
       // `user` variable to the signIn() and jwt() callback

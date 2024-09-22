@@ -164,7 +164,10 @@ SITE_ID = 1
 # Turn off the email verification functionality
 # Email verification should be turned off because this project isn't configured to send out emails yet. We also don't have the endpoints that would allow users to verify their email addresse yet.
 ACCOUNT_EMAIL_REQUIRED = False
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+# Use email authentication instead of username
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
 
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
