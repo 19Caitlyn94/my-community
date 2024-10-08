@@ -1,12 +1,13 @@
+import { ReactNode } from "react";
 import { Inter } from "next/font/google";
 import "./_styles/globals.css";
 
+import { getSession } from "@/auth";
 import type { Metadata } from "next";
-import { ReactNode } from "react";
-import { Session } from "next-auth";
 
-import { Providers } from "./Providers";
+import Providers from "./Providers";
 import { DevToolbar } from "./_components";
+
 import { isDev } from "./_utils/config";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,16 +17,18 @@ export const metadata: Metadata = {
   description: "Bringing communities together",
 };
 
-interface RootLayoutProps {
+export default async function RootLayout({
+  children,
+}: {
   children: ReactNode;
-  Session: Session | null;
-}
+}) {
+  const session = await getSession();
+  console.log("ROOT session", session);
 
-export default function RootLayout({ children, Session }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers session={Session}>{children}</Providers>
+        <Providers session={session}>{children}</Providers>
         {isDev && <DevToolbar />}
       </body>
     </html>
