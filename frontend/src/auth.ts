@@ -1,5 +1,6 @@
 import { AuthOptions, getServerSession } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
+import { isDev } from "@/app/_utils/config";
 import axios from "axios";
 
 // These two values should be a bit less than actual token lifetimes
@@ -19,6 +20,7 @@ const SIGN_IN_PROVIDERS = Object.keys(SIGN_IN_HANDLERS);
 
 const authOptions: AuthOptions = {
   secret: process.env.AUTH_SECRET,
+  debug: isDev,
   session: {
     strategy: "jwt",
     maxAge: BACKEND_REFRESH_TOKEN_LIFETIME,
