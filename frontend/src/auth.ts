@@ -1,6 +1,7 @@
 import { AuthOptions, getServerSession } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 import { isDev } from "@/app/_utils/config";
+import { signIn } from "next-auth/react";
 import axios from "axios";
 
 // These two values should be a bit less than actual token lifetimes
@@ -18,6 +19,78 @@ const SIGN_IN_HANDLERS = {
 };
 const SIGN_IN_PROVIDERS = Object.keys(SIGN_IN_HANDLERS);
 
+
+
+const providers = [
+  CredentialsProvider({
+    name: "Credentials",
+    credentials: {
+      email: { label: "Email", type: "email" },
+      password: { label: "Password", type: "password" },
+    },
+    // The data returned from this function is passed forward as the
+    // `user` variable to the signIn() and jwt() callback
+    async authorize(credentials, req) {
+      try {
+        const response = await axios({
+          url: process.env.NEXTAUTH_BACKEND_URL + "auth/login/",
+          method: "post",
+          data: credentials,
+        });
+        const data = response.data;
+        if (data) return data;
+      } catch (error) {
+        console.error(error);
+      }
+      return null;
+    },
+  }),
+]
+
+const callbacks = {
+  async signIn({ user, account, profile, email, credentials }) {
+    if (!SIGN_IN_PROVIDERS.includes(account.provider)) return false;
+    return SIGN_IN_HANDLERS[account.provider](
+      user,
+      account,
+      profile,
+      email,
+      credentials
+    );
+  },
+  async jwt({ user, token, account }) {
+    // If `user` and `account` are set that means it is a login event
+    if (user && account) {
+      let backendResponse =
+        account.provider === "credentials" ? user : account.meta;
+      token["user"] = backendResponse.user;
+      token["access_token"] = backendResponse.access;
+      token["refresh_token"] = backendResponse.refresh;
+      token["ref"] = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;
+      return token;
+    }
+    // Refresh the backend token if necessary
+    if (getCurrentEpochTime() > token["ref"]) {
+      const response = await axios({
+        method: "post",
+        url: process.env.NEXTAUTH_BACKEND_URL + "auth/token/refresh/",
+        data: {
+          refresh: token["refresh_token"],
+        },
+      });
+      token["access_token"] = response.data.access;
+      token["refresh_token"] = response.data.refresh;
+      token["ref"] = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;
+    }
+    return token;
+  },
+  // Since we're using Django as the backend we have to pass the JWT
+  // token to the client instead of the `session`.
+  async session({ token }) {
+    return token;
+  },
+}
+
 const authOptions: AuthOptions = {
   secret: process.env.AUTH_SECRET,
   debug: isDev,
@@ -25,74 +98,9 @@ const authOptions: AuthOptions = {
     strategy: "jwt",
     maxAge: BACKEND_REFRESH_TOKEN_LIFETIME,
   },
-  providers: [
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
-      },
-      // The data returned from this function is passed forward as the
-      // `user` variable to the signIn() and jwt() callback
-      async authorize(credentials, req) {
-        try {
-          const response = await axios({
-            url: process.env.NEXTAUTH_BACKEND_URL + "auth/login/",
-            method: "post",
-            data: credentials,
-          });
-          const data = response.data;
-          if (data) return data;
-        } catch (error) {
-          console.error(error);
-        }
-        return null;
-      },
-    }),
-  ],
-  callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      if (!SIGN_IN_PROVIDERS.includes(account.provider)) return false;
-      return SIGN_IN_HANDLERS[account.provider](
-        user,
-        account,
-        profile,
-        email,
-        credentials
-      );
-    },
-    async jwt({ user, token, account }) {
-      // If `user` and `account` are set that means it is a login event
-      if (user && account) {
-        let backendResponse =
-          account.provider === "credentials" ? user : account.meta;
-        token["user"] = backendResponse.user;
-        token["access_token"] = backendResponse.access;
-        token["refresh_token"] = backendResponse.refresh;
-        token["ref"] = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;
-        return token;
-      }
-      // Refresh the backend token if necessary
-      if (getCurrentEpochTime() > token["ref"]) {
-        const response = await axios({
-          method: "post",
-          url: process.env.NEXTAUTH_BACKEND_URL + "auth/token/refresh/",
-          data: {
-            refresh: token["refresh_token"],
-          },
-        });
-        token["access_token"] = response.data.access;
-        token["refresh_token"] = response.data.refresh;
-        token["ref"] = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;
-      }
-      return token;
-    },
-    // Since we're using Django as the backend we have to pass the JWT
-    // token to the client instead of the `session`.
-    async session({ token }) {
-      return token;
-    },
-  },
+  providers,
+  callbacks,
+  pages: { signIn: '/login' }
 };
 
 /**
@@ -102,3 +110,7 @@ const authOptions: AuthOptions = {
 const getSession = () => getServerSession(authOptions)
 
 export { authOptions, getSession }
+
+export const SignIn = async (email: string, password: string) => {
+  return signIn('credentials', { callbackUrl: '/dashboard', email, password })
+}
