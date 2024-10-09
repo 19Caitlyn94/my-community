@@ -2,7 +2,7 @@ import { AuthOptions, getServerSession } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 import { isDev } from "@/app/_utils/config";
 import { signIn } from "next-auth/react";
-import axios from "axios";
+import { JWT } from "next-auth/jwt";
 
 // These two values should be a bit less than actual token lifetimes
 const BACKEND_ACCESS_TOKEN_LIFETIME = 45 * 60; // 45 minutes
@@ -12,14 +12,47 @@ const getCurrentEpochTime = () => {
   return Math.floor(new Date().getTime() / 1000);
 };
 
+const getUserFromDb = async (email: string, password: string) => {
+  try {
+    const data = await fetch(`${process.env.NEXTAUTH_BACKEND_URL}auth/login/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    })
+    return await data.json()
+  } catch (error) {
+    console.error('Error fetching user: ', error);
+  }
+  return null
+}
+
+const refreshUserToken = async (token: JWT) => {
+  try {
+    const data = await fetch(`${process.env.NEXTAUTH_BACKEND_URL}auth/token/refresh/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        refresh: token["refresh_token"],
+      }),
+    })
+    const res = await data.json()
+    token["access_token"] = res.data.access;
+    token["refresh_token"] = res.data.refresh;
+    token["ref"] = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;
+    return token
+  }
+  catch (error) {
+    console.error('Error refreshing user token: ', error);
+  }
+  return null
+}
+
 const SIGN_IN_HANDLERS = {
   credentials: async (user, account, profile, email, credentials) => {
     return true;
   },
 };
 const SIGN_IN_PROVIDERS = Object.keys(SIGN_IN_HANDLERS);
-
-
 
 const providers = [
   CredentialsProvider({
@@ -31,18 +64,7 @@ const providers = [
     // The data returned from this function is passed forward as the
     // `user` variable to the signIn() and jwt() callback
     async authorize(credentials, req) {
-      try {
-        const response = await axios({
-          url: process.env.NEXTAUTH_BACKEND_URL + "auth/login/",
-          method: "post",
-          data: credentials,
-        });
-        const data = response.data;
-        if (data) return data;
-      } catch (error) {
-        console.error(error);
-      }
-      return null;
+      return await getUserFromDb(credentials?.email, credentials?.password)
     },
   }),
 ]
@@ -71,16 +93,8 @@ const callbacks = {
     }
     // Refresh the backend token if necessary
     if (getCurrentEpochTime() > token["ref"]) {
-      const response = await axios({
-        method: "post",
-        url: process.env.NEXTAUTH_BACKEND_URL + "auth/token/refresh/",
-        data: {
-          refresh: token["refresh_token"],
-        },
-      });
-      token["access_token"] = response.data.access;
-      token["refresh_token"] = response.data.refresh;
-      token["ref"] = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;
+
+      return await refreshUserToken(token)
     }
     return token;
   },

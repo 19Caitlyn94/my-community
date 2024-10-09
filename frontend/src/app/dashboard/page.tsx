@@ -1,26 +1,31 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react'
-import {signOut, useSession} from "next-auth/react";
-import axios from "axios";
+import React, { useState } from "react";
+import { signOut, useSession } from "next-auth/react";
 
-import { CardLoader } from '../_components'
+import { CardLoader } from "../_components";
 
-type Props = {}
+type Props = {};
 
 function Dashboard({}: Props) {
-  const {data: session, status} = useSession({required: true});
+  const { data: session, status } = useSession({ required: true });
   const [response, setResponse] = useState("{}");
 
   const getUserDetails = async (useToken: boolean) => {
     try {
-      const response = await axios({
-        method: "get",
-        url: process.env.NEXT_PUBLIC_BACKEND_URL + "auth/user/",
-        headers: useToken ? {Authorization: "Bearer " + session?.access_token} : {},
-      });
-      setResponse(JSON.stringify(response.data));
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}auth/user/`,
+        {
+          method: "GET",
+          headers: useToken
+            ? { Authorization: "Bearer " + session?.access_token }
+            : {},
+        }
+      );
+      const userDetails = await res.json();
+      setResponse(JSON.stringify(userDetails));
     } catch (error) {
+      console.error("Error fetching user: ", error);
       setResponse(error.message);
     }
   };
@@ -28,20 +33,29 @@ function Dashboard({}: Props) {
   if (session) {
     return (
       <>
-      <div>Dashboard</div>
-      <p>PK: {session.user.pk} </p>
-      <p>Username: {session.user.username} </p>
-      <p>Email: {session.user.email || "Not provided"}</p>
-      <code> {response}</code>
-      <button type='button' onClick={() => getUserDetails(true)}> User details (with token)</button>
-      <button type='button' onClick={() => getUserDetails(false)}>User details (without token)</button>
-      <button type='button' onClick={() => signOut({callbackUrl: "/"})}>Sign out</button>
-      {status == "loading" && <CardLoader />}
+        <div>Dashboard</div>
+        <p>PK: {session.user.pk} </p>
+        <p>Username: {session.user.username} </p>
+        <p>Email: {session.user.email || "Not provided"}</p>
+        <code> {response}</code>
+        <br />
+        <button type="button" onClick={() => getUserDetails(true)}>
+          User details (with token)
+        </button>
+        <br />
+        <button type="button" onClick={() => getUserDetails(false)}>
+          User details (without token)
+        </button>
+        <br />
+        <button type="button" onClick={() => signOut({ callbackUrl: "/" })}>
+          Sign out
+        </button>
+        {status == "loading" && <CardLoader />}
       </>
     );
-  } 
+  }
 
-  return <div>Unauthorized</div>
+  return <div>Unauthorized</div>;
 }
 
-export default Dashboard
+export default Dashboard;
