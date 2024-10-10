@@ -12,7 +12,7 @@ const getCurrentEpochTime = () => {
   return Math.floor(new Date().getTime() / 1000);
 };
 
-const getUserFromDb = async (email: string, password: string) => {
+const loginUser = async (email: string, password: string) => {
   try {
     const data = await fetch(`${process.env.NEXTAUTH_BACKEND_URL}auth/login/`, {
       method: 'POST',
@@ -47,6 +47,20 @@ const refreshUserToken = async (token: JWT) => {
   return null
 }
 
+const registerUser = async (email: string, password: string) => {
+  try {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}auth/register/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password1: password, password2: password }),
+    })
+    return await data.json()
+  } catch (error) {
+    console.error('Error fetching user: ', error);
+  }
+  return null
+}
+
 const SIGN_IN_HANDLERS = {
   credentials: async (user, account, profile, email, credentials) => {
     return true;
@@ -64,7 +78,7 @@ const providers = [
     // The data returned from this function is passed forward as the
     // `user` variable to the signIn() and jwt() callback
     async authorize(credentials, req) {
-      return await getUserFromDb(credentials?.email, credentials?.password)
+      return await loginUser(credentials?.email, credentials?.password)
     },
   }),
 ]
@@ -93,7 +107,6 @@ const callbacks = {
     }
     // Refresh the backend token if necessary
     if (getCurrentEpochTime() > token["ref"]) {
-
       return await refreshUserToken(token)
     }
     return token;
@@ -114,7 +127,9 @@ const authOptions: AuthOptions = {
   },
   providers,
   callbacks,
-  pages: { signIn: '/login' }
+  pages: {
+    signIn: '/login'
+  }
 };
 
 /**
@@ -127,4 +142,9 @@ export { authOptions, getSession }
 
 export const SignIn = async (email: string, password: string) => {
   return signIn('credentials', { callbackUrl: '/dashboard', email, password })
+}
+
+export const Register = async (email: string, password: string) => {
+  let user = await registerUser(email, password)
+  return signIn('credentials', { callbackUrl: '/overview', email, password })
 }
