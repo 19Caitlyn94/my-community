@@ -149,6 +149,6 @@ export const SignIn = async (email: string, password: string) => {
 export const Register = async (email: string, password: string) => {
   let user = await registerUser(email, password)
   if (user) {
-    signIn('credentials', { callbackUrl: '/dashboard', email, password })
+    signIn('credentials', { callbackUrl: '/overview/karen-score', email, password })
   }
 }
