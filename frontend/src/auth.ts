@@ -26,6 +26,21 @@ const loginUser = async (email: string, password: string) => {
   return null
 }
 
+const registerUser = async (email: string, password: string) => {
+  try {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}auth/register/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password1: password, password2: password }),
+    })
+    const user = await data.json()
+    return user
+  } catch (error) {
+    console.error('Error fetching user: ', error);
+  }
+  return null
+}
+
 const refreshUserToken = async (token: JWT) => {
   try {
     const data = await fetch(`${process.env.NEXTAUTH_BACKEND_URL}auth/token/refresh/`, {
@@ -43,20 +58,6 @@ const refreshUserToken = async (token: JWT) => {
   }
   catch (error) {
     console.error('Error refreshing user token: ', error);
-  }
-  return null
-}
-
-const registerUser = async (email: string, password: string) => {
-  try {
-    const data = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}auth/register/`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password1: password, password2: password }),
-    })
-    return await data.json()
-  } catch (error) {
-    console.error('Error fetching user: ', error);
   }
   return null
 }
@@ -127,6 +128,7 @@ const authOptions: AuthOptions = {
   },
   providers,
   callbacks,
+  // This points the pages that need auth to the custom login page
   pages: {
     signIn: '/login'
   }
@@ -146,5 +148,7 @@ export const SignIn = async (email: string, password: string) => {
 
 export const Register = async (email: string, password: string) => {
   let user = await registerUser(email, password)
-  return signIn('credentials', { callbackUrl: '/overview', email, password })
+  if (user) {
+    signIn('credentials', { callbackUrl: '/dashboard', email, password })
+  }
 }

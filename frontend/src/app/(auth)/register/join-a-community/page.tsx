@@ -8,10 +8,10 @@ type Props = {};
 function JoinACommunity({}: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [communityCode, setCommunityCode] = useState("");
+  // const [communityCode, setCommunityCode] = useState("");
 
   const handleRegistration = async () => {
-    return await Register(email, password, communityCode);
+    return await Register(email, password);
   };
 
   return (
@@ -21,7 +21,36 @@ function JoinACommunity({}: Props) {
       <form className="space-y-5" action="#" method="POST">
         <label className="form-control w-full max-w-sm">
           <div className="label">
-            <span className="label-text">Registration code</span>
+            <span className="label-text">Email address</span>
+          </div>
+          <input
+            type="email"
+            id="email"
+            autoComplete="email"
+            required
+            placeholder="email@domain.com"
+            className="input input-bordered placeholder-gray-500"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </label>
+
+        <label className="form-control w-full max-w-sm">
+          <div className="label">
+            <span className="label-text">Password</span>
+          </div>
+          <input
+            type="password"
+            placeholder="Must have at least 6 characters"
+            required
+            className="input input-bordered placeholder-gray-500"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
+
+        {/* TODO Add community code to registration step */}
+        {/* <label className="form-control w-full max-w-sm">
+          <div className="label">
+            <span className="label-text">Community code</span>
             <span className="label-text-alt">
               <div
                 className="tooltip"
@@ -50,35 +79,7 @@ function JoinACommunity({}: Props) {
             className="input input-bordered placeholder-gray-500"
             onChange={(e) => setCommunityCode(e.target.value)}
           />
-        </label>
-
-        <label className="form-control w-full max-w-sm">
-          <div className="label">
-            <span className="label-text">Email address</span>
-          </div>
-          <input
-            type="email"
-            id="email"
-            autoComplete="email"
-            required
-            placeholder="email@domain.com"
-            className="input input-bordered placeholder-gray-500"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-
-        <label className="form-control w-full max-w-sm">
-          <div className="label">
-            <span className="label-text">Password</span>
-          </div>
-          <input
-            type="password"
-            placeholder="Must have at least 6 characters"
-            required
-            className="input input-bordered placeholder-gray-500"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
+        </label> */}
 
         <div className="divider">OR</div>
 

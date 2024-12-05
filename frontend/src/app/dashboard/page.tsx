@@ -30,9 +30,10 @@ function Dashboard({}: Props) {
     }
   };
 
-  if (session) {
+  if (session?.user) {
     return (
       <>
+        {status == "loading" && <CardLoader />}
         <div>Dashboard</div>
         <p>PK: {session.user.pk} </p>
         <p>Username: {session.user.username} </p>
@@ -50,7 +51,6 @@ function Dashboard({}: Props) {
         <button type="button" onClick={() => signOut({ callbackUrl: "/" })}>
           Sign out
         </button>
-        {status == "loading" && <CardLoader />}
       </>
     );
   }
