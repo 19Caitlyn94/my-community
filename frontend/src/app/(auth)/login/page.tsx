@@ -1,9 +1,21 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
+
+import { SignIn } from "@/auth";
+
 import Link from "next/link";
 
 type Props = {};
 
 function Login({}: Props) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSignIn = async () => {
+    await SignIn(email, password);
+  };
+
   return (
     <>
       <h1 className="mb-10 text-center text-2xl font-bold leading-9 tracking-tight">
@@ -22,6 +34,7 @@ function Login({}: Props) {
             required
             placeholder="email@domain.com"
             className="input input-bordered placeholder-gray-500"
+            onChange={(e) => setEmail(e.target.value)}
           />
         </label>
 
@@ -34,10 +47,15 @@ function Login({}: Props) {
             placeholder="Must have at least 6 characters"
             required
             className="input input-bordered placeholder-gray-500"
+            onChange={(e) => setPassword(e.target.value)}
           />
         </label>
 
-        <button type="submit" className="btn btn-primary btn-block md:btn-auto">
+        <button
+          type="button"
+          className="btn btn-primary btn-block md:btn-auto"
+          onClick={handleSignIn}
+        >
           Log in
         </button>
       </form>

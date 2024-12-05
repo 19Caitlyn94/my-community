@@ -1,9 +1,19 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import { Register } from "@/auth";
 import Link from "next/link";
 
 type Props = {};
 
 function JoinACommunity({}: Props) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // const [communityCode, setCommunityCode] = useState("");
+
+  const handleRegistration = async () => {
+    return await Register(email, password);
+  };
+
   return (
     <>
       <h1 className="text-2xl font-bold ">Join a community</h1>
@@ -11,7 +21,36 @@ function JoinACommunity({}: Props) {
       <form className="space-y-5" action="#" method="POST">
         <label className="form-control w-full max-w-sm">
           <div className="label">
-            <span className="label-text">Registration code</span>
+            <span className="label-text">Email address</span>
+          </div>
+          <input
+            type="email"
+            id="email"
+            autoComplete="email"
+            required
+            placeholder="email@domain.com"
+            className="input input-bordered placeholder-gray-500"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </label>
+
+        <label className="form-control w-full max-w-sm">
+          <div className="label">
+            <span className="label-text">Password</span>
+          </div>
+          <input
+            type="password"
+            placeholder="Must have at least 6 characters"
+            required
+            className="input input-bordered placeholder-gray-500"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
+
+        {/* TODO Add community code to registration step */}
+        {/* <label className="form-control w-full max-w-sm">
+          <div className="label">
+            <span className="label-text">Community code</span>
             <span className="label-text-alt">
               <div
                 className="tooltip"
@@ -38,8 +77,9 @@ function JoinACommunity({}: Props) {
             id="registrationCode"
             placeholder="6HJ7JN0"
             className="input input-bordered placeholder-gray-500"
+            onChange={(e) => setCommunityCode(e.target.value)}
           />
-        </label>
+        </label> */}
 
         <div className="divider">OR</div>
 
@@ -59,8 +99,12 @@ function JoinACommunity({}: Props) {
           </svg>
         </label>
 
-        <button type="submit" className="btn btn-primary btn-block">
-          Request to join
+        <button
+          type="button"
+          className="btn btn-primary btn-block"
+          onClick={handleRegistration}
+        >
+          Join (request to join)
         </button>
       </form>
       <p className="mt-10 text-center text-sm text-gray-500">
