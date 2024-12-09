@@ -6,7 +6,7 @@ import { getSession } from "@/auth";
 import type { Metadata } from "next";
 
 import Providers from "./Providers";
-import { DevToolbar } from "./_components";
+import { DevToolbar, Navbar } from "./_components";
 
 import { isDev } from "./_utils/config";
 
@@ -23,12 +23,14 @@ export default async function RootLayout({
   children: ReactNode;
 }) {
   const session = await getSession();
-  console.log("ROOT session", session);
 
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Providers session={session}>{children}</Providers>
+      <body className={`${inter.className}`}>
+        <Providers session={session}>
+          <Navbar />
+          <>{children}</>
+        </Providers>
         {isDev && <DevToolbar />}
       </body>
     </html>

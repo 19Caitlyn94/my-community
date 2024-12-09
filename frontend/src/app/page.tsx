@@ -1,10 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <div className="h-screen flex flex-col justify-center p-10 lg:px-8">
-      <h1 className="text-center text-lg font-bold">MyCommunity</h1>
       <div className="w-full max-w-sm mx-auto grow flex flex-col justify-center space-y-6 text-center">
         <div className="container w-full md:w-50 space-y-6 text-center">
           <p>Welcome to</p>
