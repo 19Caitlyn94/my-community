@@ -13,7 +13,7 @@ const Navbar = (props: Props) => {
   const { data: session, status } = useSession();
   const isLoggedIn = !!session;
   return (
-    <div className="navbar sticky">
+    <div className="z-10 navbar sticky top-0 bg-base-100">
       <div className="navbar-start lg:hidden">
         <MenuDropdown />
       </div>
