@@ -12,9 +12,9 @@ function AuthLayout({ children }: Props) {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  // If the user is authenticated redirect to `/dashboard`
+  // If the user is authenticated redirect to base route
   if (session) {
-    router.push("/dashboard");
+    router.push("/");
     return;
   }
 

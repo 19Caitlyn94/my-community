@@ -1,11 +1,10 @@
-import React from 'react'
+import React from "react";
+import Newsfeed from "../_pages/Newsfeed";
 
-type Props = {}
+type Props = {};
 
 function News({}: Props) {
-  return (
-    <div>News</div>
-  )
+  return <Newsfeed />;
 }
 
-export default News
+export default News;

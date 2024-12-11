@@ -143,7 +143,7 @@ const getSession = () => getServerSession(authOptions)
 export { authOptions, getSession }
 
 export const SignIn = async (email: string, password: string) => {
-  return signIn('credentials', { callbackUrl: '/dashboard', email, password })
+  return signIn('credentials', { callbackUrl: '/', email, password })
 }
 
 export const Register = async (email: string, password: string) => {

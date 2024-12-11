@@ -21,7 +21,7 @@ function Overview({}: Props) {
           respect and trust..."
         </i>
       </p>
-      <Link href="/dashboard">
+      <Link href="/">
         <button className="btn btn-link">
           Let's go!
           <Icon title="Next" iconType={ICONS.arrowRight} />
