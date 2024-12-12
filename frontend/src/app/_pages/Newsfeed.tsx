@@ -31,7 +31,7 @@ const Newsfeed = (props: Props) => {
   };
 
   return (
-    <div className="mx-6">
+    <div>
       <p className="inline-block text-2xl mb-2 ">News & Updates</p>
       <button className="btn btn-primary">
         <Icon title="Search" iconType={ICONS.create} />
