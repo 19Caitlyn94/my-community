@@ -37,12 +37,19 @@ Format: `<type>[optional scope]: <description>`
 Example: `git commit -m "feat(reports): add reports to the home page`
 
 **feat:** For new functionality
+
 **fix** For a fix to existing functionality
+
 **chore:** For a change that does not create new functionality but is needed
+
 **build:** Changes that affect the build system or external dependencies
+
 **ci:** Changes to CI configuration files and scripts
+
 **docs:** Documentation only changes
+
 **refactor:** A code change that contains refactor
+
 **style:** Changes that do not affect the meaning of the code
 
 ### Branch naming
@@ -52,6 +59,16 @@ Include corresponding ticket id if necessary
 Format: `{type}/{2-3 word summary}/{ticket id}_`
 Example: `git checkout -b feature/reports/MC-244`
 
+### Tag naming
+
+https://semver.org/
+
+## Design
+
+## UI/UX
+
+Mobile first approach
+Main layout using grid
 
 ## Learn More
 
