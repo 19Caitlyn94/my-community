@@ -12,3 +12,6 @@ export { default as Icon } from './ui/icon/Icon'
 export { ICONS } from './ui/icon/utils'
 
 export { default as Avatar } from './ui/avatar/Avatar'
+
+export { default as Badge } from './ui/badge/Badge'
+export { BADGE_TYPES } from './ui/badge/Badge'
