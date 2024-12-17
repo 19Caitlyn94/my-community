@@ -1,11 +1,9 @@
-import React from 'react'
+import React from "react";
 
-type Props = {}
+type Props = {};
 
 function Settings({}: Props) {
-  return (
-    <div>Settings</div>
-  )
+  return <p className="text-2xl">Settings</p>;
 }
 
-export default Settings
+export default Settings;

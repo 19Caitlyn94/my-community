@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import MenuDropdown from "./Menu";
+import MenuDropdown from "./MenuDropdown";
 import UserDropdown from "./UserDropdown";
 import Navlink from "./Navlink";
 import { ICONS } from "../ui/icon/utils";

@@ -32,15 +32,11 @@ const Newsfeed = (props: Props) => {
 
   return (
     <div>
-      <p className="inline-block text-2xl mb-2 ">News & Updates</p>
-      <button className="btn btn-primary">
-        <Icon title="Search" iconType={ICONS.create} />
-        New Post
-      </button>
       {status == "loading" ? (
         <CardLoader />
       ) : (
         <>
+          <p className="text-2xl mb-6">News & Updates</p>
           <p>PK: {session.user.pk} </p>
           <p>Username: {session.user.username} </p>
           <p>Email: {session.user.email || "Not provided"}</p>
