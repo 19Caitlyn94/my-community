@@ -18,9 +18,9 @@ const ResponsiveCard = ({
 }: Props) => {
   return (
     <Link href={to}>
-      <div className="card xl:card-side bg-base-500 shadow-lg">
+      <div className="card xl:card-side shadow-lg shadow-neutral-300/50 border border-neutral-300/50">
         <figure>
-          <img src={image} alt="Album" />
+          <img src={image} alt={`${title} image`} />
         </figure>
         <div className="card-body basis-full">
           <h2 className="card-title">{title}</h2>

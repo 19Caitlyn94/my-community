@@ -19,7 +19,7 @@ const Navbar = (props: Props) => {
       </div>
       <div className="navbar-center lg:navbar-start">
         <Link href="/">
-          <h1 className="text-center text-lg font-bold">MyCommunity</h1>
+          <h1 className="text-center text-2xl">MyCommunity</h1>
         </Link>
       </div>
       <div className="navbar-end">
