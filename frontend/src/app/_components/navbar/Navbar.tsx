@@ -27,19 +27,27 @@ const Navbar = (props: Props) => {
           <li>
             <Navlink
               name="News feed"
-              link="/"
+              link="/news"
               iconTitle="News feed"
-              iconType={ICONS.newsfeed}
+              iconType={ICONS.squares}
             />
           </li>
           <li>
             <Navlink
+              name="Blog"
+              link="/blog"
+              iconTitle="Blog"
+              iconType={ICONS.newsfeed}
+            />
+          </li>
+          {/* <li>
+            <Navlink
               name="Settings"
               link="/settings"
               iconTitle="Settings"
-              iconType={ICONS.settings}
+              // iconType={ICONS.settings}
             />
-          </li>
+          </li> */}
         </ul>
         {isLoggedIn ? (
           <UserDropdown />

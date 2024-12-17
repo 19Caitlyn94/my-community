@@ -22,6 +22,14 @@ const MenuDropdown = (props: Props) => {
             iconType={ICONS.newsfeed}
           />
         </li>
+        <li>
+          <Navlink
+            name="Blog"
+            link="/blog"
+            iconTitle="Blog"
+            iconType={ICONS.squares}
+          />
+        </li>
         {/* TODO add settings if logged in */}
         {/* <li>
           <Navlink
