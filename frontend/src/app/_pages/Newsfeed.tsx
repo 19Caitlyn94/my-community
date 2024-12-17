@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 
-import { CardLoader, Icon, ICONS } from "../_components";
+import { CardLoader, NewPost, Post } from "@/app/_components";
 
 type Props = {};
 
@@ -36,7 +36,8 @@ const Newsfeed = (props: Props) => {
         <CardLoader />
       ) : (
         <>
-          <p className="text-2xl mb-6">News & Updates</p>
+          <NewPost />
+          <Post className="mb-6" />
           <p>PK: {session.user.pk} </p>
           <p>Username: {session.user.username} </p>
           <p>Email: {session.user.email || "Not provided"}</p>
