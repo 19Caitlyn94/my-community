@@ -1,22 +1,14 @@
 import React from "react";
 import { signOut } from "next-auth/react";
+import { Avatar } from "@/app/_components";
 
 type Props = {};
 
 const UserDropdown = (props: Props) => {
   return (
     <div className="dropdown dropdown-hover dropdown-end">
-      <div
-        tabIndex={0}
-        role="button"
-        className="btn btn-ghost btn-circle avatar"
-      >
-        <div className="w-10 rounded-full">
-          <img
-            alt="Tailwind CSS Navbar component"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-          />
-        </div>
+      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+        <Avatar />
       </div>
       <ul
         tabIndex={0}
