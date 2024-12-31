@@ -19,7 +19,7 @@ function AuthLayout({ children }: Props) {
   }
 
   return (
-    <div className="mt-32 lg:mt-48 mx-auto max-w-sm space-y-6 text-center">
+    <div className="flex flex-col mt-32 lg:mt-48 mx-auto max-w-sm space-y-6 text-center">
       {status == "loading" ? (
         <span className="loading loading-spinner"></span>
       ) : (
