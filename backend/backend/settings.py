@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'dj_rest_auth.registration',
     "corsheaders",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -138,7 +139,10 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Authentication
+AUTH_USER_MODEL = "users.User"
 
 # JWT Token Authentication
 # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html
