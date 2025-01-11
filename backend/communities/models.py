@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import User
-from utils.model import TimeStampedModel
+from utils.models import TimeStampedModel
 from django_extensions.db.fields import AutoSlugField, RandomCharField
 
 

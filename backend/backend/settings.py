@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "users",
     "communities",
+    "posts",
 ]
 
 MIDDLEWARE = [
