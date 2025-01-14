@@ -1,7 +1,9 @@
 from django.db import models
-from users.models import User
 from utils.models import TimeStampedModel
 from django_extensions.db.fields import AutoSlugField, RandomCharField
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class Community(TimeStampedModel, models.Model):

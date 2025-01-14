@@ -1,6 +1,8 @@
 from django.test import TestCase
-from users.models import User
 from .models import Community, CommunityUser
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class CommunityModelTest(TestCase):

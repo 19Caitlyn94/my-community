@@ -1,7 +1,9 @@
 from django.db import models
 from utils.models import TimeStampedModel
-from users.models import User
 from django_extensions.db.fields import AutoSlugField
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class PostType(TimeStampedModel, models.Model):
