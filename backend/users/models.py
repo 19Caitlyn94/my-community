@@ -16,3 +16,7 @@ class User(AbstractUser):
     )
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
     deactivated_at = models.DateTimeField(null=True, blank=True)
+
+    @property
+    def display_name(self):
+        return f"{self.first_name} {self.last_name}"
