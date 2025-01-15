@@ -7,18 +7,22 @@ import { Avatar, CardWrapper, Icon, ICONS } from "@/app/_components";
 import PostHeader from "./PostHeader";
 
 type Props = {
+  body?: string;
+  postTypeSlug: string;
+  user: object;
+  updatedDate: string;
   className?: string;
 };
 
-const Post = ({ className }: Props) => {
+const Post = ({ className, body, postTypeSlug, user, updatedDate }: Props) => {
   return (
     <CardWrapper className={`${className || ""}`}>
-      <PostHeader />
-      <p className="mb-6">
-        Wasn't the light on the water magnificent this evening? So beautiful
-        with the rays of the setting sun, the clouds and rain on the horizon out
-        to sea. We are SO lucky to see this view every day. 🤗
-      </p>
+      <PostHeader
+        userDisplayName={user.display_name}
+        postTypeSlug={postTypeSlug}
+        updatedDate={updatedDate}
+      />
+      {body && <p className="mb-6">{body}</p>}
       <figure className="w-full">
         <Image className="w-full h-full rounded-lg" src={post_1a} alt="post" />
       </figure>

@@ -33,6 +33,25 @@ export const blogData = [
   },
 ]
 
+import { getSession } from "@/auth";
 
 
+export const getPostsForUser = async () => {
+  const session = await getSession()
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}posts/?user=${session?.user.pk}`,
+      {
+        // TODO change revalidate timing
+        method: "GET",
+        headers: { Authorization: "Bearer " + session?.access_token }
+      }
+    );
+    const data = await res.json()
+    return data.results;
+  } catch (error) {
+    console.error("Error fetching posts: ", error);
+    return [`Error: ${error}`]
+  }
+}
 
