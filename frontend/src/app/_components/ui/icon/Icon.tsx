@@ -12,8 +12,13 @@ const Icon = ({ iconType, className, title }: Props) => {
       viewBox="0 0 24 24"
       stroke="currentColor"
     >
-      {iconType.map((d) => (
-        <path strokeLinecap="round" strokeLinejoin="round" d={d} />
+      {iconType.map((d, i) => (
+        <path
+          key={`path-${i}`}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d={d}
+        />
       ))}
       {title && <title>{title}</title>}
     </svg>
