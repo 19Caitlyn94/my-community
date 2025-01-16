@@ -1,12 +1,23 @@
 import React from "react";
-import { Avatar, Icon, ICONS, Badge, BADGE_TYPES } from "@/app/_components";
+import {
+  Avatar,
+  Icon,
+  ICONS,
+  Badge,
+  BADGE_TYPES,
+  AVATAR_SIZE,
+} from "@/app/_components";
 
 type Props = {};
 
 const PostHeader = (props: Props) => {
   return (
     <div className="flex mb-6">
-      <Avatar className="size-6 mr-6" />
+      <Avatar
+        size={AVATAR_SIZE.md}
+        className="mr-6"
+        // content={userProfileImageUrl}
+      />
       <div className="flex flex-wrap">
         <p className="mr-3 order-1 text-sm font-semibold">
           Margerie Stewart-Baxter{" "}
