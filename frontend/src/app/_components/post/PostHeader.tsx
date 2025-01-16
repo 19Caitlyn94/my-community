@@ -34,7 +34,7 @@ const PostHeader = ({ userDisplayName, postTypeSlug, updatedDate }: Props) => {
         />
       </div>
 
-      <Icon className="ml-auto" iconType={ICONS.menuMeatball} />
+      <Icon className="size-6 ml-auto" iconType={ICONS.menuMeatball} />
     </div>
   );
 };

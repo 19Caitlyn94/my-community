@@ -15,7 +15,7 @@ const NewPost = (props: Props) => {
       <div className="flex items-center	">
         <Avatar size={AVATAR_SIZE.sm} className="mr-5" />
         <p className="text-sm text-gray-400">What's new?</p>
-        <Icon className="ml-auto" iconType={ICONS.menuKebab} />
+        <Icon className="size-6 ml-auto" iconType={ICONS.menuKebab} />
       </div>
     </CardWrapper>
   );

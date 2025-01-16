@@ -1,12 +1,12 @@
 import React from "react";
 
-type Props = { iconType: Array<string>; className?: String; title?: String };
+type Props = { iconType: Array<string>; className?: string; title?: String };
 
-const Icon = ({ iconType, className, title }: Props) => {
+const Icon = ({ iconType, className = "size-6", title }: Props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={`size-6 ${className || ""}`}
+      className={className}
       fill="none"
       strokeWidth={1.5}
       viewBox="0 0 24 24"
