@@ -1,9 +1,7 @@
 import React from "react";
 import { Avatar, AVATAR_SIZE, Icon, ICONS } from "@/app/_components";
 
-type Props = {};
-
-function UI({}: Props) {
+function UI() {
   return (
     <div>
       <p className="text-2xl">UI Library</p>
