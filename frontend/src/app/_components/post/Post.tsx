@@ -3,7 +3,13 @@ import React from "react";
 import Image from "next/image";
 import post_1a from "@/data/post_1a.jpg";
 
-import { Avatar, CardWrapper, Icon, ICONS } from "@/app/_components";
+import {
+  Avatar,
+  AVATAR_SIZE,
+  CardWrapper,
+  Icon,
+  ICONS,
+} from "@/app/_components";
 import PostHeader from "./PostHeader";
 
 type Props = {
@@ -29,10 +35,10 @@ const Post = ({ className, body, postTypeSlug, user, updatedDate }: Props) => {
       <div className="divider"></div>
       <div className="flex flex-wrap items-center">
         <div className="flex -space-x-1 overflow-hidden w-full md:w-auto mb-4">
-          <Avatar className="size-5 ring-2 ring-base-100" />
-          <Avatar className="size-5 ring-2 ring-base-100" />
-          <Avatar className="size-5 ring-2 ring-base-100" />
-          <Avatar className="size-5 ring-2 ring-base-100" />
+          <Avatar size={AVATAR_SIZE.xs} className="ring-2 ring-base-100" />
+          <Avatar size={AVATAR_SIZE.xs} className="ring-2 ring-base-100" />
+          <Avatar size={AVATAR_SIZE.xs} className="ring-2 ring-base-100" />
+          <Avatar size={AVATAR_SIZE.xs} className="ring-2 ring-base-100" />
           <p className="text-sm pl-2">+20 likes</p>
         </div>
         <button className="mb-4 md:ml-auto btn btn-ghost btn-xs">

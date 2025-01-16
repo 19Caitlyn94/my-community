@@ -1,6 +1,6 @@
 import React from "react";
 import { signOut } from "next-auth/react";
-import { Avatar } from "@/app/_components";
+import { Avatar, AVATAR_SIZE } from "@/app/_components";
 
 type Props = {};
 
@@ -8,7 +8,7 @@ const UserDropdown = (props: Props) => {
   return (
     <div className="dropdown dropdown-hover dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-        <Avatar />
+        <Avatar size={AVATAR_SIZE.md} />
       </div>
       <ul
         tabIndex={0}
