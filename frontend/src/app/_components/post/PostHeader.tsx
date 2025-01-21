@@ -12,15 +12,21 @@ type Props = {
   userDisplayName: string;
   postTypeSlug: string;
   updatedDate: string;
+  userProfileImageUrl?: string;
 };
 
-const PostHeader = ({ userDisplayName, postTypeSlug, updatedDate }: Props) => {
+const PostHeader = async ({
+  userDisplayName,
+  postTypeSlug,
+  updatedDate,
+  userProfileImageUrl,
+}: Props) => {
   return (
     <div className="flex mb-6">
       <Avatar
         size={AVATAR_SIZE.md}
         className="mr-6"
-        // content={userProfileImageUrl}
+        content={userProfileImageUrl || userDisplayName}
       />
       <div className="flex flex-wrap">
         <p className="mr-3 order-1 text-sm font-semibold">{userDisplayName}</p>

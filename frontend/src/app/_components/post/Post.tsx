@@ -15,7 +15,7 @@ import PostHeader from "./PostHeader";
 type Props = {
   body?: string;
   postTypeSlug: string;
-  user: object;
+  user: any;
   updatedDate: string;
   className?: string;
 };
@@ -25,13 +25,13 @@ const Post = ({ className, body, postTypeSlug, user, updatedDate }: Props) => {
     <CardWrapper className={`${className || ""}`}>
       <PostHeader
         userDisplayName={user.display_name}
+        userProfileImageUrl={user.profile_image_url}
         postTypeSlug={postTypeSlug}
         updatedDate={updatedDate}
       />
       {body && <p className="mb-6">{body}</p>}
-      <figure className="w-full">
-        <Image className="w-full h-full rounded-lg" src={post_1a} alt="post" />
-      </figure>
+      <Image className="w-full h-full rounded-lg" src={post_1a} alt="post" />
+
       <div className="divider"></div>
       <div className="flex flex-wrap items-center">
         <div className="flex -space-x-1 overflow-hidden w-full md:w-auto mb-4">

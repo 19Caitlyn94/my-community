@@ -1,14 +1,22 @@
 import React from "react";
 import { signOut } from "next-auth/react";
+import { getLoggedInUserDetails } from "@/data/data";
 import { Avatar, AVATAR_SIZE } from "@/app/_components";
 
 type Props = {};
 
-const UserDropdown = (props: Props) => {
+const UserDropdown = async (props: Props) => {
+  const loggedInUserDetails = await getLoggedInUserDetails();
   return (
     <div className="dropdown dropdown-hover dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-        <Avatar size={AVATAR_SIZE.md} />
+        <Avatar
+          size={AVATAR_SIZE.md}
+          content={
+            loggedInUserDetails?.profile_image_url ||
+            loggedInUserDetails?.display_name
+          }
+        />
       </div>
       <ul
         tabIndex={0}

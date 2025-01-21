@@ -20,6 +20,10 @@ env = environ.Env(DEBUG=(bool, False))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# TODO Add hostname
+BASE_HOST = "http://localhost:8000"
+
+
 # Take environment variables from .env file
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
@@ -201,3 +205,7 @@ else:
         "http://localhost:3000/",
         "http://127.0.0.1:3000/",
     ]
+
+# Stores images from ImageField in www.yoursite.com/media/path_to_image/image.png
+MEDIA_ROOT = Path(BASE_DIR) / "media"
+MEDIA_URL = "/media/"
