@@ -9,12 +9,13 @@ User = get_user_model()
 class Community(TimeStampedModel, models.Model):
     slug = AutoSlugField(populate_from=["name"])
     registration_code = RandomCharField(length=9, unique=True)
+    is_active = models.BooleanField(default=True)
 
     name = models.CharField(max_length=50)
     description = models.TextField(max_length=255)
-
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    is_active = models.BooleanField(default=True)
+    created_by = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, related_name="created_communities"
+    )
 
     class Meta:
         verbose_name = "Community"

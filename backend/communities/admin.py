@@ -6,7 +6,6 @@ from .models import Community
 class CommunityAdmin(admin.ModelAdmin):
     list_display = [
         "name",
-        "created_by",
         "created_at",
         "updated_at",
         "is_active",
