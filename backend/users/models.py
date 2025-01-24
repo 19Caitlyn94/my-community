@@ -32,3 +32,6 @@ class User(AbstractUser):
         if self.profile_image:
             return f"{settings.BASE_HOST}/media/{self.profile_image}"
         return ""
+
+    def __str__(self):
+        return self.email
