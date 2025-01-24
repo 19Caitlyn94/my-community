@@ -1,14 +1,20 @@
 from django.contrib import admin
-
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
+from utils.admin import CommunityUserInline
 
 User = get_user_model()
+
+
+class CommunityUserInlineForUser(CommunityUserInline):
+    fields = ("community", "is_admin")
+    autocomplete_fields = ["community"]
 
 
 class ExtendedUserAdmin(UserAdmin):
     list_display = ["first_name", "last_name", "email", "status", "is_superuser"]
     ordering = ["date_joined"]
+    inlines = [CommunityUserInlineForUser]
 
     fieldsets = [
         (
