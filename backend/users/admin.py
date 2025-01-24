@@ -26,7 +26,12 @@ class ExtendedUserAdmin(UserAdmin):
         (
             "Personal Info",
             {
-                "fields": ["first_name", "last_name", "bio", "profile_image"],
+                "fields": [
+                    "first_name",
+                    "last_name",
+                    "bio",
+                    "profile_image",
+                ],
             },
         ),
         (
@@ -49,6 +54,23 @@ class ExtendedUserAdmin(UserAdmin):
             },
         ),
     ]
+
+    # Add add_fieldsets to make sure the 'email' is included for adding users (no 'username') - this will reflect in the user creation popup in the Admin
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": ("email", "password1", "password2"),
+            },
+        ),
+        (
+            "Personal Info",
+            {
+                "fields": ("first_name", "last_name", "bio", "profile_image"),
+            },
+        ),
+    )
 
 
 admin.site.register(User, ExtendedUserAdmin)
