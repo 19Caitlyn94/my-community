@@ -12,8 +12,11 @@ function Login({}: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignIn = async () => {
-    await SignIn(email, password);
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    if (email && password) {
+      await SignIn(email, password);
+    }
   };
 
   return (
@@ -54,7 +57,7 @@ function Login({}: Props) {
         <button
           type="button"
           className="btn btn-primary btn-block md:btn-auto"
-          onClick={handleSignIn}
+          onClick={(e) => handleSignIn(e)}
         >
           Log in
         </button>
