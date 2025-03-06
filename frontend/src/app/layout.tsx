@@ -29,9 +29,9 @@ export default async function RootLayout({
       <body className={`${inter.className}`}>
         <Providers session={session}>
           <Navbar />
-          <div className="grid grid-cols-12 gap-5">
+          <div className="grid grid-cols-12 gap-10">
             <div>{/* Left Sidebar */}</div>
-            <div className="col-start-2 col-end-12 lg:col-start-4 lg:col-end-10">
+            <div className="col-start-2 col-end-12 lg:col-start-5 lg:col-end-9">
               {children}
             </div>
             <div>{/* Right Sidebar */}</div>

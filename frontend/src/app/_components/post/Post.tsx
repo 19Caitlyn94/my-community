@@ -26,7 +26,7 @@ const Post = ({ className }: Props) => {
         to sea. We are SO lucky to see this view every day. 🤗
       </p>
       <figure className="w-full">
-        <Image className="w-full h-full rounded-lg" src={post_1a} alt="post" />
+        <Image className="w-full h-full rounded-sm" src={post_1a} alt="post" />
       </figure>
       <div className="divider"></div>
       <div className="flex flex-wrap items-center">
