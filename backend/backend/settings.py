@@ -20,6 +20,10 @@ env = environ.Env(DEBUG=(bool, False))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# TODO Add hostname
+BASE_HOST = "http://localhost:8000"
+
+
 # Take environment variables from .env file
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
@@ -167,12 +171,17 @@ SIMPLE_JWT = {
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ]
+    ],
+    # Remove the default permission class - endpoints will be public by default
+    # Add permissions explicitly to views that need them
 }
+
 
 REST_AUTH = {
     "USE_JWT": True,  # is required because we're using djangorestframework-simplejwt
     "JWT_AUTH_HTTPONLY": False,  # should be off, otherwise dj-rest-auth won't send out refresh tokens
+    "USER_DETAILS_SERIALIZER": "users.serializers.UserSerializer",
+    "REGISTER_SERIALIZER": "users.serializers.CustomRegisterSerializer",
 }
 
 # django-allauth depends on Django's 'sites' framework
@@ -181,11 +190,12 @@ SITE_ID = 1
 # Turn off the email verification functionality
 # Email verification should be turned off because this project isn't configured to send out emails yet. We also don't have the endpoints that would allow users to verify their email addresse yet.
 ACCOUNT_EMAIL_VERIFICATION = "none"
-# Use email authentication instead of username
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USER_MODEL_EMAIL_FIELD = "email"
 
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
@@ -194,3 +204,6 @@ else:
         "http://localhost:3000/",
         "http://127.0.0.1:3000/",
     ]
+# Stores images from ImageField in www.yoursite.com/media/path_to_image/image.png
+MEDIA_ROOT = Path(BASE_DIR) / "media"
+MEDIA_URL = "/media/"
