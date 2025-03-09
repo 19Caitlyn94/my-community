@@ -1,6 +1,8 @@
 "use client";
-import React, { useState } from "react";
-import { Register } from "@/auth";
+
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { registerUser } from "@/auth";
 import Link from "next/link";
 import { Icon, ICONS } from "@/app/_components";
 
@@ -12,7 +14,14 @@ function JoinACommunity({}: Props) {
   // const [communityCode, setCommunityCode] = useState("");
 
   const handleRegistration = async () => {
-    return await Register(email, password);
+    let user = await registerUser(email, password);
+    if (user) {
+      await signIn("credentials", {
+        callbackUrl: "/overview/karen-score",
+        email,
+        password,
+      });
+    }
   };
 
   return (
