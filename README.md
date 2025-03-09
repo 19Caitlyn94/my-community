@@ -4,83 +4,184 @@ Welcome to MyCommunity, a platform where individuals from all walks of life come
 
 Join us in creating a supportive and inclusive space where everyone can thrive, share, and grow together.
 
-## Getting Started
+## 🛠️ Tech Stack
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+### Frontend
 
-First, run the development server:
+- Next.js
+- TypeScript
+- Tailwind CSS
+- DaisyUI
+
+### Backend
+
+- Django
+- Django REST Framework
+- PostgreSQL
+- Simple JWT for authentication
+
+## 📋 Prerequisites
+
+[![Node.js](https://img.shields.io/badge/Node-20.11.1-green?logo=node.js)](https://nodejs.org/) [![npm](https://img.shields.io/badge/npm-10.2.4-red?logo=npm)](https://www.npmjs.com/)
+
+[![Python](https://img.shields.io/badge/Python-3.10.5-blue?logo=python)](https://www.python.org/) [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14.15-blue?logo=postgresql)](https://www.postgresql.org/) [![Poetry](https://img.shields.io/badge/Poetry-1.8.3-blue?logo=poetry)](https://python-poetry.org/)
+
+## 🔧 Installation
+
+### Backend Setup
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Clone the repository
+git clone https://github.com/19Caitlyn94/my-community.git
+
+# Install Python dependencies
+cd my-community/backend
+poetry install
+
+# Set up environment variables
+echo .env
+# Edit .env with the database credentials and secret key
+
+# Run migrations
+poetry run python manage.py migrate
+
+# Create a superuser
+poetry run python manage.py createsuperuser
+
+# Start the development server
+export DEBUG=True
+poetry run python manage.py runserver 8000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Frontend Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Navigate to frontend directory
+cd my-community/frontend
 
+# Install dependencies
+npm install
+
+# Set up environment variables
+echo .env.local
+# Edit .env.local with the API URL
+
+# Start the development server
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser.
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Git
+## 🧪 Running Tests
 
-### Commit naming
+### Backend Tests
 
-Should use [Conventional Commits](https://www.conventionalcommits.org/en/) format. It provides guidelines to create a better commit history log, making easier to have automated tasks around it (e.g. automated changelogs).
+```bash
+cd backend
+poetry run python manage.py test
+```
 
-Include type: feat, fix, chore, docs, build, cl, docs, refactor, style
+### Frontend Tests
+
+```bash
+cd frontend
+npm test
+```
+
+## 📝 API Documentation
+
+The API documentation is available at `/api/docs/` when running the backend server.
+
+Key endpoints:
+
+- `/api/auth/` - Authentication endpoints
+- `/api/users/` - User management
+- `/api/communities/` - Community operations
+- `/api/posts/` - Post operations
+
+## 🔐 Environment Variables
+
+### Backend (.env)
+
+```
+DJANGO_SECRET_KEY=your-secret-key
+DB_NAME=your-db-name
+DB_USER=your-db-user
+DB_SECRET=your-db-password
+```
+
+### Frontend (.env.local)
+
+```
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
+
+## 📝 Development Guidelines
+
+### Git Workflow
+
+#### Commit Messages
+
+[Conventional Commits](https://www.conventionalcommits.org/en/) specification for commit messages.
+
 Format: `<type>[optional scope]: <description>`
-Example: `git commit -m "feat(reports): add reports to the home page`
 
-**feat:** For new functionality
+Example: `feat(auth): implement email verification flow`
 
-**fix** For a fix to existing functionality
+| Type       | Description                                         |
+| ---------- | --------------------------------------------------- |
+| `feat`     | New features or significant changes                 |
+| `fix`      | Bug fixes                                           |
+| `chore`    | Regular maintenance tasks                           |
+| `docs`     | Documentation updates                               |
+| `style`    | Code style changes (formatting, semicolons, etc.)   |
+| `refactor` | Code changes that neither fix bugs nor add features |
+| `test`     | Adding or modifying tests                           |
+| `build`    | Changes affecting build system or dependencies      |
+| `ci`       | Changes to CI configuration and scripts             |
+| `perf`     | Performance improvements                            |
 
-**chore:** For a change that does not create new functionality but is needed
+#### Branch Naming
 
-**build:** Changes that affect the build system or external dependencies
+Format: `{type}/{description}[/{ticket-id}]`
 
-**ci:** Changes to CI configuration files and scripts
+Example: `feature/email-verification/MC-244`
 
-**docs:** Documentation only changes
+| Type         | Description                 |
+| ------------ | --------------------------- |
+| `feature/*`  | New features                |
+| `bugfix/*`   | Bug fixes                   |
+| `hotfix/*`   | Urgent fixes for production |
+| `release/*`  | Release preparation         |
+| `refactor/*` | Code refactoring            |
 
-**refactor:** A code change that contains refactor
+#### Versioning
 
-**style:** Changes that do not affect the meaning of the code
+[Semantic Versioning](https://semver.org/) for version numbers:
 
-### Branch naming
+Format: `MAJOR.MINOR.PATCH`
 
-Include type: feature, refactor, bugfix, hotfix, release
-Include corresponding ticket id if necessary
-Format: `{type}/{2-3 word summary}/{ticket id}_`
-Example: `git checkout -b feature/reports/MC-244`
+Example: `1.2.3`
 
-### Tag naming
+- **MAJOR**: Breaking changes
+- **MINOR**: New features (backwards-compatible)
+- **PATCH**: Bug fixes (backwards-compatible)
 
-https://semver.org/
+## 🎨 Design System
 
-## Design
+#### UI Principles
 
-## UI/UX
+1. **Mobile-First Approach**
 
-Mobile first approach
-Main layout using grid
+   - Design and develop for mobile devices first
+   - Progressive enhancement for larger screens
 
-## Learn More
+2. **Layout Structure**
+   - CSS Grid for main layout
+   - Flexbox for component-level layouts
 
-To learn more about Next.js, take a look at the following resources:
+<!--
+## 🚀 Deploy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The easiest way to deploy is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js. -->
