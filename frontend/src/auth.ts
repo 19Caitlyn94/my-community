@@ -1,8 +1,7 @@
-import { AuthOptions, getServerSession } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 import { isDev } from "@/app/_utils/config";
-import { signIn } from "next-auth/react";
 import { JWT } from "next-auth/jwt";
+import NextAuth from "next-auth"
 
 // These two values should be a bit less than actual token lifetimes
 const BACKEND_ACCESS_TOKEN_LIFETIME = 45 * 60; // 45 minutes
@@ -26,7 +25,7 @@ const loginUser = async (email: string, password: string) => {
   return null
 }
 
-const registerUser = async (email: string, password: string) => {
+export const registerUser = async (email: string, password: string) => {
   try {
     const data = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}auth/register/`, {
       method: 'POST',
@@ -119,7 +118,8 @@ const callbacks = {
   },
 }
 
-const authOptions: AuthOptions = {
+
+export const { auth, handlers, signIn, signOut } = NextAuth({
   secret: process.env.AUTH_SECRET,
   debug: isDev,
   session: {
@@ -132,23 +132,12 @@ const authOptions: AuthOptions = {
   pages: {
     signIn: '/login'
   }
-};
+})
+
 
 /**
  * Helper function to get the session on the server without having to import the authOptions object every single time
  * @returns The session object or null
  */
-const getSession = () => getServerSession(authOptions)
+export const getSession = () => auth()
 
-export { authOptions, getSession }
-
-export const SignIn = async (email: string, password: string) => {
-  return signIn('credentials', { callbackUrl: '/', email, password })
-}
-
-export const Register = async (email: string, password: string) => {
-  let user = await registerUser(email, password)
-  if (user) {
-    signIn('credentials', { callbackUrl: '/overview/karen-score', email, password })
-  }
-}
