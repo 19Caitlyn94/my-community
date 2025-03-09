@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-import { SignIn } from "@/auth";
+import { signIn } from "next-auth/react";
 
 import Link from "next/link";
 
@@ -12,11 +12,8 @@ function Login({}: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignIn = async (e) => {
-    e.preventDefault();
-    if (email && password) {
-      await SignIn(email, password);
-    }
+  const handleSignIn = async () => {
+    await signIn("credentials", { callbackUrl: "/", email, password });
   };
 
   return (
@@ -31,8 +28,9 @@ function Login({}: Props) {
             <span className="label-text">Email address</span>
           </div>
           <input
-            type="email"
             id="email"
+            type="email"
+            name="email" // Add name attribute for password managers
             autoComplete="email"
             required
             placeholder="email@domain.com"
@@ -47,7 +45,9 @@ function Login({}: Props) {
           </div>
           <input
             type="password"
+            name="password" // Add name attribute for password managers
             placeholder="Must have at least 6 characters"
+            autoComplete="current-password"
             required
             className="input input-bordered placeholder-gray-500"
             onChange={(e) => setPassword(e.target.value)}
