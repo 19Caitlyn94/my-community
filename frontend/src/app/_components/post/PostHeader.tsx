@@ -8,9 +8,13 @@ import {
   AVATAR_SIZE,
 } from "@/app/_components";
 
-type Props = {};
+type Props = {
+  userDisplayName: string;
+  postTypeSlug: string;
+  updatedDate: string;
+};
 
-const PostHeader = (props: Props) => {
+const PostHeader = ({ userDisplayName, postTypeSlug, updatedDate }: Props) => {
   return (
     <div className="flex mb-6">
       <Avatar
@@ -19,16 +23,14 @@ const PostHeader = (props: Props) => {
         // content={userProfileImageUrl}
       />
       <div className="flex flex-wrap">
-        <p className="mr-3 order-1 text-sm font-semibold">
-          Margerie Stewart-Baxter{" "}
-        </p>
+        <p className="mr-3 order-1 text-sm font-semibold">{userDisplayName}</p>
         <p className="w-full order-2 md:order-3 text-sm text-gray-400 mb-2">
-          Thursday, June 31 at 13:30
+          {updatedDate} {/* TODO: format date */}
         </p>
         <Badge
           className="order-3 md:order-2"
           badgeType={BADGE_TYPES.red}
-          title="Security Alert"
+          title={postTypeSlug}
         />
       </div>
 
