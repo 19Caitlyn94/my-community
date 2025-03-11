@@ -3,6 +3,12 @@ from rest_framework import serializers
 from users.serializers import UserSerializer
 
 
+class PostTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PostType
+        fields = ["slug", "name"]
+
+
 class PostSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     posttype = serializers.SlugRelatedField(read_only=True, slug_field="slug")

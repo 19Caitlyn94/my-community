@@ -1,7 +1,17 @@
 from rest_framework import viewsets, permissions
-from .models import Post
+from .models import Post, PostType
 from utils.viewsets import CreateListRetrieveUpdateDestroyViewSet
 from .serializers import PostSerializer
+from .serializers import PostTypeSerializer
+
+
+class PostTypesViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint lists all available posttype options
+    """
+
+    queryset = PostType.objects.all()
+    serializer_class = PostTypeSerializer
 
 
 class PostViewSet(CreateListRetrieveUpdateDestroyViewSet):
