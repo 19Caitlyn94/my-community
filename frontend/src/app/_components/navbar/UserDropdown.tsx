@@ -1,12 +1,14 @@
+"use client";
+
 import React from "react";
-import { getSession } from "@/auth";
+import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import { Avatar, AVATAR_SIZE } from "@/app/_components";
 
 type Props = {};
 
-const UserDropdown = async (props: Props) => {
-  const session = await getSession();
+const UserDropdown = (props: Props) => {
+  const { data: session } = useSession();
   const userDisplayName = `${session?.user?.first_name} ${session?.user?.last_name}`;
 
   return (
