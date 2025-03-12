@@ -1,5 +1,4 @@
 import React from "react";
-import { getSession } from "@/auth";
 import { Post } from "@/app/_components";
 
 type Props = {};
