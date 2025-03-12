@@ -17,6 +17,7 @@ type Props = {
   postTypeSlug: string;
   userFirstName: string;
   userLastName: string;
+  userProfileImageUrl: string;
   updatedDate: string;
   className?: string;
 };
@@ -28,18 +29,18 @@ const Post = ({
   userFirstName,
   userLastName,
   updatedDate,
+  userProfileImageUrl,
 }: Props) => {
   return (
     <CardWrapper className={`${className || ""}`}>
       <PostHeader
+        userProfileImageUrl={userProfileImageUrl}
         userDisplayName={`${userFirstName}${userLastName ? ` ${userLastName}` : ""}`}
         postTypeSlug={postTypeSlug}
         updatedDate={updatedDate}
       />
       {body && <p className="mb-6">{body}</p>}
-      <figure className="w-full">
-        <Image className="w-full h-full rounded-sm" src={post_1a} alt="post" />
-      </figure>
+      <Image className="w-full h-full rounded-lg" src={post_1a} alt="post" />
       <div className="divider"></div>
       <div className="flex flex-wrap items-center">
         <div className="flex -space-x-1 overflow-hidden w-full md:w-auto mb-4">
