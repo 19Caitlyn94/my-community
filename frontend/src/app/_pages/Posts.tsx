@@ -1,5 +1,6 @@
 import React from "react";
 import { Post } from "@/app/_components";
+import { formatDate } from "@/app/_utils/date";
 
 type Props = {};
 
@@ -14,7 +15,7 @@ const Posts = async ({}: Props) => {
           key={p.id}
           body={p.body}
           postTypeSlug={p.posttype}
-          updatedDate={p.updated_at}
+          updatedDate={formatDate(p.updated_at)}
           userFirstName={p.user.first_name}
           userLastName={p.user.last_name}
           className="mb-6"

@@ -31,7 +31,7 @@ const PostHeader = async ({
       <div className="flex flex-wrap">
         <p className="mr-3 order-1 text-sm font-semibold">{userDisplayName}</p>
         <p className="w-full order-2 md:order-3 text-sm text-gray-400 mb-2">
-          {updatedDate} {/* TODO: format date */}
+          {updatedDate}
         </p>
         <Badge
           className="order-3 md:order-2"
