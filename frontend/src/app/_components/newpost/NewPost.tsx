@@ -12,6 +12,9 @@ type Props = {};
 
 const NewPost = async (props: Props) => {
   const session = await getSession();
+  const greetingMessage = session?.user?.first_name
+    ? `Hey ${session?.user?.first_name}, what's new?`
+    : "What's new";
   const userDisplayName = `${session?.user?.first_name} ${session?.user?.last_name}`;
   const userAvatarContent = session?.user?.profile_image || userDisplayName;
   return (
@@ -22,7 +25,7 @@ const NewPost = async (props: Props) => {
           className="mr-5"
           content={userAvatarContent}
         />
-        <p className="text-sm text-gray-400">What's new?</p>
+        <p className="text-sm text-gray-400">{greetingMessage}</p>
         <Icon className="size-6 ml-auto" iconType={ICONS.menuKebab} />
       </div>
     </CardWrapper>
