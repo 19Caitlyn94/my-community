@@ -9,7 +9,10 @@ type Props = {};
 
 const UserDropdown = (props: Props) => {
   const { data: session } = useSession();
-  const userDisplayName = `${session?.user?.first_name} ${session?.user?.last_name}`;
+  const userDisplayName =
+    session?.user?.first_name && session?.user?.last_name
+      ? `${session?.user?.first_name} ${session?.user?.last_name}`
+      : null;
 
   return (
     <div className="dropdown dropdown-hover dropdown-end">

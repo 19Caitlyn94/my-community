@@ -1,5 +1,5 @@
 import React from "react";
-import { getInitials, stringToHslColor } from "@/app/_utils/functions";
+import { getInitials, stringToHslColor } from "@/app/_utils";
 
 type Props = {
   content: string;
