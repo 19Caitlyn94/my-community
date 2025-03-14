@@ -12,8 +12,12 @@ function Login({}: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignIn = async () => {
-    await signIn("credentials", { callbackUrl: "/", email, password });
+  const handleSignIn = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    // TODO validate email and password
+    e.preventDefault();
+    if (email && password) {
+      await signIn("credentials", { callbackUrl: "/", email, password });
+    }
   };
 
   return (

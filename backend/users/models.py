@@ -55,11 +55,5 @@ class User(AbstractUser):
     def display_name(self):
         return f"{self.first_name} {self.last_name}"
 
-    @property
-    def profile_image_url(self):
-        if self.profile_image:
-            return f"{settings.BASE_HOST}/media/{self.profile_image}"
-        return ""
-
     def __str__(self):
         return self.email

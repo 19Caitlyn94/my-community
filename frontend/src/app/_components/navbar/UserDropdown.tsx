@@ -1,14 +1,26 @@
+"use client";
+
 import React from "react";
+import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import { Avatar, AVATAR_SIZE } from "@/app/_components";
 
 type Props = {};
 
 const UserDropdown = (props: Props) => {
+  const { data: session } = useSession();
+  const userDisplayName =
+    session?.user?.first_name && session?.user?.last_name
+      ? `${session?.user?.first_name} ${session?.user?.last_name}`
+      : null;
+
   return (
     <div className="dropdown dropdown-hover dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-        <Avatar size={AVATAR_SIZE.md} />
+        <Avatar
+          size={AVATAR_SIZE.md}
+          content={session?.user?.profile_image || userDisplayName}
+        />
       </div>
       <ul
         tabIndex={0}

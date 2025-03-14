@@ -5,7 +5,7 @@ import AvatarInitials from "./AvatarInitials";
 
 type Props = {
   size: keyof typeof AVATAR_SIZE;
-  content?: string;
+  content?: string | null;
   className?: string;
 };
 

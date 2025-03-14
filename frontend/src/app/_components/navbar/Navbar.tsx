@@ -1,7 +1,6 @@
-"use client";
 import React from "react";
+import { auth } from "@/auth";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import MenuDropdown from "./MenuDropdown";
 import UserDropdown from "./UserDropdown";
 import Navlink from "./Navlink";
@@ -9,8 +8,9 @@ import { ICONS } from "../ui/icon/utils";
 
 type Props = {};
 
-const Navbar = (props: Props) => {
-  const { data: session, status } = useSession();
+const Navbar = async (props: Props) => {
+  const session = await auth();
+
   const isLoggedIn = !!session;
   return (
     <div className="z-10 navbar sticky top-0 bg-base-100">

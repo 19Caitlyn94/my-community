@@ -1,5 +1,5 @@
-import CredentialsProvider from "next-auth/providers/credentials";
-import { isDev } from "@/app/_utils/config";
+import Credentials from "next-auth/providers/credentials";
+import { BACKEND_URL, isDev } from "@/app/_utils";
 import { JWT } from "next-auth/jwt";
 import NextAuth from "next-auth"
 
@@ -11,23 +11,9 @@ const getCurrentEpochTime = () => {
   return Math.floor(new Date().getTime() / 1000);
 };
 
-const loginUser = async (email: string, password: string) => {
-  try {
-    const data = await fetch(`${process.env.NEXTAUTH_BACKEND_URL}auth/login/`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    })
-    return await data.json()
-  } catch (error) {
-    console.error('Error fetching user: ', error);
-  }
-  return null
-}
-
 export const registerUser = async (email: string, password: string) => {
   try {
-    const data = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}auth/register/`, {
+    const data = await fetch(`${BACKEND_URL}api/auth/register/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password1: password, password2: password }),
@@ -42,7 +28,7 @@ export const registerUser = async (email: string, password: string) => {
 
 const refreshUserToken = async (token: JWT) => {
   try {
-    const data = await fetch(`${process.env.NEXTAUTH_BACKEND_URL}auth/token/refresh/`, {
+    const data = await fetch(`${BACKEND_URL}api/auth/token/refresh/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -69,8 +55,7 @@ const SIGN_IN_HANDLERS = {
 const SIGN_IN_PROVIDERS = Object.keys(SIGN_IN_HANDLERS);
 
 const providers = [
-  CredentialsProvider({
-    name: "Credentials",
+  Credentials({
     credentials: {
       email: { label: "Email", type: "email" },
       password: { label: "Password", type: "password" },
@@ -78,7 +63,13 @@ const providers = [
     // The data returned from this function is passed forward as the
     // `user` variable to the signIn() and jwt() callback
     async authorize(credentials, req) {
-      return await loginUser(credentials?.email, credentials?.password)
+      const response = await fetch(`${BACKEND_URL}api/auth/login/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials),
+      })
+      if (!response.ok) return null
+      return (await response.json()) ?? null
     },
   }),
 ]
@@ -133,11 +124,3 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     signIn: '/login'
   }
 })
-
-
-/**
- * Helper function to get the session on the server without having to import the authOptions object every single time
- * @returns The session object or null
- */
-export const getSession = () => auth()
-
