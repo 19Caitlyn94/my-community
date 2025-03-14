@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Inter } from "next/font/google";
 import "./_styles/globals.css";
 
-import { getSession } from "@/auth";
+import { auth } from "@/auth";
 import type { Metadata } from "next";
 
 import Providers from "./Providers";
@@ -22,7 +22,7 @@ export default async function RootLayout({
 }: {
   children: ReactNode;
 }) {
-  const session = await getSession();
+  const session = await auth();
 
   return (
     <html lang="en">

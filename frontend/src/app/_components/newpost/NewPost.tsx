@@ -1,5 +1,5 @@
 import React from "react";
-import { getSession } from "@/auth";
+import { auth } from "@/auth";
 import {
   Avatar,
   AVATAR_SIZE,
@@ -11,7 +11,7 @@ import {
 type Props = {};
 
 const NewPost = async (props: Props) => {
-  const session = await getSession();
+  const session = await auth();
 
   const greetingMessage = session?.user?.first_name
     ? `Hey ${session?.user?.first_name}, what's new?`

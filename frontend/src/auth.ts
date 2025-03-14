@@ -124,11 +124,3 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     signIn: '/login'
   }
 })
-
-
-/**
- * Helper function to get the session on the server without having to import the authOptions object every single time
- * @returns The session object or null
- */
-export const getSession = () => auth()
-

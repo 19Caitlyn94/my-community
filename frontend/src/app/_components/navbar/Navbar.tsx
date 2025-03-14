@@ -1,5 +1,5 @@
 import React from "react";
-import { getSession } from "@/auth";
+import { auth } from "@/auth";
 import Link from "next/link";
 import MenuDropdown from "./MenuDropdown";
 import UserDropdown from "./UserDropdown";
@@ -9,7 +9,7 @@ import { ICONS } from "../ui/icon/utils";
 type Props = {};
 
 const Navbar = async (props: Props) => {
-  const session = await getSession();
+  const session = await auth();
 
   const isLoggedIn = !!session;
   return (
