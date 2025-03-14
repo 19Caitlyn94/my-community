@@ -1,12 +1,24 @@
 import React from "react";
 import { Post } from "@/app/_components";
-import { formatDate } from "@/app/_utils/date";
+import { BACKEND_URL, formatDate } from "@/app/_utils";
+
+interface PostData {
+  id: number;
+  body: string;
+  posttype: string;
+  updated_at: string;
+  user: {
+    first_name: string;
+    last_name: string;
+    profile_image: string;
+  };
+}
 
 type Props = {};
 
 const Posts = async ({}: Props) => {
-  const data = await fetch("http://localhost:8000/api/posts/");
-  const posts = await data.json();
+  const data = await fetch(`${BACKEND_URL}api/posts/`);
+  const posts: PostData[] = await data.json();
 
   return (
     <>
