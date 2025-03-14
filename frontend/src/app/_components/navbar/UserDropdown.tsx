@@ -16,7 +16,7 @@ const UserDropdown = (props: Props) => {
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
         <Avatar
           size={AVATAR_SIZE.md}
-          content={session?.user?.profile_image_url || userDisplayName}
+          content={session?.user?.profile_image || userDisplayName}
         />
       </div>
       <ul

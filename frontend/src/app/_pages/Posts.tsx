@@ -18,6 +18,7 @@ const Posts = async ({}: Props) => {
           updatedDate={formatDate(p.updated_at)}
           userFirstName={p.user.first_name}
           userLastName={p.user.last_name}
+          userProfileImageUrl={p.user.profile_image}
           className="mb-6"
         />
       ))}

@@ -7,6 +7,10 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
+    profile_image = serializers.ImageField(
+        max_length=255, use_url=True, allow_null=True, required=False
+    )
+
     class Meta:
         model = User
         fields = (
@@ -15,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "status",
-            "profile_image_url",
+            "profile_image",
             "bio",
         )
         read_only_fields = ("id", "status")

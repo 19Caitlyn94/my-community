@@ -13,13 +13,14 @@ type Props = {};
 const NewPost = async (props: Props) => {
   const session = await getSession();
   const userDisplayName = `${session?.user?.first_name} ${session?.user?.last_name}`;
+  const userAvatarContent = session?.user?.profile_image || userDisplayName;
   return (
     <CardWrapper className="mb-6">
       <div className="flex items-center	">
         <Avatar
           size={AVATAR_SIZE.sm}
           className="mr-5"
-          content={session?.user?.profile_image_url || userDisplayName}
+          content={userAvatarContent}
         />
         <p className="text-sm text-gray-400">What's new?</p>
         <Icon className="size-6 ml-auto" iconType={ICONS.menuKebab} />
