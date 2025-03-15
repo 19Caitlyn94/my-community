@@ -14,7 +14,7 @@ const ModalContainer = ({ children }: Props) => {
     >
       <div className="fixed inset-0 bg-gray-500/75" aria-hidden="true"></div>
 
-      <div className="relative max-h-screen max-w-screen overflow-auto rounded-lg bg-base-200 shadow-xl px-4 py-3">
+      <div className="relative max-h-screen max-w-screen overflow-auto rounded-lg bg-base-100 shadow-xl px-4 py-3">
         {children}
       </div>
     </div>
