@@ -19,3 +19,5 @@ export { AVATAR_SIZE } from './ui/avatar/Avatar'
 
 export { default as Badge } from './ui/badge/Badge'
 export { BADGE_TYPES } from './ui/badge/Badge'
+
+export { default as ModalWrapper } from './ui/modal/ModalWrapper'
