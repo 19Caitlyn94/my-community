@@ -1,62 +1,111 @@
 "use client";
 
-import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { registerUser } from "@/auth";
 import Link from "next/link";
 import { Icon, ICONS } from "@/app/_components";
+import { useForm } from "react-hook-form";
+import { errorMessage, validationPattern } from "@/app/_utils";
 
 type Props = {};
 
-function JoinACommunity({}: Props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  // const [communityCode, setCommunityCode] = useState("");
+type FormValues = {
+  email: string;
+  password: string;
+};
 
-  const handleRegistration = async () => {
-    let user = await registerUser(email, password);
+function JoinACommunity({}: Props) {
+  const {
+    register,
+    handleSubmit,
+    clearErrors,
+    formState: { errors },
+  } = useForm<FormValues>({
+    mode: "onBlur",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleRegistration = async (data: FormValues) => {
+    let user = await registerUser(data.email, data.password);
     if (user) {
       await signIn("credentials", {
         callbackUrl: "/overview/karen-score",
-        email,
-        password,
+        email: data.email,
+        password: data.password,
       });
     }
   };
 
+  // const [communityCode, setCommunityCode] = useState("");
   return (
     <>
-      <h1 className="text-2xl font-bold ">Join a community</h1>
+      <h1 className="text-2xl font-bold">Join a community</h1>
 
-      <form className="space-y-5" action="#" method="POST">
-        <label className="form-control w-full max-w-sm">
-          <div className="label">
-            <span className="label-text">Email address</span>
-          </div>
+      <form
+        className="relative w-full max-w-sm text-left"
+        onSubmit={handleSubmit(handleRegistration)}
+      >
+        <div className="mb-6">
+          <label className="form-control w-full label-text mb-2">
+            Email address
+          </label>
           <input
             type="email"
             id="email"
             autoComplete="email"
             required
             placeholder="email@domain.com"
-            className="input input-bordered placeholder-gray-500"
-            onChange={(e) => setEmail(e.target.value)}
+            className={`input w-full input-bordered placeholder-gray-500 ${
+              errors.email ? "border-rose-700" : "border-gray-700"
+            }`}
+            onFocus={() => {
+              clearErrors("email");
+            }}
+            {...register("email", {
+              required: errorMessage.required,
+              pattern: {
+                value: validationPattern.email,
+                message: errorMessage.email,
+              },
+            })}
           />
-        </label>
+          {errors.email && (
+            <p className="absolute text-xs text-rose-500 mt-1">
+              {errors.email.message}
+            </p>
+          )}
+        </div>
 
-        <label className="form-control w-full max-w-sm">
-          <div className="label">
-            <span className="label-text">Password</span>
-          </div>
+        <div className="mb-10">
+          <label className="form-control w-full label-text mb-2">
+            Password
+          </label>
           <input
+            className={`input w-full input-bordered placeholder-gray-500 ${
+              errors.password ? "border-rose-700" : "border-gray-700"
+            }`}
             type="password"
-            placeholder="Must have at least 6 characters"
-            required
-            className="input input-bordered placeholder-gray-500"
-            onChange={(e) => setPassword(e.target.value)}
+            placeholder="********"
+            onFocus={() => {
+              clearErrors("password");
+            }}
+            {...register("password", {
+              required: errorMessage.required,
+              pattern: {
+                value: validationPattern.password,
+                message: errorMessage.password,
+              },
+            })}
           />
-        </label>
-
+          {errors.password && (
+            <p className="absolute text-xs text-rose-500 mt-1">
+              {errors.password.message}
+            </p>
+          )}
+        </div>
         {/* TODO Add community code to registration step */}
         {/* <label className="form-control w-full max-w-sm">
           <div className="label">
@@ -93,7 +142,7 @@ function JoinACommunity({}: Props) {
 
         <div className="divider">OR</div>
 
-        <label className="input input-bordered flex items-center gap-2">
+        <label className="input input-bordered flex items-center gap-2 mb-5">
           <input type="text" className="grow" placeholder="Search" />
           <Icon
             className="h-4 w-4 opacity-70"
@@ -102,11 +151,7 @@ function JoinACommunity({}: Props) {
           />
         </label>
 
-        <button
-          type="button"
-          className="btn btn-primary btn-block"
-          onClick={handleRegistration}
-        >
+        <button type="submit" className="btn btn-primary btn-block">
           Join (request to join)
         </button>
       </form>

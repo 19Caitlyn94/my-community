@@ -1,23 +1,34 @@
 "use client";
 
-import React, { useState } from "react";
-
-import { signIn } from "next-auth/react";
-
+import React from "react";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
+import { useForm } from "react-hook-form";
+import { errorMessage, validationPattern } from "@/app/_utils";
 
 type Props = {};
 
-function Login({}: Props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+type FormValues = {
+  email: string;
+  password: string;
+};
 
-  const handleSignIn = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    // TODO validate email and password
-    e.preventDefault();
-    if (email && password) {
-      await signIn("credentials", { callbackUrl: "/", email, password });
-    }
+function Login({}: Props) {
+  const {
+    register,
+    handleSubmit,
+    clearErrors,
+    formState: { errors },
+  } = useForm<FormValues>({
+    mode: "onBlur",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleSignIn = async (data: FormValues) => {
+    await signIn("credentials", { callbackUrl: "/", ...data });
   };
 
   return (
@@ -26,45 +37,67 @@ function Login({}: Props) {
         Log in to your account
       </h1>
 
-      <form className="w-full max-w-sm space-y-5" action="#" method="POST">
-        <label className="form-control w-full max-w-sm">
-          <div className="label">
-            <span className="label-text">Email address</span>
-          </div>
+      <form
+        className="relative w-full max-w-sm text-left"
+        onSubmit={handleSubmit(handleSignIn)}
+      >
+        <div className="mb-6">
+          <label className="form-control w-full label-text mb-2">
+            Email address
+          </label>
           <input
-            id="email"
-            type="email"
-            name="email" // Add name attribute for password managers
-            autoComplete="email"
-            required
+            className={`input w-full input-bordered placeholder-gray-500 ${
+              errors.email ? "border-rose-700" : "border-gray-700"
+            }`}
             placeholder="email@domain.com"
-            className="input input-bordered placeholder-gray-500"
-            onChange={(e) => setEmail(e.target.value)}
+            onFocus={() => {
+              clearErrors("email");
+            }}
+            {...register("email", {
+              required: errorMessage.required,
+              pattern: {
+                value: validationPattern.email,
+                message: errorMessage.email,
+              },
+            })}
           />
-        </label>
-
-        <label className="form-control w-full max-w-sm">
-          <div className="label">
-            <span className="label-text">Password</span>
-          </div>
+          {errors.email && (
+            <p className="absolute text-xs text-rose-500 mt-1">
+              {errors.email.message}
+            </p>
+          )}
+        </div>
+        <div className="mb-10">
+          <label className="form-control w-full label-text mb-2">
+            Password
+          </label>
           <input
+            className={`input w-full input-bordered placeholder-gray-500 ${
+              errors.password ? "border-rose-700" : "border-gray-700"
+            }`}
+            placeholder="********"
             type="password"
-            name="password" // Add name attribute for password managers
-            placeholder="Must have at least 6 characters"
-            autoComplete="current-password"
-            required
-            className="input input-bordered placeholder-gray-500"
-            onChange={(e) => setPassword(e.target.value)}
+            onFocus={() => {
+              clearErrors("password");
+            }}
+            {...register("password", {
+              required: errorMessage.required,
+            })}
           />
-        </label>
-
-        <button
-          type="button"
+          {errors.password && (
+            <p
+              className={`absolute text-xs ${
+                errors.password.message ? "text-rose-500" : "text-gray-500"
+              } mt-1 w-full`}
+            >
+              {errors.password.message}
+            </p>
+          )}
+        </div>
+        <input
           className="btn btn-primary btn-block md:btn-auto"
-          onClick={handleSignIn}
-        >
-          Log in
-        </button>
+          type="submit"
+        />
       </form>
 
       <p className="mt-10 text-center text-sm text-gray-500">
