@@ -6,9 +6,9 @@ import { errorMessage } from "@/app/_utils";
 type Props = {};
 
 type FormValues = {
-  postContent: string;
-  postType: string;
-  image?: FileList;
+  body?: string;
+  posttype?: string;
+  media?: FileList;
 };
 
 const NewPostForm = (props: Props) => {
@@ -17,7 +17,14 @@ const NewPostForm = (props: Props) => {
     handleSubmit,
     clearErrors,
     formState: { errors },
-  } = useForm<FormValues>({ mode: "onChange" });
+  } = useForm<FormValues>({
+    defaultValues: {
+      body: "",
+      posttype: "",
+      media: undefined,
+    },
+    mode: "onChange",
+  });
 
   const handleCreatePost = (data: FormValues) => {
     console.log(data);
@@ -32,15 +39,15 @@ const NewPostForm = (props: Props) => {
 
         <textarea
           className={`w-full h-24 border border-gray-300 rounded-md p-2 bg-base-100 placeholder:text-gray-500 ${
-            errors.postContent
+            errors.body
               ? "border-rose-500 focus:border-rose-500"
               : "border-gray-300 focus:border-gray-300"
           } `}
           placeholder="I'd like to share..."
           onFocus={() => {
-            clearErrors("postContent");
+            clearErrors("body");
           }}
-          {...register("postContent", {
+          {...register("body", {
             required: true,
             maxLength: {
               value: 500,
@@ -48,9 +55,10 @@ const NewPostForm = (props: Props) => {
             },
           })}
         ></textarea>
-        {errors.postContent && (
-          <p className=" text-xs text-rose-500 mt-1">
-            {errors.postContent.message}
+
+        {errors.body && (
+          <p className="absolute text-xs text-rose-500 mt-1">
+            {errors.body.message}
           </p>
         )}
       </div>
@@ -60,7 +68,7 @@ const NewPostForm = (props: Props) => {
         </label>
         <select
           className="w-full border border-gray-300 rounded-md p-2 bg-base-100"
-          {...register("postType", { required: errorMessage.selectOne })}
+          {...register("posttype", { required: errorMessage.selectOne })}
         >
           <option className="text-gray-500" value="">
             Select a post type
@@ -70,9 +78,9 @@ const NewPostForm = (props: Props) => {
           <option value="recommendation">Ask for a recommendation</option>
           <option value="more">Other...</option>
         </select>
-        {errors.postType && (
+        {errors.posttype && (
           <p className="absolute text-xs text-rose-500 mt-1">
-            {errors.postType.message}
+            {errors.posttype.message}
           </p>
         )}
       </div>
@@ -104,7 +112,7 @@ const NewPostForm = (props: Props) => {
                 id="file-upload"
                 type="file"
                 className="sr-only"
-                {...register("image")}
+                {...register("media")}
               />
             </label>
             <p className="pl-1">or drag and drop</p>
