@@ -8,7 +8,7 @@ class PostTypeAdmin(admin.ModelAdmin):
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ["__str__", "status", "posttype", "user"]
+    list_display = ["__str__", "status", "posttype", "user", "community"]
     readonly_fields = ["deleted_at", "created_at", "updated_at"]
 
 

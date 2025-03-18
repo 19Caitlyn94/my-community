@@ -1,4 +1,5 @@
 import React from "react";
+import { auth } from "@/auth";
 import { Post } from "@/app/_components";
 import { BACKEND_URL, formatDate } from "@/app/_utils";
 
@@ -17,7 +18,19 @@ interface PostData {
 type Props = {};
 
 const Posts = async ({}: Props) => {
-  const data = await fetch(`${BACKEND_URL}api/posts/`);
+  const session = await auth();
+  console.log(session);
+
+  const data = await fetch(
+    // TODO: get community id from selection in UserDropdown
+    `${BACKEND_URL}api/posts?community_id=${session?.user.communities[0].id}`,
+    {
+      headers: {
+        method: "GET",
+        Authorization: `Bearer ${session?.access_token}`,
+      },
+    }
+  );
   const posts: PostData[] = await data.json();
 
   return (
