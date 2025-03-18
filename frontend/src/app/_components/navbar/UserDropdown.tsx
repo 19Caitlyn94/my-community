@@ -5,6 +5,11 @@ import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import { Avatar, AVATAR_SIZE } from "@/app/_components";
 
+type CommunityType = {
+  id: string;
+  name: string;
+};
+
 type Props = {};
 
 const UserDropdown = (props: Props) => {
@@ -13,6 +18,7 @@ const UserDropdown = (props: Props) => {
     session?.user?.first_name && session?.user?.last_name
       ? `${session?.user?.first_name} ${session?.user?.last_name}`
       : null;
+  const userCommunities = session?.user?.communities as CommunityType[];
 
   return (
     <div className="dropdown dropdown-hover dropdown-end">
@@ -26,6 +32,12 @@ const UserDropdown = (props: Props) => {
         tabIndex={0}
         className="menu dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow"
       >
+        {userCommunities.map((community) => (
+          <li key={community.id}>
+            <a>{community.name}</a>
+          </li>
+        ))}
+        <div className="divider"></div>
         <li>
           <a className="justify-between">
             Notifications

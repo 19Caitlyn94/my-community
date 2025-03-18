@@ -19,7 +19,6 @@ type Props = {};
 
 const Posts = async ({}: Props) => {
   const session = await auth();
-  console.log(session);
 
   const data = await fetch(
     // TODO: get community id from selection in UserDropdown
