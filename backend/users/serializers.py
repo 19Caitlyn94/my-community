@@ -10,6 +10,13 @@ class UserSerializer(serializers.ModelSerializer):
     profile_image = serializers.ImageField(
         max_length=255, use_url=True, allow_null=True, required=False
     )
+    communities = serializers.SerializerMethodField()
+
+    def get_communities(self, obj):
+        return [
+            {"id": community.id, "name": community.name}
+            for community in obj.joined_communities.all()
+        ]
 
     class Meta:
         model = User
@@ -21,6 +28,7 @@ class UserSerializer(serializers.ModelSerializer):
             "status",
             "profile_image",
             "bio",
+            "communities",
         )
         read_only_fields = ("id", "status")
 
