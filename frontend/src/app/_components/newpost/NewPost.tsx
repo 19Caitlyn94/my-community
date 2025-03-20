@@ -9,6 +9,7 @@ import {
 } from "@/app/_components";
 import ModalWrapper from "../ui/modal/ModalWrapper";
 import NewPostForm from "./NewPostForm";
+
 type Props = {};
 
 const NewPost = async (props: Props) => {

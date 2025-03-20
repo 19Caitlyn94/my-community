@@ -3,7 +3,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { errorMessage } from "@/app/_utils";
-type Props = {};
 
 type FormValues = {
   body?: string;
@@ -11,7 +10,7 @@ type FormValues = {
   media?: FileList;
 };
 
-const NewPostForm = (props: Props) => {
+const NewPostForm = () => {
   const {
     register,
     handleSubmit,
@@ -121,7 +120,6 @@ const NewPostForm = (props: Props) => {
         </div>
       </div>
       <div className="flex justify-end gap-2">
-        <button className="btn btn-md">Cancel</button>
         <button type="submit" className="btn btn-md bg-primary text-white">
           Post
         </button>

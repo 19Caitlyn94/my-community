@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, ReactNode } from "react";
 import ModalContainer from "./ModalContainer";
 import { ICONS, Icon } from "@/app/_components";
 
 type Props = {
-  children: React.ReactNode;
-  modalContent: React.ReactNode;
+  children: ReactNode;
+  modalContent: ReactNode;
 };
 
 const ModalWrapper = ({ children, modalContent }: Props) => {
