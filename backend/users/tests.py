@@ -107,6 +107,7 @@ class UserSerializerTests(TestCase):
             "status",
             "profile_image",
             "bio",
+            "communities",
         }
         self.assertEqual(set(serializer.data.keys()), expected_fields)
 
