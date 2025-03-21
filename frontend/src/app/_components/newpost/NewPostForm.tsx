@@ -2,8 +2,9 @@
 
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
 import { errorMessage } from "@/app/_utils";
-
+import { BACKEND_URL } from "@/app/_utils/config";
 type FormValues = {
   body?: string;
   posttype?: string;
@@ -25,8 +26,49 @@ const NewPostForm = () => {
     mode: "onChange",
   });
 
-  const handleCreatePost = (data: FormValues) => {
-    console.log(data);
+  const { data: session } = useSession();
+  const handleCreatePost = async (data: FormValues) => {
+    try {
+      // TODO: Get the community id that the user is posting to
+      const communityId = session?.user?.communities?.[0]?.id;
+
+      if (!communityId) {
+        console.error("No community ID available");
+        return;
+      }
+
+      const payload = {
+        body: data.body,
+        posttype: data.posttype,
+        media: data.media,
+        community_id: communityId,
+        user_id: session?.user?.id,
+      };
+
+      console.log("payload", payload);
+
+      const response = await fetch(
+        `${BACKEND_URL}api/posts/?community_id=${communityId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.access_token}`,
+          },
+          method: "POST",
+          body: JSON.stringify(payload),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Failed to create post:", errorData);
+        return;
+      }
+
+      console.log("Post created successfully");
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
   };
 
   return (
@@ -72,9 +114,10 @@ const NewPostForm = () => {
           <option className="text-gray-500" value="">
             Select a post type
           </option>
-          <option value="security">Security update</option>
-          <option value="fun">Just for fun</option>
+          <option value="security-alert">Security alert</option>
+          <option value="just-for-fun">Just for fun</option>
           <option value="recommendation">Ask for a recommendation</option>
+          <option value="lost-pet">Lost pet</option>
           <option value="more">Other...</option>
         </select>
         {errors.posttype && (

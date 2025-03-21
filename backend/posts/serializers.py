@@ -1,20 +1,24 @@
 from .models import Post, PostType
-from rest_framework import serializers
-from users.serializers import UserSerializer
+from rest_framework.serializers import (
+    ModelSerializer,
+    PrimaryKeyRelatedField,
+    SlugRelatedField,
+    DateTimeField,
+    CurrentUserDefault,
+)
+from users.serializers import UserPostSerializer
+from communities.models import Community
 
 
-class PostTypeSerializer(serializers.ModelSerializer):
+class PostTypeSerializer(ModelSerializer):
     class Meta:
         model = PostType
         fields = ["slug", "name"]
 
 
-class PostSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
-    posttype = serializers.SlugRelatedField(read_only=True, slug_field="slug")
-    updated_at = serializers.DateTimeField(
-        read_only=True
-    )  # format="%A, %B %e at %H:%M" Thursday, June 31 at 13:30
+class PostSerializer(ModelSerializer):
+    user = UserPostSerializer(read_only=True)
+    posttype = SlugRelatedField(slug_field="slug", queryset=PostType.objects.all())
 
     class Meta:
         model = Post
@@ -23,5 +27,11 @@ class PostSerializer(serializers.ModelSerializer):
             "body",
             "posttype",
             "user",
+            "community",
+            "updated_at",
+        ]
+        read_only_fields = [
+            "user",
+            "community",
             "updated_at",
         ]
