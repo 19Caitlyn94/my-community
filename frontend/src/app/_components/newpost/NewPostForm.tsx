@@ -42,7 +42,7 @@ const NewPostForm = () => {
         posttype: data.posttype,
         media: data.media,
         community_id: communityId,
-        user_id: session?.user?.id,
+        user: session?.user?.id,
       };
 
       console.log("payload", payload);
@@ -75,6 +75,29 @@ const NewPostForm = () => {
     <form className="relative w-full" onSubmit={handleSubmit(handleCreatePost)}>
       <div className="mb-5">
         <label className="form-control w-full label-text mb-2">
+          What kind of post is this?
+        </label>
+        <select
+          className="w-full border border-gray-300 rounded-md p-2 bg-base-100"
+          {...register("posttype", { required: errorMessage.selectOne })}
+        >
+          <option className="text-gray-500" value="">
+            Select a post type
+          </option>
+          <option value="security-alert">Security alert</option>
+          <option value="just-for-fun">Just for fun</option>
+          <option value="recommendation">Ask for a recommendation</option>
+          <option value="lost-pet">Lost pet</option>
+          <option value="more">Other...</option>
+        </select>
+        {errors.posttype && (
+          <p className="absolute text-xs text-rose-500 mt-1">
+            {errors.posttype.message}
+          </p>
+        )}
+      </div>
+      <div className="mb-5">
+        <label className="form-control w-full label-text mb-2">
           What's on your mind?
         </label>
 
@@ -103,29 +126,7 @@ const NewPostForm = () => {
           </p>
         )}
       </div>
-      <div className="mb-5">
-        <label className="form-control w-full label-text mb-2">
-          What kind of post is this?
-        </label>
-        <select
-          className="w-full border border-gray-300 rounded-md p-2 bg-base-100"
-          {...register("posttype", { required: errorMessage.selectOne })}
-        >
-          <option className="text-gray-500" value="">
-            Select a post type
-          </option>
-          <option value="security-alert">Security alert</option>
-          <option value="just-for-fun">Just for fun</option>
-          <option value="recommendation">Ask for a recommendation</option>
-          <option value="lost-pet">Lost pet</option>
-          <option value="more">Other...</option>
-        </select>
-        {errors.posttype && (
-          <p className="absolute text-xs text-rose-500 mt-1">
-            {errors.posttype.message}
-          </p>
-        )}
-      </div>
+      {/* TODO: Add filelist upload 
       <label className="form-control w-full label-text mb-2">
         Add an image or video
       </label>
@@ -161,7 +162,7 @@ const NewPostForm = () => {
           </div>
           <p className="text-xs/5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
         </div>
-      </div>
+      </div> */}
       <div className="flex justify-end gap-2">
         <button type="submit" className="btn btn-md bg-primary text-white">
           Post
