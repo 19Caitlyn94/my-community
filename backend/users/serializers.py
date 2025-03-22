@@ -4,8 +4,10 @@ from rest_framework.serializers import (
     CharField,
     ImageField,
 )
+from rest_framework.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from dj_rest_auth.registration.serializers import RegisterSerializer
+from communities.models import Community
 
 
 User = get_user_model()
@@ -53,12 +55,22 @@ class UserSerializer(ModelSerializer):
 
 class CustomRegisterSerializer(RegisterSerializer):
     username = None  # Remove username field
-    first_name = CharField(required=False)
-    last_name = CharField(required=False)
+    community_code = CharField(required=False)
 
     def save(self, request):
+        community_code = self.validated_data.get("community_code", "")
+
+        # Only proceed if registration code exists and is valid
+        if not community_code:
+            raise ValidationError("Registration code is required")
+
+        community = Community.objects.filter(registration_code=community_code).first()
+        if not community:
+            raise ValidationError("Invalid registration code")
+
+        # Create and save the user
         user = super().save(request)
-        user.first_name = self.validated_data.get("first_name", "")
-        user.last_name = self.validated_data.get("last_name", "")
+        user.joined_communities.add(community)
         user.save()
+
         return user
