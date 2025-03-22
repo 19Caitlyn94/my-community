@@ -11,12 +11,12 @@ const getCurrentEpochTime = () => {
   return Math.floor(new Date().getTime() / 1000);
 };
 
-export const registerUser = async (email: string, password: string) => {
+export const registerUser = async (email: string, password: string, community_code: string) => {
   try {
     const data = await fetch(`${BACKEND_URL}api/auth/register/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password1: password, password2: password }),
+      body: JSON.stringify({ email, password1: password, password2: password, community_code: community_code }),
     })
     const user = await data.json()
     return user

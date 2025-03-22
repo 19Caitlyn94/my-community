@@ -10,9 +10,10 @@ class CommunityAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
         "is_active",
+        "registration_code",
     ]
     ordering = ["updated_at"]
-    readonly_fields = ["created_at", "updated_at"]
+    readonly_fields = ["created_at", "updated_at", "registration_code"]
 
 
 class CommunityUserAdmin(admin.ModelAdmin):

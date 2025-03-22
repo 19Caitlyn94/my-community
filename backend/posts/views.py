@@ -4,6 +4,7 @@ from utils.viewsets import CreateListRetrieveUpdateDestroyViewSet
 from .serializers import PostSerializer
 from .serializers import PostTypeSerializer
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from communities.models import Community
 from .permissions import IsCommunityMember
 
 
@@ -18,14 +19,15 @@ class PostTypesViewSet(viewsets.ReadOnlyModelViewSet):
 
 class PostViewSet(CreateListRetrieveUpdateDestroyViewSet):
     serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated & IsCommunityMember]
 
-    def get_permissions(self):
-        print("self.action", self.action)
-        if self.action == "list":
-            permission_classes = [IsAuthenticated & IsCommunityMember]
-        # else:
-        #     permission_classes = [IsAuthenticatedOrReadOnly]
-        return [permission() for permission in permission_classes]
+    # TODO: check isAuthor on update, partial update and delete.
+    # def get_permissions(self):
+    #     if self.action == "list":
+    #         permission_classes = [IsAuthenticated & IsCommunityMember]
+    #     # else:
+    #     #     permission_classes = [IsAuthenticated & IsCommunityMember]
+    #     return [permission() for permission in permission_classes]
 
     def get_queryset(self):
         queryset = []
@@ -39,3 +41,10 @@ class PostViewSet(CreateListRetrieveUpdateDestroyViewSet):
             )
 
         return queryset
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        # TODO: check this implementation
+        community = Community.objects.get(id=self.request.data.get("community_id"))
+
+        serializer.save(user=user, community=community)
