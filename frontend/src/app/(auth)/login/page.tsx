@@ -3,8 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { useForm } from "react-hook-form";
 import { errorMessage, validationPattern } from "@/app/_utils";
+import { Form, InputText, FormSubmitButton } from "@/app/_components";
 
 type Props = {};
 
@@ -14,19 +14,6 @@ type FormValues = {
 };
 
 function Login({}: Props) {
-  const {
-    register,
-    handleSubmit,
-    clearErrors,
-    formState: { errors },
-  } = useForm<FormValues>({
-    mode: "onBlur",
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
   const handleSignIn = async (data: FormValues) => {
     await signIn("credentials", { callbackUrl: "/", ...data });
   };
@@ -37,68 +24,54 @@ function Login({}: Props) {
         Log in to your account
       </h1>
 
-      <form
+      <Form<FormValues>
         className="relative w-full max-w-sm text-left"
-        onSubmit={handleSubmit(handleSignIn)}
+        onSubmit={handleSignIn}
+        defaultValues={{
+          email: "",
+          password: "",
+        }}
+        formOptions={{
+          mode: "onBlur",
+        }}
       >
-        <div className="mb-6">
-          <label className="form-control w-full label-text mb-2">
-            Email address
-          </label>
-          <input
-            className={`input w-full input-bordered placeholder-gray-500 ${
-              errors.email ? "border-rose-700" : "border-gray-700"
-            }`}
-            placeholder="email@domain.com"
-            onFocus={() => {
-              clearErrors("email");
-            }}
-            {...register("email", {
-              required: errorMessage.required,
-              pattern: {
-                value: validationPattern.email,
-                message: errorMessage.email,
-              },
-            })}
-          />
-          {errors.email && (
-            <p className="absolute text-xs text-rose-500 mt-1">
-              {errors.email.message}
-            </p>
-          )}
-        </div>
-        <div className="mb-10">
-          <label className="form-control w-full label-text mb-2">
-            Password
-          </label>
-          <input
-            className={`input w-full input-bordered placeholder-gray-500 ${
-              errors.password ? "border-rose-700" : "border-gray-700"
-            }`}
-            placeholder="********"
-            type="password"
-            onFocus={() => {
-              clearErrors("password");
-            }}
-            {...register("password", {
-              required: errorMessage.required,
-            })}
-          />
-          {errors.password && (
-            <p
-              className={`absolute text-xs ${
-                errors.password.message ? "text-rose-500" : "text-gray-500"
-              } mt-1 w-full`}
-            >
-              {errors.password.message}
-            </p>
-          )}
-        </div>
-        <input
-          className="btn btn-primary btn-block md:btn-auto"
-          type="submit"
-        />
-      </form>
+        {({ register, formState: { errors }, clearErrors }) => (
+          <>
+            <InputText
+              label="Email address"
+              name="email"
+              placeholder="email@domain.com"
+              register={register}
+              errors={errors}
+              clearErrors={clearErrors}
+              required
+              pattern={validationPattern.email}
+              patternMessage={errorMessage.email}
+              className={errors.email ? "border-rose-700" : "border-gray-700"}
+            />
+
+            <InputText
+              label="Password"
+              name="password"
+              type="password"
+              placeholder="********"
+              register={register}
+              errors={errors}
+              clearErrors={clearErrors}
+              required
+              className={
+                errors.password ? "border-rose-700" : "border-gray-700"
+              }
+            />
+
+            <div className="mb-10"></div>
+            <FormSubmitButton
+              label="Log in"
+              className="btn btn-primary btn-block md:btn-auto"
+            />
+          </>
+        )}
+      </Form>
 
       <p className="mt-10 text-center text-sm text-gray-500">
         Not a member?{" "}
