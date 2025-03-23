@@ -47,7 +47,7 @@ export const InputTextArea: React.FC<InputTextAreaProps> = ({
         className={`w-full h-24 border border-gray-300 rounded-md p-2 bg-base-100 placeholder:text-gray-500 ${
           errors[name]
             ? "border-rose-500 focus:border-rose-500"
-            : "border-gray-300 focus:border-gray-300"
+            : "border-gray-700 focus:border-gray-700"
         }`}
         placeholder={placeholder}
         onFocus={() => clearErrors(name)}
