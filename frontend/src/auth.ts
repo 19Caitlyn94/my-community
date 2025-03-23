@@ -28,23 +28,38 @@ export const registerUser = async (email: string, password: string, community_co
 
 const refreshUserToken = async (token: JWT) => {
   try {
-    const data = await fetch(`${BACKEND_URL}api/auth/token/refresh/`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const data = await fetch(`${BACKEND_URL}api/auth/refresh/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
-        refresh: token["refresh_token"],
+        refresh: token.refresh_token,
       }),
     })
+
     const res = await data.json()
-    token["access_token"] = res.data.access;
-    token["refresh_token"] = res.data.refresh;
-    token["ref"] = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;
-    return token
+
+    // Check if res.data exists before accessing properties
+    if (res.data) {
+      token["access_token"] = res.data.access;
+      token["refresh_token"] = res.data.refresh;
+      token["ref"] = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;
+    } else {
+      // Handle the case where data doesn't exist - token refresh failed
+      console.error("Token refresh failed:", res);
+      // Clear tokens to force re-login
+      delete token.access_token;
+      delete token.refresh_token;
+    }
+    return token;
+  } catch (error) {
+    console.error("Error refreshing token:", error);
+    // On error, clear tokens to force re-login
+    delete token.access_token;
+    delete token.refresh_token;
+    return token;
   }
-  catch (error) {
-    console.error('Error refreshing user token: ', error);
-  }
-  return null
 }
 
 const SIGN_IN_HANDLERS = {
