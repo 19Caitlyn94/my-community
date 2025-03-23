@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { auth } from "@/auth";
 import { Post } from "@/app/_components";
 import { BACKEND_URL, formatDate } from "@/app/_utils";
@@ -20,33 +20,43 @@ type Props = {};
 const Posts = async ({}: Props) => {
   const session = await auth();
 
-  const data = await fetch(
-    // TODO: get community id from selection in UserDropdown
-    `${BACKEND_URL}api/posts?community_id=${session?.user.communities[0].id}`,
-    {
-      headers: {
-        method: "GET",
-        Authorization: `Bearer ${session?.access_token}`,
-      },
+  const getPosts = async () => {
+    try {
+      const response = await fetch(
+        `${BACKEND_URL}api/posts/?community_id=${session?.user.communities[0].id}`,
+        {
+          headers: {
+            method: "GET",
+            Authorization: `Bearer ${session?.access_token}`,
+          },
+        }
+      );
+      const data: PostData[] = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+      return [];
     }
-  );
-  const posts: PostData[] = await data.json();
+  };
 
+  const posts = await getPosts();
   return (
-    <>
-      {posts.map((p) => (
-        <Post
-          key={p.id}
-          body={p.body}
-          postTypeSlug={p.posttype}
-          updatedDate={formatDate(p.updated_at)}
-          userFirstName={p.user.first_name}
-          userLastName={p.user.last_name}
-          userProfileImageUrl={p.user.profile_image}
-          className="mb-6"
-        />
-      ))}
-    </>
+    <Suspense fallback={<div>Loading...</div>}>
+      <>
+        {posts.results.map((p) => (
+          <Post
+            key={p.id}
+            body={p.body}
+            postTypeSlug={p.posttype}
+            updatedDate={formatDate(p.updated_at)}
+            userFirstName={p.user.first_name}
+            userLastName={p.user.last_name}
+            userProfileImageUrl={p.user.profile_image}
+            className="mb-6"
+          />
+        ))}
+      </>
+    </Suspense>
   );
 };
 

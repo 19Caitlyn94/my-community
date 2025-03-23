@@ -30,7 +30,7 @@ function JoinACommunity({}: Props) {
     );
     if (user) {
       await signIn("credentials", {
-        callbackUrl: "/overview/karen-score",
+        callbackUrl: "/register/join-a-community/details",
         email: data.email,
         password: data.password,
       });

@@ -50,7 +50,7 @@ class UserSerializer(ModelSerializer):
             "bio",
             "communities",
         )
-        read_only_fields = ("id", "status")
+        read_only_fields = ("id", "status", "communities", "status")
 
 
 class CustomRegisterSerializer(RegisterSerializer):
