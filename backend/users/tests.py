@@ -4,6 +4,7 @@ from rest_framework.test import APITestCase
 from rest_framework import status
 from django.contrib.auth import get_user_model
 from .factories import UserFactory
+from communities.factories import CommunityFactory
 
 User = get_user_model()
 
@@ -41,10 +42,12 @@ class UserAPITests(APITestCase):
     def setUp(self):
         self.register_url = reverse("rest_register")
         self.login_url = reverse("rest_login")
+        self.community = CommunityFactory()
         self.user_data = {
             "email": "test1@example.com",
             "password1": "testpass123",
             "password2": "testpass123",
+            "community_code": self.community.registration_code,
             "first_name": "Test",
             "last_name": "User",
         }

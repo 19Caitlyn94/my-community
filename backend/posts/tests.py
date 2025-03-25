@@ -88,7 +88,7 @@ class PostAPITests(TestCase):
 
         response = self.client.get(f"/api/posts/?community_id={self.community.id}")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data["results"]), 2)
 
     def test_list_posts_unauthenticated(self):
         """Test listing posts fails for unauthenticated user"""
