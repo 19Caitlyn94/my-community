@@ -1,11 +1,31 @@
+"use client";
+
 import React from "react";
-import { Avatar, AVATAR_SIZE, Icon, ICONS } from "@/app/_components";
-import { ModalWrapper } from "@/app/_components";
+import {
+  Avatar,
+  AVATAR_SIZE,
+  Icon,
+  ICONS,
+  ModalWrapper,
+  Form,
+  InputText,
+  InputTextArea,
+  InputSelect,
+  FormSubmitButton,
+} from "@/app/_components";
+import { errorMessage, validationPattern } from "../_utils";
 
 function UI() {
+  // Mock form submit handler
+  const handleSubmit = (data: any) => {
+    console.log("Form submitted:", data);
+    alert("Form submitted! Check console for data.");
+  };
+
   return (
     <div>
       <p className="text-2xl">UI Library</p>
+
       <div className="divider"></div>
       <p className="text-xl mb-5">Icons</p>
       <div className="flex flex-wrap gap-2">
@@ -19,6 +39,8 @@ function UI() {
         <Icon iconType={ICONS.settings} />
         <Icon iconType={ICONS.squares} />
         <Icon iconType={ICONS.sun} />
+        <Icon iconType={ICONS.moon} />
+        <Icon iconType={ICONS.info} />
       </div>
 
       <div className="divider"></div>
@@ -49,11 +71,114 @@ function UI() {
         <Avatar size={AVATAR_SIZE.md} />
         <Avatar size={AVATAR_SIZE.lg} />
       </div>
+
       <div className="divider"></div>
       <p className="text-xl mb-5">Modal</p>
       <ModalWrapper modalContent={<div>Modal Content</div>}>
         <div>Click me</div>
       </ModalWrapper>
+
+      <div className="divider"></div>
+      <p className="text-xl mb-5">Form Components</p>
+
+      <div className="bg-base-200 p-6 rounded-lg">
+        <h3 className="text-lg font-medium mb-4">Form Demo</h3>
+        <Form
+          onSubmit={handleSubmit}
+          defaultValues={{
+            name: "",
+            email: "",
+            password: "",
+            category: "",
+            message: "",
+          }}
+        >
+          {({
+            register,
+            formState: { errors },
+            clearErrors,
+            watch,
+            setValue,
+          }) => {
+            const category = watch("category");
+
+            return (
+              <>
+                <InputText
+                  label="Name"
+                  name="name"
+                  placeholder="John Doe"
+                  register={register}
+                  errors={errors}
+                  clearErrors={clearErrors}
+                  required
+                />
+
+                <InputText
+                  label="Email"
+                  name="email"
+                  type="email"
+                  placeholder="john@example.com"
+                  register={register}
+                  errors={errors}
+                  clearErrors={clearErrors}
+                  required
+                  pattern={validationPattern.email}
+                  patternMessage={errorMessage.email}
+                />
+
+                <InputText
+                  label="Password"
+                  name="password"
+                  type="password"
+                  placeholder="********"
+                  register={register}
+                  errors={errors}
+                  pattern={validationPattern.password}
+                  patternMessage={errorMessage.password}
+                />
+
+                <InputSelect
+                  label="Category"
+                  name="category"
+                  options={[
+                    { value: "question", label: "Question" },
+                    { value: "feedback", label: "Feedback" },
+                    { value: "other", label: "Other" },
+                  ]}
+                  register={register}
+                  errors={errors}
+                  required
+                  value={category}
+                  onValueChange={(value) => setValue("category", value)}
+                />
+
+                <InputTextArea
+                  label="Message"
+                  name="message"
+                  placeholder={
+                    category === "question"
+                      ? "What would you like to know?"
+                      : category === "feedback"
+                        ? "Share your thoughts with us"
+                        : "Type your message here..."
+                  }
+                  register={register}
+                  errors={errors}
+                  clearErrors={clearErrors}
+                  required
+                  maxLength={500}
+                  maxLengthMessage="Message cannot exceed 500 characters"
+                />
+
+                <div className="mt-6">
+                  <FormSubmitButton label="Submit" />
+                </div>
+              </>
+            );
+          }}
+        </Form>
+      </div>
     </div>
   );
 }
