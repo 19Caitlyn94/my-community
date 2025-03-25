@@ -2,9 +2,9 @@ name: Django Tests
 
 on:
   pull_request:
-    branches: [main, master]
+    branches: [main]
   push:
-    branches: [main, master]
+    branches: [main]
 
 jobs:
   test:
@@ -23,12 +23,13 @@ jobs:
         with:
           version: 1.8.3
 
-      - name: Navigate to backend directory
-        run: cd backend
+      - name: Find pyproject.toml
+        run: find . -name "pyproject.toml"
 
       - name: Install dependencies
         working-directory: ./backend
         run: poetry install
 
       - name: Run tests
-        run: poetry run ./manage.py test
+        working-directory: ./backend
+        run: poetry run python manage.py test
