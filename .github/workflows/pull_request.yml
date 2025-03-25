@@ -28,8 +28,8 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./backend
-        run: poetry install
+        run: poetry install --no-root
 
       - name: Run tests
         working-directory: ./backend
-        run: poetry run python backend/manage.py test
+        run: poetry run python ./manage.py test
