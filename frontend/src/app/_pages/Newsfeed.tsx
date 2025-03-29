@@ -1,12 +1,12 @@
 import React from "react";
 import { NewPost } from "@/app/_components";
 import { auth } from "@/auth";
-import Posts from "./Posts";
+import Posts from "../_components/posts/Posts";
 import { redirect } from "next/navigation";
 
-type Props = {};
+type Props = { communityId: string };
 
-const Newsfeed = async (props: Props) => {
+const Newsfeed = async ({ communityId }: Props) => {
   const session = await auth();
   if (!session) {
     redirect(`/login`);
@@ -15,7 +15,7 @@ const Newsfeed = async (props: Props) => {
   return (
     <div>
       <NewPost />
-      <Posts />
+      <Posts communityId={communityId} />
     </div>
   );
 };

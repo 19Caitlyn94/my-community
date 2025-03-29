@@ -1,10 +1,8 @@
-"use client";
-
 import React from "react";
-import { useSession } from "next-auth/react";
-import { signOut } from "next-auth/react";
 import { Avatar, AVATAR_SIZE } from "@/app/_components";
 import LogoutButton from "./LogOutButton";
+import { getLoggedInUser } from "@/api/users";
+import UserDropdownCommunityLink from "./UserDropdownCommunityLink";
 
 type CommunityType = {
   id: string;
@@ -13,20 +11,24 @@ type CommunityType = {
 
 type Props = {};
 
-const UserDropdown = (props: Props) => {
-  const { data: session } = useSession();
+const UserDropdown = async (props: Props) => {
+  const { data: user, error } = await getLoggedInUser();
+  if (error) {
+    console.error(error);
+    return null;
+  }
   const userDisplayName =
-    session?.user?.first_name && session?.user?.last_name
-      ? `${session?.user?.first_name} ${session?.user?.last_name}`
+    user?.first_name && user?.last_name
+      ? `${user?.first_name} ${user?.last_name}`
       : null;
-  const userCommunities = session?.user?.communities as CommunityType[];
+  const userCommunities = user?.communities as CommunityType[];
 
   return (
     <div className="dropdown dropdown-hover dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
         <Avatar
           size={AVATAR_SIZE.md}
-          content={session?.user?.profile_image || userDisplayName}
+          content={user?.profile_image || userDisplayName}
         />
       </div>
       <ul
@@ -35,7 +37,7 @@ const UserDropdown = (props: Props) => {
       >
         {userCommunities.map((community) => (
           <li key={community.id}>
-            <a>{community.name}</a>
+            <UserDropdownCommunityLink community={community} />
           </li>
         ))}
         <div className="divider"></div>

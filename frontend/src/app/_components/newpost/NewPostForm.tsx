@@ -9,6 +9,7 @@ import {
 } from "@/app/_components";
 import { createPost } from "@/api/posts";
 import { useSession } from "next-auth/react";
+import { useParams } from "next/navigation";
 
 type FormValues = {
   body?: string;
@@ -28,23 +29,15 @@ const postTypeOptions = [
 
 const NewPostForm = () => {
   const { data: session } = useSession();
-  const handleCreatePost = async (data: FormValues) => {
-    try {
-      // TODO: Get the community id that the user is posting to
-      const communityId = session?.user?.communities?.[0]?.id;
-
-      if (!communityId) {
-        console.error("No community ID available");
-        return;
-      }
-
-      const payload = {
+  const { communityId } = useParams<{ communityId: string }>();
+  const handleCreatePost = async (formdata: FormValues) => {
+    const payload = {
       body: formdata.body,
       posttype: formdata.posttype,
       media: formdata.media,
-        community_id: communityId,
-        user: session?.user?.id,
-      };
+      community_id: communityId,
+      user: session?.user?.id,
+    };
 
     const { error, data } = await createPost(
       payload,
