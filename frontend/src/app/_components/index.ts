@@ -3,7 +3,7 @@ export { default as DevToolbar } from './DevToolbar'
 
 // Components
 export { default as Navbar } from './navbar/Navbar'
-export { default as Post } from './post/Post'
+export { default as Post } from './posts/Post'
 export { default as NewPost } from './newpost/NewPost'
 
 // UI

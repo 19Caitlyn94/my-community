@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
-import { auth } from "@/auth";
 import { Post } from "@/app/_components";
-import { BACKEND_URL, formatDate } from "@/app/_utils";
+import { formatDate } from "@/app/_utils";
+import { getPosts } from "@/api/posts";
 
 interface PostData {
   id: number;
@@ -15,35 +15,20 @@ interface PostData {
   };
 }
 
-type Props = {};
+type Props = { communityId: string };
 
-const Posts = async ({}: Props) => {
-  const session = await auth();
+const Posts = async ({ communityId }: Props) => {
+  const { error, data: posts } = await getPosts(parseInt(communityId));
 
-  const getPosts = async () => {
-    try {
-      const response = await fetch(
-        `${BACKEND_URL}api/posts/?community_id=${session?.user.communities[0].id}`,
-        {
-          headers: {
-            method: "GET",
-            Authorization: `Bearer ${session?.access_token}`,
-          },
-        }
-      );
-      const data: PostData[] = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Error fetching posts:", error);
-      return [];
-    }
-  };
+  if (error) {
+    console.error(error);
+    return null;
+  }
 
-  const posts = await getPosts();
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <>
-        {posts.results.map((p) => (
+        {posts.map((p: PostData) => (
           <Post
             key={p.id}
             body={p.body}
