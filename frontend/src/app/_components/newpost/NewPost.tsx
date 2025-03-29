@@ -9,21 +9,28 @@ import {
 } from "@/app/_components";
 import ModalWrapper from "../ui/modal/ModalWrapper";
 import NewPostForm from "./NewPostForm";
+import { getLoggedInUser } from "@/api/users";
 
 type Props = {};
 
 const NewPost = async (props: Props) => {
   const session = await auth();
+  const { data: user, error } = await getLoggedInUser();
 
-  const greetingMessage = session?.user?.first_name
-    ? `Hey ${session?.user?.first_name}, what's new?`
+  if (error) {
+    console.error(error);
+    return null;
+  }
+
+  const greetingMessage = user?.first_name
+    ? `Hey ${user?.first_name}, what's new?`
     : "What's new?";
 
   const userDisplayName =
-    session?.user?.first_name && session?.user?.last_name
-      ? `${session?.user?.first_name} ${session?.user?.last_name}`
+    user?.first_name && user?.last_name
+      ? `${user?.first_name} ${user?.last_name}`
       : null;
-  const userAvatarContent = session?.user?.profile_image || userDisplayName;
+  const userAvatarContent = user?.profile_image || userDisplayName;
 
   return (
     <>

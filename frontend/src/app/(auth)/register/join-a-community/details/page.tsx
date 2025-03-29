@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Form, InputText, FormSubmitButton } from "@/app/_components";
-import { updateUser } from "@/actions/user";
+import { updateUser } from "@/api/users";
 
 type FormValues = {
   first_name: string;
@@ -23,7 +23,7 @@ function RegisterUserDetails() {
 
     try {
       const response = await updateUser(formData);
-      if (response.success) {
+      if (!response.error) {
         router.push("/overview/karen-score");
       }
     } catch (error) {

@@ -1,20 +1,21 @@
 "use client";
-
-import React, { useEffect } from "react";
-import { useSession } from "next-auth/react";
+import React from "react";
 import { errorMessage } from "@/app/_utils";
-import { BACKEND_URL } from "@/app/_utils/config";
 import {
   Form,
   InputSelect,
   InputTextArea,
   FormSubmitButton,
 } from "@/app/_components";
+import { createPost } from "@/api/posts";
+import { useSession } from "next-auth/react";
 
 type FormValues = {
   body?: string;
   posttype?: string;
   media?: FileList;
+  community_id?: string;
+  user?: string;
 };
 
 const postTypeOptions = [
@@ -38,35 +39,19 @@ const NewPostForm = () => {
       }
 
       const payload = {
-        body: data.body,
-        posttype: data.posttype,
-        media: data.media,
+      body: formdata.body,
+      posttype: formdata.posttype,
+      media: formdata.media,
         community_id: communityId,
         user: session?.user?.id,
       };
 
-      console.log("payload", payload);
-
-      const response = await fetch(
-        `${BACKEND_URL}api/posts/?community_id=${communityId}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.access_token}`,
-          },
-          method: "POST",
-          body: JSON.stringify(payload),
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Failed to create post:", errorData);
-        return;
-      }
-
-      console.log("Post created successfully");
-    } catch (error) {
+    const { error, data } = await createPost(
+      payload,
+      communityId,
+      session?.access_token
+    );
+    if (error) {
       console.error("Error creating post:", error);
     }
   };
@@ -101,11 +86,11 @@ const NewPostForm = () => {
           "I'd like to share...";
 
         // Example of reacting to form value changes
-        useEffect(() => {
-          if (postType === "security-alert") {
-            setValue("body", "ALERT: ");
-          }
-        }, [postType, setValue]);
+        // useEffect(() => {
+        //   if (postType === "security-alert") {
+        //     setValue("body", "ALERT: ");
+        //   }
+        // }, [postType, setValue]);
 
         return (
           <>
