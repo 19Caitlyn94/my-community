@@ -4,6 +4,7 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import { Avatar, AVATAR_SIZE } from "@/app/_components";
+import LogoutButton from "./LogOutButton";
 
 type CommunityType = {
   id: string;
@@ -52,9 +53,7 @@ const UserDropdown = (props: Props) => {
         </li>
         <div className="divider"></div>
         <li>
-          <button type="button" onClick={() => signOut({ callbackUrl: "/" })}>
-            Log out
-          </button>
+          <LogoutButton />
         </li>
       </ul>
     </div>
