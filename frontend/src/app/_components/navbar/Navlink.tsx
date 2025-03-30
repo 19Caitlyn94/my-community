@@ -8,11 +8,19 @@ type Props = {
   iconClassName?: string;
   iconTitle?: string;
   iconType?: Array<string>;
+  dataTestId?: string;
 };
 
-const Navlink = ({ link, name, iconClassName, iconTitle, iconType }: Props) => {
+const Navlink = ({
+  link,
+  name,
+  iconClassName,
+  iconTitle,
+  iconType,
+  dataTestId,
+}: Props) => {
   return (
-    <Link href={link}>
+    <Link href={link} data-testid={dataTestId}>
       {iconType && (
         <Icon className={iconClassName} title={iconTitle} iconType={iconType} />
       )}

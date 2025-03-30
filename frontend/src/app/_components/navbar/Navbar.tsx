@@ -38,6 +38,7 @@ const Navbar = async (props: Props) => {
               link="/blog"
               iconTitle="Blog"
               iconType={ICONS.newsfeed}
+              dataTestId="navlink-blog"
             />
           </li>
           {/* <li>
