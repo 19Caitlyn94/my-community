@@ -1,7 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Form, InputText, FormSubmitButton } from "@/app/_components";
+import {
+  Form,
+  InputText,
+  InputFile,
+  FormSubmitButton,
+} from "@/app/_components";
 import { updateUser } from "@/api/users";
 
 type FormValues = {
@@ -72,24 +77,15 @@ function RegisterUserDetails() {
                 errors.last_name ? "border-rose-700" : "border-gray-700"
               }
             />
-            <div className="mb-5">
-              <label className="form-control w-full label-text mb-2">
-                Profile image (optional)
-              </label>
-              <input
-                type="file"
-                accept="image/*"
-                className={`file-input w-full border rounded-md p-2 bg-base-100 ${
-                  errors.profile_image ? "border-rose-700" : "border-gray-700"
-                }`}
-                {...register("profile_image")}
-              />
-              {errors.profile_image && (
-                <p className="text-xs text-rose-500 mt-1">
-                  {errors.profile_image?.message?.toString()}
-                </p>
-              )}
-            </div>
+            <InputFile
+              label="Profile image (optional)"
+              accept="image/*"
+              name="profile_image"
+              register={register}
+              errors={errors}
+              required
+              dataTestId="profile-image-input"
+            />
 
             <FormSubmitButton
               label="Submit"
