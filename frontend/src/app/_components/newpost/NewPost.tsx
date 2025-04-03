@@ -49,7 +49,12 @@ const NewPost = async (props: Props) => {
               className="mr-5"
               content={userAvatarContent}
             />
-            <p className="text-sm text-gray-400">{greetingMessage}</p>
+            <p
+              className="text-sm text-gray-400"
+              data-testid="new-post-greeting-message"
+            >
+              {greetingMessage}
+            </p>
             <Icon className="size-6 ml-auto" iconType={ICONS.menuKebab} />
           </div>
         </CardWrapper>
