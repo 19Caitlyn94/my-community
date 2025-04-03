@@ -92,3 +92,44 @@ npm run cypress:open
 4. Use Cypress fixtures for test data
 
 [Cypress Documentation Reference](https://docs.cypress.io/)
+
+## Test Environment Configuration
+
+The project uses a `cypress.env.ts` file to store consistent test data that is loaded into the database before tests run. This ensures tests can run in any environment.
+
+Before running Cypress tests, the database needs to contain these test users and communities. And the structure of the data should be (_example_):
+
+```json
+{
+  "host": "localhost:3000/",
+  "api_url": "http://localhost:8000/api/",
+  "user_member": {
+    "id": "87",
+    "email": "member@testcypress.io",
+    "password": "SecurePass456!",
+    "communities": [
+      {
+        "id": "12",
+        "name": "Evergreen Community",
+        "is_admin": false
+      }
+    ],
+    "first_name": "Taylor",
+    "last_name": "Rivera"
+  },
+  "user_admin": {
+    "id": "93",
+    "email": "admin@testcypress.io",
+    "password": "AdminSecure789!",
+    "communities": [
+      {
+        "id": "12",
+        "name": "Evergreen Community",
+        "is_admin": true
+      }
+    ],
+    "first_name": "Jordan",
+    "last_name": "Chen"
+  }
+}
+```
