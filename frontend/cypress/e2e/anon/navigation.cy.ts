@@ -30,7 +30,6 @@ describe('Navigation for anonymous users', () => {
   })
 
   it('navigates to blog page', () => {
-    cy.viewport('macbook-13');
     cy.get('[data-testid="navlink-blog"]').click()
     cy.url().should('include', '/blog')
   })

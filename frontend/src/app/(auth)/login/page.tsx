@@ -48,6 +48,7 @@ function Login({}: Props) {
               pattern={validationPattern.email}
               patternMessage={errorMessage.email}
               className={errors.email ? "border-rose-700" : "border-gray-700"}
+              dataTestId="email-field"
             />
 
             <InputText
@@ -62,12 +63,14 @@ function Login({}: Props) {
               className={
                 errors.password ? "border-rose-700" : "border-gray-700"
               }
+              dataTestId="password-field"
             />
 
             <div className="mb-10"></div>
             <FormSubmitButton
               label="Log in"
               className="btn btn-primary btn-block md:btn-auto"
+              dataTestId="login-submit"
             />
           </>
         )}

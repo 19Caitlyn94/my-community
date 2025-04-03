@@ -12,6 +12,7 @@ interface InputSelectProps {
   value?: string;
   onValueChange?: (value: string) => void;
   className?: string;
+  dataTestId?: string;
 }
 
 export const InputSelect: React.FC<InputSelectProps> = ({
@@ -23,9 +24,10 @@ export const InputSelect: React.FC<InputSelectProps> = ({
   errors,
   required = false,
   errorMessage = "This field is required",
+  dataTestId = "",
 }) => {
   return (
-    <div className={`mb-5 ${className || ""}`}>
+    <div className={`mb-5 ${className || ""}`} data-testid={dataTestId}>
       <label className="form-control w-full label-text mb-2">{label}</label>
       <select
         className={`w-full border rounded-md p-2 bg-base-100 placeholder:text-gray-500 ${

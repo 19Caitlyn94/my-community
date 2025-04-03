@@ -16,6 +16,7 @@ interface InputTextAreaProps {
   maxLength?: number;
   maxLengthMessage?: string;
   className?: string;
+  dataTestId?: string;
 }
 
 export const InputTextArea: React.FC<InputTextAreaProps> = ({
@@ -29,6 +30,7 @@ export const InputTextArea: React.FC<InputTextAreaProps> = ({
   maxLength,
   maxLengthMessage,
   className,
+  dataTestId = "",
 }) => {
   const validation = {
     required: required ? "This field is required" : false,
@@ -41,7 +43,10 @@ export const InputTextArea: React.FC<InputTextAreaProps> = ({
   };
 
   return (
-    <div className={`mb-5 relative ${className || ""}`}>
+    <div
+      className={`mb-5 relative ${className || ""}`}
+      data-testid={dataTestId}
+    >
       <label className="form-control w-full label-text mb-2">{label}</label>
       <textarea
         className={`w-full h-24 border border-gray-300 rounded-md p-2 bg-base-100 placeholder:text-gray-500 ${

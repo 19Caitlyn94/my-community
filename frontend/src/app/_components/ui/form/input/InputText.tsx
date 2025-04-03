@@ -19,6 +19,7 @@ interface InputTextProps {
   value?: string;
   onValueChange?: (value: string) => void;
   className?: string;
+  dataTestId?: string;
 }
 
 export const InputText: React.FC<InputTextProps> = ({
@@ -34,6 +35,7 @@ export const InputText: React.FC<InputTextProps> = ({
   patternMessage,
   onValueChange,
   className = "",
+  dataTestId = "",
 }) => {
   // Prepare validation rules
   const validation = {
@@ -59,7 +61,7 @@ export const InputText: React.FC<InputTextProps> = ({
       : undefined;
 
   return (
-    <div className={`mb-5 ${className || ""}`}>
+    <div className={`mb-5 ${className || ""}`} data-testid={dataTestId}>
       <label className="form-control w-full label-text mb-2">{label}</label>
       <input
         type={type}
