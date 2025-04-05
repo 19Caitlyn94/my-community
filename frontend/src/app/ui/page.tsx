@@ -11,9 +11,11 @@ import {
   InputText,
   InputTextArea,
   InputSelect,
+  InputFiles,
   FormSubmitButton,
 } from "@/app/_components";
 import { errorMessage, validationPattern } from "../_utils";
+import { acceptedFileTypes } from "../_utils/form";
 
 function UI() {
   // Mock form submit handler
@@ -92,6 +94,9 @@ function UI() {
             category: "",
             message: "",
           }}
+          formOptions={{
+            mode: "onBlur",
+          }}
         >
           {({
             register,
@@ -168,7 +173,17 @@ function UI() {
                   clearErrors={clearErrors}
                   required
                   maxLength={500}
-                  maxLengthMessage="Message cannot exceed 500 characters"
+                  maxLengthMessage={errorMessage.maxLength(500)}
+                />
+
+                <InputFiles
+                  label="Upload media"
+                  name="media"
+                  register={register}
+                  errors={errors}
+                  accept={acceptedFileTypes.image}
+                  maxSizeInMB={1}
+                  maxFiles={2}
                 />
 
                 <div className="mt-6">
