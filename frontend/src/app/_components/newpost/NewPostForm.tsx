@@ -98,7 +98,6 @@ const NewPostForm = () => {
               value={postType}
               onValueChange={(value: string) => setValue("posttype", value)}
             />
-
             <InputTextArea
               label="What's on your mind?"
               name="body"
@@ -108,10 +107,21 @@ const NewPostForm = () => {
               clearErrors={clearErrors}
               required
               maxLength={500}
-              maxLengthMessage={errorMessage.maxLength500}
+              maxLengthMessage={errorMessage.maxLength(500)}
             />
-
-            {/* TODO: Add filelist upload component here */}
+            <InputFiles
+              label="Upload media"
+              name="media"
+              register={register}
+              errors={errors}
+              accept={[
+                acceptedFileTypes.image,
+                acceptedFileTypes.video,
+                acceptedFileTypes.document,
+              ].join(",")}
+              maxSizeInMB={2}
+              maxFiles={10}
+            />
 
             <div className="flex justify-end gap-2">
               <FormSubmitButton label="Post" />

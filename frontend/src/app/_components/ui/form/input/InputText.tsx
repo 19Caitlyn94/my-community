@@ -4,7 +4,7 @@ import {
   FieldErrors,
   UseFormClearErrors,
 } from "react-hook-form";
-import { errorMessage } from "@/app/_utils/form";
+import { errorMessage } from "@/app/_utils";
 
 interface InputTextProps {
   label: string;
