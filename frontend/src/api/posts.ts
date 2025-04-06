@@ -27,15 +27,14 @@ export const getPosts = async (communityId: number) => {
 };
 
 
-export const createPost = async (payload: FormData, communityId: number, accessToken) => {
+export const createPost = async (payload: FormData, communityId: number, accessToken: string) => {
   try {
     const response = await fetch(`${BACKEND_URL}api/posts/?community_id=${communityId}`, {
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
       method: "POST",
-      body: JSON.stringify(payload),
+      body: payload,
     });
 
     if (!response.ok) {

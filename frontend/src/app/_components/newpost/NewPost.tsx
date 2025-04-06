@@ -1,5 +1,4 @@
 import React from "react";
-import { auth } from "@/auth";
 import {
   Avatar,
   AVATAR_SIZE,
@@ -14,7 +13,6 @@ import { getLoggedInUser } from "@/api/users";
 type Props = {};
 
 const NewPost = async (props: Props) => {
-  const session = await auth();
   const { data: user, error } = await getLoggedInUser();
 
   if (error) {

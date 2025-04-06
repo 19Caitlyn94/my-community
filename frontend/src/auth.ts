@@ -2,6 +2,7 @@ import Credentials from "next-auth/providers/credentials";
 import { BACKEND_URL, isDev } from "@/app/_utils";
 import { JWT } from "next-auth/jwt";
 import NextAuth from "next-auth"
+import { redirect } from "next/navigation";
 
 // These two values should be a bit less than actual token lifetimes
 const BACKEND_ACCESS_TOKEN_LIFETIME = 45 * 60; // 45 minutes
@@ -52,12 +53,18 @@ const refreshUserToken = async (token: JWT) => {
       delete token.access_token;
       delete token.refresh_token;
     }
+
     return token;
   } catch (error) {
     console.error("Error refreshing token:", error);
     // On error, clear tokens to force re-login
     delete token.access_token;
     delete token.refresh_token;
+
+    // If we fail to refresh the token, return an error so we can handle it on the page
+    token.error = "RefreshTokenError"
+    redirect('/login')
+
     return token;
   }
 }

@@ -4,6 +4,7 @@ import {
   FieldErrors,
   UseFormClearErrors,
 } from "react-hook-form";
+import { errorMessage } from "@/app/_utils";
 
 interface InputTextProps {
   label: string;
@@ -39,7 +40,7 @@ export const InputText: React.FC<InputTextProps> = ({
 }) => {
   // Prepare validation rules
   const validation = {
-    required: required ? "This field is required" : false,
+    required: required ? errorMessage.required : false,
     ...(pattern && {
       pattern: {
         value: pattern,

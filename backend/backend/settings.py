@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "users",
     "communities",
     "posts",
+    "media",
 ]
 
 MIDDLEWARE = [
@@ -204,6 +205,7 @@ else:
         "http://localhost:3000/",
         "http://127.0.0.1:3000/",
     ]
-# Stores images from ImageField in www.yoursite.com/media/path_to_image/image.png
-MEDIA_ROOT = Path(BASE_DIR) / "media"
-MEDIA_URL = "/media/"
+
+# Stores images from ImageField in www.yoursite.com/allmedia/path_to_image/image.png
+MEDIA_ROOT = Path(BASE_DIR) / "media_store"
+MEDIA_URL = "/media_store/"

@@ -8,6 +8,7 @@ interface PostData {
   body: string;
   posttype: string;
   updated_at: string;
+  media_urls?: Array<string | undefined>;
   user: {
     first_name: string;
     last_name: string;
@@ -37,6 +38,7 @@ const Posts = async ({ communityId }: Props) => {
             userFirstName={p.user.first_name}
             userLastName={p.user.last_name}
             userProfileImageUrl={p.user.profile_image}
+            mediaUrls={p.media_urls}
             className="mb-6"
           />
         ))}
