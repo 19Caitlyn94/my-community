@@ -3,6 +3,7 @@ from utils.models import TimeStampedModel
 from users.models import User
 from django_extensions.db.fields import AutoSlugField
 from communities.models import Community
+from django.contrib.contenttypes.fields import GenericRelation
 
 
 class PostType(TimeStampedModel, models.Model):
@@ -28,6 +29,7 @@ class Post(TimeStampedModel, models.Model):
     community = models.ForeignKey(
         Community, on_delete=models.CASCADE, null=True, related_name="posts"
     )
+    media = GenericRelation("media.Media")
 
     is_active = models.BooleanField(default=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
