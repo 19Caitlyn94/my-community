@@ -5,18 +5,20 @@ import {
   Form,
   InputSelect,
   InputTextArea,
+  InputFiles,
   FormSubmitButton,
 } from "@/app/_components";
 import { createPost } from "@/api/posts";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
+import { acceptedFileTypes } from "@/app/_utils/form";
 
 type FormValues = {
+  posttype: string;
+  community_id: string;
   body?: string;
-  posttype?: string;
-  media?: FileList;
-  community_id?: string;
   user?: string;
+  media?: FileList;
 };
 
 const postTypeOptions = [
@@ -30,22 +32,33 @@ const postTypeOptions = [
 const NewPostForm = () => {
   const { data: session } = useSession();
   const { communityId } = useParams<{ communityId: string }>();
+
   const handleCreatePost = async (formdata: FormValues) => {
-    const payload = {
-      body: formdata.body,
-      posttype: formdata.posttype,
-      media: formdata.media,
-      community_id: communityId,
-      user: session?.user?.id,
-    };
+    const formData = new FormData();
+
+    formData.append("posttype", formdata.posttype);
+    formData.append("community_id", communityId);
+    formData.append("body", formdata.body || "");
+    formData.append("user", session?.user?.id || "");
+    console.log("formdata.media", formdata.media);
+    if (formdata.media) {
+      Array.from(formdata.media).forEach((file) => {
+        console.log("file", file);
+        formData.append("uploaded_files", file);
+        console.log("formData media", formData.getAll("media"));
+      });
+    }
 
     const { error, data } = await createPost(
-      payload,
-      communityId,
+      formData,
+      Number(communityId),
       session?.access_token
     );
     if (error) {
       console.error("Error creating post:", error);
+    } else if (data) {
+      // Todo: Optimistic UI update postlist with newly returned post
+      // then close modal
     }
   };
 
