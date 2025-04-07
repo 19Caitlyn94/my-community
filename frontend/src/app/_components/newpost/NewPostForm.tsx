@@ -10,7 +10,7 @@ import {
 } from "@/app/_components";
 import { createPost } from "@/api/posts";
 import { useSession } from "next-auth/react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { acceptedFileTypes } from "@/app/_utils/form";
 
 type FormValues = {
@@ -32,6 +32,7 @@ const postTypeOptions = [
 const NewPostForm = () => {
   const { data: session } = useSession();
   const { communityId } = useParams<{ communityId: string }>();
+  const router = useRouter();
 
   const handleCreatePost = async (formdata: FormValues) => {
     const formData = new FormData();
@@ -40,12 +41,10 @@ const NewPostForm = () => {
     formData.append("community_id", communityId);
     formData.append("body", formdata.body || "");
     formData.append("user", session?.user?.id || "");
-    console.log("formdata.media", formdata.media);
+
     if (formdata.media) {
       Array.from(formdata.media).forEach((file) => {
-        console.log("file", file);
         formData.append("uploaded_files", file);
-        console.log("formData media", formData.getAll("media"));
       });
     }
 
@@ -59,6 +58,7 @@ const NewPostForm = () => {
     } else if (data) {
       // Todo: Optimistic UI update postlist with newly returned post
       // then close modal
+      router.refresh();
     }
   };
 
