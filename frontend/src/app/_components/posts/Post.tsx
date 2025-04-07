@@ -47,7 +47,7 @@ const Post = ({
         <Image
           width={500}
           height={100}
-          className="w-full h-full rounded-lg"
+          className="w-full h-full rounded-sm"
           src={`${BACKEND_URL}${mediaUrls[0]}`}
           alt="post"
         />

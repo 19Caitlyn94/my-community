@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Avatar, AVATAR_SIZE } from "@/app/_components";
 import LogoutButton from "./LogOutButton";
 import { getLoggedInUser } from "@/api/users";
@@ -48,7 +49,7 @@ const UserDropdown = async (props: Props) => {
           </a>
         </li>
         <li>
-          <a>Profile Settings</a>
+          <Link href="/profile">My Profile</Link>
         </li>
         <li>
           <a>Give feedback</a>
