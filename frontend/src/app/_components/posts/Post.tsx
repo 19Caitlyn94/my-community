@@ -45,7 +45,7 @@ const Post = ({
       {/* TODO: Add ui component to display more than just the first image */}
       {mediaUrls && mediaUrls.length > 0 && (
         <Image
-          width={100}
+          width={500}
           height={100}
           className="w-full h-full rounded-lg"
           src={`${BACKEND_URL}${mediaUrls[0]}`}
