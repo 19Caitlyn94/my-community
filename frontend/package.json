@@ -11,7 +11,7 @@
     "cypress:run": "cypress run"
   },
   "dependencies": {
-    "next": "15.2.1",
+    "next": "^15.2.5",
     "next-auth": "5.0.0-beta.25",
     "react": "19.0.0",
     "react-dom": "19.0.0",
@@ -24,7 +24,7 @@
     "cypress": "^14.2.1",
     "daisyui": "^4.12.10",
     "eslint": "^8",
-    "eslint-config-next": "14.2.5",
+    "eslint-config-next": "^15.2.5",
     "eslint-config-prettier": "^9.1.0",
     "postcss": "^8",
     "prettier": "^3.3.3",
