@@ -27,7 +27,7 @@ const Navbar = async (props: Props) => {
           <li>
             <Navlink
               name="News feed"
-              link="/news"
+              link="/"
               iconTitle="News feed"
               iconType={ICONS.squares}
             />
@@ -38,6 +38,7 @@ const Navbar = async (props: Props) => {
               link="/blog"
               iconTitle="Blog"
               iconType={ICONS.newsfeed}
+              dataTestId="navlink-blog"
             />
           </li>
           {/* <li>

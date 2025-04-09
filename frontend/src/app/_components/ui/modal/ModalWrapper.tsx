@@ -2,7 +2,7 @@
 
 import React, { useState, ReactNode } from "react";
 import ModalContainer from "./ModalContainer";
-import { ICONS, Icon } from "@/app/_components";
+import ModalCloseIcon from "./ModalCloseIcon";
 
 type Props = {
   children: ReactNode;
@@ -22,13 +22,7 @@ const ModalWrapper = ({ children, modalContent }: Props) => {
       {showModal && (
         <ModalContainer>
           {modalContent}
-          <button
-            type="button"
-            className="absolute top-3 right-4"
-            onClick={closeModal}
-          >
-            <Icon iconType={ICONS.close} />
-          </button>
+          <ModalCloseIcon closeModal={closeModal} />
         </ModalContainer>
       )}
     </>

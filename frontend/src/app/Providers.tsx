@@ -8,9 +8,6 @@ interface RootLayoutProps {
   session: Session | null;
 }
 
-export default function Providers({
-  children,
-  session,
-}: RootLayoutProps) {
-  return <SessionProvider session={ session }> { children } </SessionProvider>;
+export default function Providers({ children, session }: RootLayoutProps) {
+  return <SessionProvider session={session}> {children} </SessionProvider>;
 }

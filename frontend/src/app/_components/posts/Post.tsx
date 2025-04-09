@@ -1,7 +1,6 @@
 import React from "react";
 
 import Image from "next/image";
-import post_1a from "@/data/post_1a.jpg";
 
 import {
   Avatar,
@@ -11,6 +10,7 @@ import {
   ICONS,
 } from "@/app/_components";
 import PostHeader from "./PostHeader";
+import { BACKEND_URL } from "@/app/_utils";
 
 type Props = {
   body?: string;
@@ -20,6 +20,7 @@ type Props = {
   userProfileImageUrl: string;
   updatedDate: string;
   className?: string;
+  mediaUrls?: Array<string | undefined>;
 };
 
 const Post = ({
@@ -30,6 +31,7 @@ const Post = ({
   userLastName,
   updatedDate,
   userProfileImageUrl,
+  mediaUrls,
 }: Props) => {
   return (
     <CardWrapper className={`${className || ""}`}>
@@ -40,7 +42,16 @@ const Post = ({
         updatedDate={updatedDate}
       />
       {body && <p className="mb-6">{body}</p>}
-      <Image className="w-full h-full rounded-lg" src={post_1a} alt="post" />
+      {/* TODO: Add ui component to display more than just the first image */}
+      {mediaUrls && mediaUrls.length > 0 && (
+        <Image
+          width={500}
+          height={100}
+          className="w-full h-full rounded-sm"
+          src={`${BACKEND_URL}${mediaUrls[0]}`}
+          alt="post"
+        />
+      )}
       <div className="divider"></div>
       <div className="flex flex-wrap items-center">
         <div className="flex -space-x-1 overflow-hidden w-full md:w-auto mb-4">

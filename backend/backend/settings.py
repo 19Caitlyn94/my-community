@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "users",
     "communities",
     "posts",
+    "media",
 ]
 
 MIDDLEWARE = [
@@ -164,7 +165,7 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
     "UPDATE_LAST_LOGIN": True,
-    "SIGNING_KEY": SECRET_KEY,  # generate a key and replace me
+    "SIGNING_KEY": SECRET_KEY,
     "ALGORITHM": "HS512",
 }
 
@@ -172,8 +173,8 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
-    # Remove the default permission class - endpoints will be public by default
-    # Add permissions explicitly to views that need them
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 25,
 }
 
 
@@ -204,6 +205,7 @@ else:
         "http://localhost:3000/",
         "http://127.0.0.1:3000/",
     ]
-# Stores images from ImageField in www.yoursite.com/media/path_to_image/image.png
-MEDIA_ROOT = Path(BASE_DIR) / "media"
-MEDIA_URL = "/media/"
+
+# Stores images from ImageField in www.yoursite.com/allmedia/path_to_image/image.png
+MEDIA_ROOT = Path(BASE_DIR) / "media_store"
+MEDIA_URL = "/media_store/"

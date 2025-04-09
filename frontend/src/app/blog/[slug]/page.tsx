@@ -7,6 +7,11 @@ type Props = { params: Promise<{ slug: string }> };
 const Blogpost = async ({ params }: Props) => {
   const slug = (await params).slug;
   const blogpost = blogData.find((p) => p.slug === slug);
+
+  if (!blogpost) {
+    return <div>Blogpost not found</div>;
+  }
+
   return (
     <div>
       <h1 className="text-3xl mb-10">{blogpost.title}</h1>

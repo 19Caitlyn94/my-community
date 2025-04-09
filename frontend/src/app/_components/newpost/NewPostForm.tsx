@@ -1,174 +1,144 @@
 "use client";
-
 import React from "react";
-import { useForm } from "react-hook-form";
-import { useSession } from "next-auth/react";
 import { errorMessage } from "@/app/_utils";
-import { BACKEND_URL } from "@/app/_utils/config";
+import {
+  Form,
+  InputSelect,
+  InputTextArea,
+  InputFiles,
+  FormSubmitButton,
+} from "@/app/_components";
+import { createPost } from "@/api/posts";
+import { useSession } from "next-auth/react";
+import { useParams, useRouter } from "next/navigation";
+import { acceptedFileTypes } from "@/app/_utils/form";
+
 type FormValues = {
+  posttype: string;
+  community_id: string;
   body?: string;
-  posttype?: string;
+  user?: string;
   media?: FileList;
 };
 
+const postTypeOptions = [
+  { value: "security-alert", label: "Security alert" },
+  { value: "just-for-fun", label: "Just for fun" },
+  { value: "recommendation", label: "Ask for a recommendation" },
+  { value: "lost-pet", label: "Lost pet" },
+  { value: "more", label: "Other..." },
+];
+
 const NewPostForm = () => {
-  const {
-    register,
-    handleSubmit,
-    clearErrors,
-    formState: { errors },
-  } = useForm<FormValues>({
-    defaultValues: {
-      body: "",
-      posttype: "",
-      media: undefined,
-    },
-    mode: "onChange",
-  });
-
   const { data: session } = useSession();
-  const handleCreatePost = async (data: FormValues) => {
-    try {
-      // TODO: Get the community id that the user is posting to
-      const communityId = session?.user?.communities?.[0]?.id;
+  const { communityId } = useParams<{ communityId: string }>();
+  const router = useRouter();
 
-      if (!communityId) {
-        console.error("No community ID available");
-        return;
-      }
+  const handleCreatePost = async (formdata: FormValues) => {
+    const formData = new FormData();
 
-      const payload = {
-        body: data.body,
-        posttype: data.posttype,
-        media: data.media,
-        community_id: communityId,
-        user: session?.user?.id,
-      };
+    formData.append("posttype", formdata.posttype);
+    formData.append("community_id", communityId);
+    formData.append("body", formdata.body || "");
+    formData.append("user", session?.user?.id || "");
 
-      console.log("payload", payload);
+    if (formdata.media) {
+      Array.from(formdata.media).forEach((file) => {
+        formData.append("uploaded_files", file);
+      });
+    }
 
-      const response = await fetch(
-        `${BACKEND_URL}api/posts/?community_id=${communityId}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.access_token}`,
-          },
-          method: "POST",
-          body: JSON.stringify(payload),
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Failed to create post:", errorData);
-        return;
-      }
-
-      console.log("Post created successfully");
-    } catch (error) {
+    const { error, data } = await createPost(formData, Number(communityId));
+    if (error) {
       console.error("Error creating post:", error);
+    } else if (data) {
+      // Todo: Optimistic UI update postlist with newly returned post
+      // then close modal
+      router.refresh();
     }
   };
 
   return (
-    <form className="relative w-full" onSubmit={handleSubmit(handleCreatePost)}>
-      <div className="mb-5">
-        <label className="form-control w-full label-text mb-2">
-          What kind of post is this?
-        </label>
-        <select
-          className="w-full border border-gray-300 rounded-md p-2 bg-base-100"
-          {...register("posttype", { required: errorMessage.selectOne })}
-        >
-          <option className="text-gray-500" value="">
-            Select a post type
-          </option>
-          <option value="security-alert">Security alert</option>
-          <option value="just-for-fun">Just for fun</option>
-          <option value="recommendation">Ask for a recommendation</option>
-          <option value="lost-pet">Lost pet</option>
-          <option value="more">Other...</option>
-        </select>
-        {errors.posttype && (
-          <p className="absolute text-xs text-rose-500 mt-1">
-            {errors.posttype.message}
-          </p>
-        )}
-      </div>
-      <div className="mb-5">
-        <label className="form-control w-full label-text mb-2">
-          What's on your mind?
-        </label>
+    <Form
+      onSubmit={handleCreatePost}
+      defaultValues={{
+        body: "",
+        posttype: "",
+        media: undefined,
+      }}
+      formOptions={{
+        mode: "onChange",
+      }}
+    >
+      {({ register, formState: { errors }, clearErrors, watch, setValue }) => {
+        const postType = watch("posttype");
 
-        <textarea
-          className={`w-full h-24 border border-gray-300 rounded-md p-2 bg-base-100 placeholder:text-gray-500 ${
-            errors.body
-              ? "border-rose-500 focus:border-rose-500"
-              : "border-gray-300 focus:border-gray-300"
-          } `}
-          placeholder="I'd like to share..."
-          onFocus={() => {
-            clearErrors("body");
-          }}
-          {...register("body", {
-            required: true,
-            maxLength: {
-              value: 500,
-              message: errorMessage.maxLength500,
-            },
-          })}
-        ></textarea>
+        const placeholderMap = {
+          "security-alert":
+            "I would like to report a security concern in my area...",
+          "just-for-fun": "I want to share something fun with my neighbors...",
+          recommendation: "I am looking for recommendations about...",
+          "lost-pet": "I have lost my pet. They were last seen...",
+          more: "I would like to share something with my community...",
+        };
 
-        {errors.body && (
-          <p className="absolute text-xs text-rose-500 mt-1">
-            {errors.body.message}
-          </p>
-        )}
-      </div>
-      {/* TODO: Add filelist upload 
-      <label className="form-control w-full label-text mb-2">
-        Add an image or video
-      </label>
-      <div className="flex justify-center rounded-lg border border-dashed border-grey-600 px-6 py-10 mb-5">
-        <div className="text-center">
-          <svg
-            className="mx-auto size-12 text-gray-300"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            aria-hidden="true"
-            data-slot="icon"
-          >
-            <path
-              fillRule="evenodd"
-              d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z"
-              clipRule="evenodd"
+        // Get placeholder from map or use default
+        const placeholder =
+          placeholderMap[postType as keyof typeof placeholderMap] ||
+          "I'd like to share...";
+
+        // Example of reacting to form value changes
+        // useEffect(() => {
+        //   if (postType === "security-alert") {
+        //     setValue("body", "ALERT: ");
+        //   }
+        // }, [postType, setValue]);
+
+        return (
+          <>
+            <InputSelect
+              label="What kind of post is this?"
+              name="posttype"
+              options={postTypeOptions}
+              register={register}
+              errors={errors}
+              required
+              errorMessage={errorMessage.selectOne}
+              value={postType}
+              onValueChange={(value: string) => setValue("posttype", value)}
             />
-          </svg>
-          <div className="mt-4 flex text-sm/6 text-gray-600">
-            <label
-              htmlFor="file-upload"
-              className="relative cursor-pointer rounded-md bg-base font-semibold text-indigo-600 focus-within:ring-2 focus-within:ring-primary-600 focus-within:ring-offset-2 focus-within:outline-hidden hover:text-primary-500"
-            >
-              <span>Upload a file</span>
-              <input
-                id="file-upload"
-                type="file"
-                className="sr-only"
-                {...register("media")}
-              />
-            </label>
-            <p className="pl-1">or drag and drop</p>
-          </div>
-          <p className="text-xs/5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
-        </div>
-      </div> */}
-      <div className="flex justify-end gap-2">
-        <button type="submit" className="btn btn-md bg-primary text-white">
-          Post
-        </button>
-      </div>
-    </form>
+            <InputTextArea
+              label="What's on your mind?"
+              name="body"
+              placeholder={placeholder}
+              register={register}
+              errors={errors}
+              clearErrors={clearErrors}
+              required
+              maxLength={500}
+              maxLengthMessage={errorMessage.maxLength(500)}
+            />
+            <InputFiles
+              label="Upload media"
+              name="media"
+              register={register}
+              errors={errors}
+              accept={[
+                acceptedFileTypes.image,
+                acceptedFileTypes.video,
+                acceptedFileTypes.document,
+              ].join(",")}
+              maxSizeInMB={2}
+              maxFiles={10}
+            />
+
+            <div className="flex justify-end gap-2">
+              <FormSubmitButton label="Post" />
+            </div>
+          </>
+        );
+      }}
+    </Form>
   );
 };
 

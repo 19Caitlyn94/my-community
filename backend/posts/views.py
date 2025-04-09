@@ -6,6 +6,7 @@ from .serializers import PostTypeSerializer
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from communities.models import Community
 from .permissions import IsCommunityMember
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 class PostTypesViewSet(viewsets.ReadOnlyModelViewSet):
@@ -20,6 +21,7 @@ class PostTypesViewSet(viewsets.ReadOnlyModelViewSet):
 class PostViewSet(CreateListRetrieveUpdateDestroyViewSet):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated & IsCommunityMember]
+    parser_classes = [MultiPartParser, FormParser]
 
     # TODO: check isAuthor on update, partial update and delete.
     # def get_permissions(self):

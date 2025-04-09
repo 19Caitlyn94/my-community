@@ -1,2 +1,7 @@
 .DS_Store
 .cursor
+
+# Cypress
+cypress/screenshots
+cypress/videos
+cypress.env.json

@@ -3,7 +3,7 @@ export { default as DevToolbar } from './DevToolbar'
 
 // Components
 export { default as Navbar } from './navbar/Navbar'
-export { default as Post } from './post/Post'
+export { default as Post } from './posts/Post'
 export { default as NewPost } from './newpost/NewPost'
 
 // UI
@@ -21,3 +21,10 @@ export { default as Badge } from './ui/badge/Badge'
 export { BADGE_TYPES } from './ui/badge/Badge'
 
 export { default as ModalWrapper } from './ui/modal/ModalWrapper'
+
+export { Form } from './ui/form/Form'
+export { InputSelect } from './ui/form/input/InputSelect'
+export { InputTextArea } from './ui/form/input/InputTextArea'
+export { InputText } from './ui/form/input/InputText'
+export { InputFiles } from './ui/form/input/InputFiles'
+export { FormSubmitButton } from './ui/form/FormSubmitButton'

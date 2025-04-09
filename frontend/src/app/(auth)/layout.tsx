@@ -13,10 +13,10 @@ function AuthLayout({ children }: Props) {
   const { data: session, status } = useSession();
 
   // If the user is authenticated redirect to base route
-  if (session) {
-    router.push("/");
-    return;
-  }
+  // if (session) {
+  //   router.push("/");
+  //   return;
+  // }
 
   return (
     <div className="flex flex-col mt-32 lg:mt-48 mx-auto max-w-sm space-y-6 text-center">

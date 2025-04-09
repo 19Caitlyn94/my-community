@@ -84,12 +84,17 @@ poetry run python manage.py test
 
 ### Frontend Tests
 
+For end-to-end and component testing, we use Cypress:
+
 ```bash
 cd frontend
-npm test
+npm run cypress:open  # Open Cypress GUI
+npm run cypress:run   # Run tests in headless mode
 ```
 
-## 📝 API Documentation
+See the [documentation](frontend/cypress/docs/overview.md) for testing guidelines.
+
+## � API Documentation
 
 The API documentation is available at `/api/docs/` when running the backend server.
 

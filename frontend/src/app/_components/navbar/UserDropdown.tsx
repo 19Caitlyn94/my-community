@@ -1,40 +1,40 @@
-"use client";
-
 import React from "react";
-import { useSession } from "next-auth/react";
-import { signOut } from "next-auth/react";
+import Link from "next/link";
 import { Avatar, AVATAR_SIZE } from "@/app/_components";
-
-type CommunityType = {
-  id: string;
-  name: string;
-};
+import LogoutButton from "./LogoutButton";
+import { getLoggedInUser } from "@/api/users";
+import UserDropdownCommunityLink from "./UserDropdownCommunityLink";
+import { type Community } from "@/types/community";
 
 type Props = {};
 
-const UserDropdown = (props: Props) => {
-  const { data: session } = useSession();
+const UserDropdown = async (props: Props) => {
+  const { data: user, error } = await getLoggedInUser();
+  if (error) {
+    console.error(error);
+    return null;
+  }
   const userDisplayName =
-    session?.user?.first_name && session?.user?.last_name
-      ? `${session?.user?.first_name} ${session?.user?.last_name}`
+    user?.first_name && user?.last_name
+      ? `${user?.first_name} ${user?.last_name}`
       : null;
-  const userCommunities = session?.user?.communities as CommunityType[];
+  const userCommunities = user?.communities;
 
   return (
     <div className="dropdown dropdown-hover dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
         <Avatar
           size={AVATAR_SIZE.md}
-          content={session?.user?.profile_image || userDisplayName}
+          content={user?.profile_image || userDisplayName}
         />
       </div>
       <ul
         tabIndex={0}
         className="menu dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow"
       >
-        {userCommunities.map((community) => (
+        {userCommunities.map((community: Community) => (
           <li key={community.id}>
-            <a>{community.name}</a>
+            <UserDropdownCommunityLink community={community} />
           </li>
         ))}
         <div className="divider"></div>
@@ -45,16 +45,14 @@ const UserDropdown = (props: Props) => {
           </a>
         </li>
         <li>
-          <a>Profile Settings</a>
+          <Link href="/profile">My Profile</Link>
         </li>
         <li>
           <a>Give feedback</a>
         </li>
         <div className="divider"></div>
         <li>
-          <button type="button" onClick={() => signOut({ callbackUrl: "/" })}>
-            Log out
-          </button>
+          <LogoutButton />
         </li>
       </ul>
     </div>
