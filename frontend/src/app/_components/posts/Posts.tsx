@@ -2,19 +2,7 @@ import React, { Suspense } from "react";
 import { Post } from "@/app/_components";
 import { formatDate } from "@/app/_utils";
 import { getPosts } from "@/api/posts";
-
-interface PostData {
-  id: number;
-  body: string;
-  posttype: string;
-  updated_at: string;
-  media_urls?: Array<string | undefined>;
-  user: {
-    first_name: string;
-    last_name: string;
-    profile_image: string;
-  };
-}
+import { type PostData } from "@/types/posts";
 
 type Props = { communityId: string };
 

@@ -165,7 +165,7 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
     "UPDATE_LAST_LOGIN": True,
-    "SIGNING_KEY": SECRET_KEY,  # generate a key and replace me
+    "SIGNING_KEY": SECRET_KEY,
     "ALGORITHM": "HS512",
 }
 

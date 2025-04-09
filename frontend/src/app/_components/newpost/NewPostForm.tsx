@@ -48,11 +48,7 @@ const NewPostForm = () => {
       });
     }
 
-    const { error, data } = await createPost(
-      formData,
-      Number(communityId),
-      session?.access_token
-    );
+    const { error, data } = await createPost(formData, Number(communityId));
     if (error) {
       console.error("Error creating post:", error);
     } else if (data) {

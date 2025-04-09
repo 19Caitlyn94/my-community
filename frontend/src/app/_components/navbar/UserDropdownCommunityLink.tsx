@@ -2,8 +2,9 @@
 import React from "react";
 import Link from "next/link";
 import { setCommunityCookie } from "@/app/actions";
+import { type Community } from "@/types/community";
 
-type Props = { community: { id: number; name: string } };
+type Props = { community: Community };
 
 const UserDropdownCommunityLink = ({ community }: Props) => {
   return (

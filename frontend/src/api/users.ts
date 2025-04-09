@@ -4,7 +4,7 @@ import { getSession } from "next-auth/react";
 
 export const updateUser = async (payload: FormData) => {
   const session = await getSession();
-  const token = session?.access_token;
+  const token = session?.accessToken;
 
   try {
     const response = await fetch(`${BACKEND_URL}api/users/${session?.user?.id}/`, {
@@ -28,7 +28,7 @@ export const updateUser = async (payload: FormData) => {
 
 export const getLoggedInUser = async () => {
   const session = await auth();
-  const token = session?.access_token;
+  const token = session?.accessToken;
 
   try {
     const response = await fetch(`${BACKEND_URL}api/auth/user/`, {

@@ -3,6 +3,7 @@
 import React, { useState, ReactNode } from "react";
 import ModalContainer from "./ModalContainer";
 import ModalCloseIcon from "./ModalCloseIcon";
+
 type Props = {
   children: ReactNode;
   modalContent: ReactNode;

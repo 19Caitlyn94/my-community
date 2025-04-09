@@ -9,7 +9,7 @@ export const getPosts = async (communityId: number) => {
       {
         headers: {
           method: "GET",
-          Authorization: `Bearer ${session?.access_token}`,
+          Authorization: `Bearer ${session?.accessToken}`,
         },
       }
     );
@@ -27,11 +27,12 @@ export const getPosts = async (communityId: number) => {
 };
 
 
-export const createPost = async (payload: FormData, communityId: number, accessToken: string) => {
+export const createPost = async (payload: FormData, communityId: number) => {
+  const session = await auth();
   try {
     const response = await fetch(`${BACKEND_URL}api/posts/?community_id=${communityId}`, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${session?.accessToken}`,
       },
       method: "POST",
       body: payload,

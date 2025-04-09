@@ -8,6 +8,9 @@ import { redirect } from "next/navigation";
 const BACKEND_ACCESS_TOKEN_LIFETIME = 45 * 60; // 45 minutes
 const BACKEND_REFRESH_TOKEN_LIFETIME = 6 * 24 * 60 * 60; // 6 days
 
+// TODO: Salt and hash password
+// TODO: Refactor to remove JWT
+
 const getCurrentEpochTime = () => {
   return Math.floor(new Date().getTime() / 1000);
 };
@@ -35,7 +38,7 @@ const refreshUserToken = async (token: JWT) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        refresh: token.refresh_token,
+        refresh: token.refreshToken,
       }),
     })
 
@@ -43,23 +46,23 @@ const refreshUserToken = async (token: JWT) => {
 
     // Check if res.data exists before accessing properties
     if (res.data) {
-      token["access_token"] = res.data.access;
-      token["refresh_token"] = res.data.refresh;
+      token["accessToken"] = res.data.access;
+      token["refreshToken"] = res.data.refresh;
       token["ref"] = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;
     } else {
       // Handle the case where data doesn't exist - token refresh failed
       console.error("Token refresh failed:", res);
       // Clear tokens to force re-login
-      delete token.access_token;
-      delete token.refresh_token;
+      delete token.accessToken;
+      delete token.refreshToken;
     }
 
     return token;
   } catch (error) {
     console.error("Error refreshing token:", error);
     // On error, clear tokens to force re-login
-    delete token.access_token;
-    delete token.refresh_token;
+    delete token.accessToken;
+    delete token.refreshToken;
 
     // If we fail to refresh the token, return an error so we can handle it on the page
     token.error = "RefreshTokenError"
@@ -74,6 +77,7 @@ const SIGN_IN_HANDLERS = {
     return true;
   },
 };
+
 const SIGN_IN_PROVIDERS = Object.keys(SIGN_IN_HANDLERS);
 
 const providers = [
@@ -90,6 +94,7 @@ const providers = [
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(credentials),
       })
+      // TODO: Handle error response
       if (!response.ok) return null
       return (await response.json()) ?? null
     },
@@ -113,8 +118,8 @@ const callbacks = {
       let backendResponse =
         account.provider === "credentials" ? user : account.meta;
       token["user"] = backendResponse.user;
-      token["access_token"] = backendResponse.access;
-      token["refresh_token"] = backendResponse.refresh;
+      token["accessToken"] = backendResponse.access;
+      token["refreshToken"] = backendResponse.refresh;
       token["ref"] = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;
       return token;
     }

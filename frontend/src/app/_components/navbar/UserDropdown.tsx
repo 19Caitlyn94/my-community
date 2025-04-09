@@ -1,14 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import { Avatar, AVATAR_SIZE } from "@/app/_components";
-import LogoutButton from "./LogOutButton";
+import LogoutButton from "./LogoutButton";
 import { getLoggedInUser } from "@/api/users";
 import UserDropdownCommunityLink from "./UserDropdownCommunityLink";
-
-type CommunityType = {
-  id: string;
-  name: string;
-};
+import { type Community } from "@/types/community";
 
 type Props = {};
 
@@ -22,7 +18,7 @@ const UserDropdown = async (props: Props) => {
     user?.first_name && user?.last_name
       ? `${user?.first_name} ${user?.last_name}`
       : null;
-  const userCommunities = user?.communities as CommunityType[];
+  const userCommunities = user?.communities;
 
   return (
     <div className="dropdown dropdown-hover dropdown-end">
@@ -36,7 +32,7 @@ const UserDropdown = async (props: Props) => {
         tabIndex={0}
         className="menu dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow"
       >
-        {userCommunities.map((community) => (
+        {userCommunities.map((community: Community) => (
           <li key={community.id}>
             <UserDropdownCommunityLink community={community} />
           </li>
