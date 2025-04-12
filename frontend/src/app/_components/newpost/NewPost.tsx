@@ -10,9 +10,7 @@ import ModalWrapper from "../ui/modal/ModalWrapper";
 import NewPostForm from "./NewPostForm";
 import { getLoggedInUser } from "@/api/users";
 
-type Props = {};
-
-const NewPost = async (props: Props) => {
+const NewPost = async () => {
   const { data: user, error } = await getLoggedInUser();
 
   if (error) {

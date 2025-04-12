@@ -3,9 +3,7 @@ import { ResponsiveCard } from "@/app/_components";
 
 import { blogData } from "@/data/data";
 
-type Props = {};
-
-const Blog = (props: Props) => {
+const Blog = () => {
   if (!blogData) {
     return <div>No blog data found</div>;
   }

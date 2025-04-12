@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-
+import Image from "next/image";
 type Props = {
   title: string;
   description: string;
@@ -20,7 +20,7 @@ const ResponsiveCard = ({
     <Link href={to}>
       <div className="card xl:card-side shadow-lg shadow-neutral-300/50 border border-neutral-300/50">
         <figure>
-          <img src={image} alt={`${title} image`} />
+          <Image width="500" height="500" src={image} alt={`${title} image`} />
         </figure>
         <div className="card-body basis-full">
           <h2 className="card-title">{title}</h2>

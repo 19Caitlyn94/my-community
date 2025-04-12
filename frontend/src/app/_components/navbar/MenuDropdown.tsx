@@ -2,9 +2,7 @@ import React from "react";
 import { Icon, ICONS } from "@/app/_components";
 import Navlink from "./Navlink";
 
-type Props = {};
-
-const MenuDropdown = (props: Props) => {
+const MenuDropdown = () => {
   return (
     <div className="dropdown dropdown-hover">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">

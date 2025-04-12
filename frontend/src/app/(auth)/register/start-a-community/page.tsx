@@ -2,9 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Icon, ICONS } from "@/app/_components";
 
-type Props = {};
-
-function StartACommunity({}: Props) {
+function StartACommunity() {
   return (
     <>
       <h1 className="text-2xl font-bold"> Start a community </h1>

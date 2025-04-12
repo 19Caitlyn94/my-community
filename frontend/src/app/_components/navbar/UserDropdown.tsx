@@ -6,9 +6,7 @@ import { getLoggedInUser } from "@/api/users";
 import UserDropdownCommunityLink from "./UserDropdownCommunityLink";
 import { type Community } from "@/types/community";
 
-type Props = {};
-
-const UserDropdown = async (props: Props) => {
+const UserDropdown = async () => {
   const { data: user, error } = await getLoggedInUser();
   if (error) {
     console.error(error);

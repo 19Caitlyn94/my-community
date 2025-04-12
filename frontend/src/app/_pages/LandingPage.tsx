@@ -1,9 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-type Props = {};
-
-const LandingPage = (props: Props) => {
+const LandingPage = () => {
   return (
     <div className="mt-32 lg:mt-48">
       <div className="max-w-md mx-auto flex flex-col container space-y-6 text-center">
