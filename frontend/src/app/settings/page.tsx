@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-function Settings({}: Props) {
+function Settings() {
   return <p className="text-2xl">Settings</p>;
 }
 

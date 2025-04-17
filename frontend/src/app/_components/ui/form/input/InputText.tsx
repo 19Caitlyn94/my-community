@@ -1,19 +1,12 @@
 import React from "react";
-import {
-  UseFormRegister,
-  FieldErrors,
-  UseFormClearErrors,
-} from "react-hook-form";
+import { type FieldValues } from "react-hook-form";
 import { errorMessage } from "@/app/_utils";
 
-interface InputTextProps {
+interface InputTextProps extends FieldValues {
   label: string;
   name: string;
   placeholder?: string;
   type?: string;
-  register: UseFormRegister<any>;
-  errors: FieldErrors<any>;
-  clearErrors?: UseFormClearErrors<any>;
   required?: boolean;
   pattern?: RegExp;
   patternMessage?: string;

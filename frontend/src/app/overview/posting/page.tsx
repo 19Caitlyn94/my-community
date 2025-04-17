@@ -2,9 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Icon, ICONS } from "@/app/_components";
 
-type Props = {};
-
-function Overview({}: Props) {
+function Overview() {
   return (
     <>
       <h4 className="font-semibold">Posting</h4>

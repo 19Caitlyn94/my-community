@@ -1,9 +1,27 @@
+
+/**
+ * Formats a date into a localized string
+ * @param date - The Date object to format
+ * @returns A formatted date string like "Thu, 10 Mar 2025, 8:00"
+ */
+export const formattedDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  });
+}
+
 /**
  * Converts a date string to a human-readable relative time (e.g., "2 hours ago")
  * @param dateString - ISO date string
  * @returns Relative time string
  */
-export const formatDate = (dateString: string) => {
+export const formatRelativeDate = (dateString: string) => {
   const date = new Date(dateString);
   const now = new Date();
   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
@@ -44,6 +62,7 @@ export const formatDate = (dateString: string) => {
   }
 
   // More than a year
-  const years = Math.floor(days / 365);
-  return `Over a year ago`;
-}; 
+  return formattedDate(dateString);
+}
+
+

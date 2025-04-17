@@ -1,9 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-type Props = {};
-
-function Register({}: Props) {
+function Register() {
   return (
     <>
       <h1 className="text-2xl font-bold">Register</h1>

@@ -1,12 +1,12 @@
 import React from "react";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import { errorMessage } from "@/app/_utils/form";
 
 type Props = {
   label: string;
   name: string;
-  register: UseFormRegister<any>;
-  errors: FieldErrors<any>;
+  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors<FieldValues>;
   accept: string;
   required?: boolean;
   className?: string;

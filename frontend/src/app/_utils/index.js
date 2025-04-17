@@ -1,5 +1,5 @@
 // Date
-export { formatDate } from "./date";
+export { formatRelativeDate, formattedDate } from "./date";
 
 // Function
 export { getInitials, stringToHslColor } from "./functions";

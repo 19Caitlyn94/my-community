@@ -6,9 +6,7 @@ import UserDropdown from "./UserDropdown";
 import Navlink from "./Navlink";
 import { ICONS } from "../ui/icon/utils";
 
-type Props = {};
-
-const Navbar = async (props: Props) => {
+const Navbar = async () => {
   const session = await auth();
 
   const isLoggedIn = !!session;

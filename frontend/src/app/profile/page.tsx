@@ -1,5 +1,5 @@
 import React from "react";
-import { getLoggedInUser } from "@/api/users";
+import { getLoggedInUser } from "@/actions/users";
 import { Avatar, AVATAR_SIZE } from "@/app/_components";
 
 const Profile = async () => {

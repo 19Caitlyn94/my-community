@@ -1,9 +1,7 @@
 import React from "react";
 import { Icon, ICONS } from "@/app/_components";
 
-type Props = {};
-
-function DevToolbar({}: Props) {
+function DevToolbar() {
   return (
     <div className="fixed bottom-0 left-0">
       <label className="swap swap-rotate">

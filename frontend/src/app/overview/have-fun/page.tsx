@@ -2,9 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Icon, ICONS } from "@/app/_components";
 
-type Props = {};
-
-function Overview({}: Props) {
+function Overview() {
   return (
     <>
       <h4 className="font-semibold">
@@ -15,10 +13,9 @@ function Overview({}: Props) {
         supportive, safe and thriving community.
       </p>
       <p>
-        "
         <i>
-          The best communities are those that are built on a foundation of love,
-          respect and trust..."
+          "The best communities are those that are built on a foundation of
+          love, respect and trust..."
         </i>
       </p>
       <Link href="/">

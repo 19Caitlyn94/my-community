@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { Post } from "@/app/_components";
-import { formatDate } from "@/app/_utils";
-import { getPosts } from "@/api/posts";
+import { formatRelativeDate } from "@/app/_utils";
+import { getPosts } from "@/actions/posts";
 import { type PostData } from "@/types/posts";
 
 type Props = { communityId: string };
@@ -22,7 +22,7 @@ const Posts = async ({ communityId }: Props) => {
             key={p.id}
             body={p.body}
             postTypeSlug={p.posttype}
-            updatedDate={formatDate(p.updated_at)}
+            updatedDate={formatRelativeDate(p.updated_at)}
             userFirstName={p.user.first_name}
             userLastName={p.user.last_name}
             userProfileImageUrl={p.user.profile_image}

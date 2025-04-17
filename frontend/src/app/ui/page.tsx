@@ -16,10 +16,11 @@ import {
 } from "@/app/_components";
 import { errorMessage, validationPattern } from "../_utils";
 import { acceptedFileTypes } from "../_utils/form";
+import { FieldValues } from "react-hook-form";
 
 function UI() {
   // Mock form submit handler
-  const handleSubmit = (data: any) => {
+  const handleSubmit = (data: FieldValues) => {
     console.log("Form submitted:", data);
     alert("Form submitted! Check console for data.");
   };
@@ -94,9 +95,7 @@ function UI() {
             category: "",
             message: "",
           }}
-          formOptions={{
-            mode: "onBlur",
-          }}
+          mode="onBlur"
         >
           {({
             register,
@@ -155,7 +154,7 @@ function UI() {
                   errors={errors}
                   required
                   value={category}
-                  onValueChange={(value) => setValue("category", value)}
+                  onValueChange={(value: string) => setValue("category", value)}
                 />
 
                 <InputTextArea

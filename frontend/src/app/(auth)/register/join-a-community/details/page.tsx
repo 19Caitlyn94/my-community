@@ -7,19 +7,14 @@ import {
   FormSubmitButton,
   InputFiles,
 } from "@/app/_components";
-import { updateUser } from "@/api/users";
+import { updateUser } from "@/actions/users";
 import { acceptedFileTypes } from "@/app/_utils/form";
-
-type FormValues = {
-  first_name: string;
-  last_name: string;
-  profile_image: FileList | null;
-};
+import { FieldValues } from "react-hook-form";
 
 function RegisterUserDetails() {
   const router = useRouter();
 
-  const handleUpdateUser = async (data: FormValues) => {
+  const handleUpdateUser = async (data: FieldValues) => {
     const formData = new FormData();
     formData.append("first_name", data.first_name);
     formData.append("last_name", data.last_name);
@@ -41,16 +36,14 @@ function RegisterUserDetails() {
     <>
       <h1 className="text-2xl font-bold">Tell us about yourself</h1>
 
-      <Form<FormValues>
+      <Form
         className="relative w-full max-w-sm text-left"
         onSubmit={handleUpdateUser}
         defaultValues={{
           first_name: "",
           last_name: "",
         }}
-        formOptions={{
-          mode: "onBlur",
-        }}
+        mode="onBlur"
       >
         {({ register, formState: { errors }, clearErrors }) => (
           <>

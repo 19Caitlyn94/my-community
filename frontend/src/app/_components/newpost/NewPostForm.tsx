@@ -8,10 +8,11 @@ import {
   InputFiles,
   FormSubmitButton,
 } from "@/app/_components";
-import { createPost } from "@/api/posts";
+import { createPost } from "@/actions/posts";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import { acceptedFileTypes } from "@/app/_utils/form";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 
 type FormValues = {
   posttype: string;
@@ -48,7 +49,11 @@ const NewPostForm = () => {
       });
     }
 
-    const { error, data } = await createPost(formData, Number(communityId));
+    const { error, data } = await createPost(
+      formData,
+      Number(communityId),
+      session?.accessToken || ""
+    );
     if (error) {
       console.error("Error creating post:", error);
     } else if (data) {
@@ -60,15 +65,13 @@ const NewPostForm = () => {
 
   return (
     <Form
-      onSubmit={handleCreatePost}
+      onSubmit={handleCreatePost as SubmitHandler<FieldValues>}
       defaultValues={{
         body: "",
         posttype: "",
         media: undefined,
       }}
-      formOptions={{
-        mode: "onChange",
-      }}
+      mode="onChange"
     >
       {({ register, formState: { errors }, clearErrors, watch, setValue }) => {
         const postType = watch("posttype");
@@ -86,13 +89,6 @@ const NewPostForm = () => {
         const placeholder =
           placeholderMap[postType as keyof typeof placeholderMap] ||
           "I'd like to share...";
-
-        // Example of reacting to form value changes
-        // useEffect(() => {
-        //   if (postType === "security-alert") {
-        //     setValue("body", "ALERT: ");
-        //   }
-        // }, [postType, setValue]);
 
         return (
           <>

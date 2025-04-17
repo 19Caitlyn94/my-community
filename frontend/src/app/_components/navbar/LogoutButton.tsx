@@ -3,9 +3,7 @@
 import { signOut } from "next-auth/react";
 import React from "react";
 
-type Props = {};
-
-const LogoutButton = (props: Props) => {
+const LogoutButton = () => {
   return (
     <button type="button" onClick={() => signOut({ callbackUrl: "/" })}>
       Log out

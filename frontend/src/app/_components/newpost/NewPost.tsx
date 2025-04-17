@@ -8,11 +8,9 @@ import {
 } from "@/app/_components";
 import ModalWrapper from "../ui/modal/ModalWrapper";
 import NewPostForm from "./NewPostForm";
-import { getLoggedInUser } from "@/api/users";
+import { getLoggedInUser } from "@/actions/users";
 
-type Props = {};
-
-const NewPost = async (props: Props) => {
+const NewPost = async () => {
   const { data: user, error } = await getLoggedInUser();
 
   if (error) {

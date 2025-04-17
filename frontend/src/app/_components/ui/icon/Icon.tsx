@@ -1,6 +1,6 @@
 import React from "react";
 
-type Props = { iconType: Array<string>; className?: string; title?: String };
+type Props = { iconType: Array<string>; className?: string; title?: string };
 
 const Icon = ({ iconType, className = "size-6", title }: Props) => {
   return (
