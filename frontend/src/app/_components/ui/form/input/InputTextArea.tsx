@@ -3,15 +3,16 @@ import {
   UseFormRegister,
   FieldErrors,
   UseFormClearErrors,
+  FieldValues,
 } from "react-hook-form";
 
 interface InputTextAreaProps {
   label: string;
   name: string;
   placeholder?: string;
-  register: UseFormRegister<any>;
-  errors: FieldErrors<any>;
-  clearErrors: UseFormClearErrors<any>;
+  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors<FieldValues>;
+  clearErrors: UseFormClearErrors<FieldValues>;
   required?: boolean;
   maxLength?: number;
   maxLengthMessage?: string;

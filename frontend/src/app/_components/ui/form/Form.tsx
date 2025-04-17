@@ -2,35 +2,39 @@
 
 import React, { ReactNode } from "react";
 import {
-  UseFormReturn,
   useForm,
-  UseFormProps,
-  FieldValues,
-  DefaultValues,
+  type UseFormProps,
+  type UseFormReturn,
+  type FieldValues,
+  type SubmitHandler,
 } from "react-hook-form";
 
-interface FormProps<T extends FieldValues> {
-  children: (methods: UseFormReturn<T>) => ReactNode;
-  onSubmit: (data: T) => void;
+interface FormProps extends UseFormProps {
+  children: (methods: UseFormReturn<FieldValues>) => ReactNode;
+  onSubmit: SubmitHandler<FieldValues>;
   className?: string;
-  formOptions?: UseFormProps<T>;
-  defaultValues?: DefaultValues<T>;
 }
 
-export function Form<T extends FieldValues>({
+export function Form({
   children,
   onSubmit,
   className = "relative w-full",
-  formOptions,
+  mode,
   defaultValues,
-}: FormProps<T>) {
-  const methods = useForm<T>({
-    ...formOptions,
+  ...rest
+}: FormProps) {
+  const methods = useForm({
+    mode,
     defaultValues,
+    ...rest,
   });
 
   return (
-    <form className={className} onSubmit={methods.handleSubmit(onSubmit)}>
+    <form
+      className={className}
+      onSubmit={methods.handleSubmit(onSubmit)}
+      {...rest}
+    >
       {children(methods)}
     </form>
   );

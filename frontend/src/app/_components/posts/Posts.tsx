@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { Post } from "@/app/_components";
 import { formatRelativeDate } from "@/app/_utils";
-import { getPosts } from "@/api/posts";
+import { getPosts } from "@/actions/posts";
 import { type PostData } from "@/types/posts";
 
 type Props = { communityId: string };

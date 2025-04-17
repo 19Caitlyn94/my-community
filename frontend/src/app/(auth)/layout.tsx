@@ -1,32 +1,15 @@
-"use client";
-
 import React from "react";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 
 type Props = {
   children: React.ReactNode;
 };
 
-function AuthLayout({ children }: Props) {
-  const router = useRouter();
-  const { data: session, status } = useSession();
-
-  // If the user is authenticated redirect to base route
-  // if (session) {
-  //   router.push("/");
-  //   return;
-  // }
-
+const AuthLayout = async ({ children }: Props) => {
   return (
     <div className="flex flex-col mt-32 lg:mt-48 mx-auto max-w-sm space-y-6 text-center">
-      {status == "loading" ? (
-        <span className="loading loading-spinner"></span>
-      ) : (
-        children
-      )}
+      {children}
     </div>
   );
-}
+};
 
 export default AuthLayout;

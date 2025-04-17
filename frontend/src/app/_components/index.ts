@@ -5,7 +5,8 @@ export { default as DevToolbar } from './DevToolbar'
 export { default as Navbar } from './navbar/Navbar'
 export { default as Post } from './posts/Post'
 export { default as NewPost } from './newpost/NewPost'
-
+export { default as LoginForm } from './auth/LoginForm'
+export { default as JoinCommunityForm } from './auth/JoinCommunityForm'
 // UI
 export { default as CardLoader } from './ui/loader/CardLoader'
 export { default as ResponsiveCard } from './ui/card/ResponsiveCard'

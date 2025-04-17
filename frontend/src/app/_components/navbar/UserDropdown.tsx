@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Avatar, AVATAR_SIZE } from "@/app/_components";
 import LogoutButton from "./LogoutButton";
-import { getLoggedInUser } from "@/api/users";
+import { getLoggedInUser } from "@/actions/users";
 import UserDropdownCommunityLink from "./UserDropdownCommunityLink";
 import { type Community } from "@/types/community";
 

@@ -27,14 +27,13 @@ export const getPosts = async (communityId: number) => {
 };
 
 
-export const createPost = async (payload: FormData, communityId: number) => {
-  const session = await auth();
+export const createPost = async (payload: FormData, communityId: number, accessToken: string) => {
   try {
     const response = await fetch(`${BACKEND_URL}api/posts/?community_id=${communityId}`, {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
       method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
       body: payload,
     });
 

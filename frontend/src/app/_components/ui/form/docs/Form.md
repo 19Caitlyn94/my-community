@@ -21,9 +21,7 @@ The Form component is a flexible, reusable wrapper around React Hook Form that s
     field1: "default",
     field2: "",
   }}
-  formOptions={{
-    mode: "onChange",
-  }}
+  mode="onChange"
 >
   {({ register, formState: { errors }, watch, setValue, ...methods }) => (
     <>{/* Your form inputs here */}</>
@@ -33,13 +31,11 @@ The Form component is a flexible, reusable wrapper around React Hook Form that s
 
 ## Props
 
-| Prop            | Type                                       | Description                                     |
-| --------------- | ------------------------------------------ | ----------------------------------------------- |
-| `onSubmit`      | `(data: T) => void`                        | Function to handle form submission              |
-| `defaultValues` | `DefaultValues<T>`                         | Initial values for form fields                  |
-| `formOptions`   | `UseFormProps<T>`                          | Options passed to React Hook Form               |
-| `className`     | `string?`                                  | Optional CSS class for the form element         |
-| `children`      | `(methods: UseFormReturn<T>) => ReactNode` | Render prop function that receives form methods |
+| Prop        | Type                                       | Description                                     |
+| ----------- | ------------------------------------------ | ----------------------------------------------- |
+| `onSubmit`  | `(data: T) => void`                        | Function to handle form submission              |
+| `className` | `string?`                                  | Optional CSS class for the form element         |
+| `children`  | `(methods: UseFormReturn<T>) => ReactNode` | Render prop function that receives form methods |
 
 ## Examples
 

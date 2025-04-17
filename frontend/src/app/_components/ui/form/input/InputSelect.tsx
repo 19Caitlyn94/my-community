@@ -1,18 +1,8 @@
 import React from "react";
-import { UseFormRegister, FieldErrors } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 
-interface InputSelectProps {
-  label: string;
-  name: string;
+interface InputSelectProps extends FieldValues {
   options: { value: string; label: string }[];
-  register: UseFormRegister<any>;
-  errors: FieldErrors<any>;
-  required?: boolean;
-  errorMessage?: string;
-  value?: string;
-  onValueChange?: (value: string) => void;
-  className?: string;
-  dataTestId?: string;
 }
 
 export const InputSelect: React.FC<InputSelectProps> = ({
