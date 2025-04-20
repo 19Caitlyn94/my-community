@@ -1,9 +1,15 @@
-import { BACKEND_URL } from "@/app/_utils/config";
+import { BACKEND_URL, isDev } from "@/app/_utils/config";
 import { auth } from "@/auth";
 
 export const getPosts = async (communityId: number) => {
   const session = await auth();
   try {
+    if (isDev) {
+      // Simulate a slow response in development to show skeleton loader
+      console.debug("Simulating slow response...");
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+
     const response = await fetch(
       `${BACKEND_URL}api/posts/?community_id=${communityId}`,
       {

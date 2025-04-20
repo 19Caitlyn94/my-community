@@ -5,7 +5,7 @@ import LandingPage from "./_pages/LandingPage";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
-export default async function Home() {
+export default async function Page() {
   const session = await auth();
   const isLoggedIn = session?.user;
   const firstCommunity = session?.user?.communities[0]?.id;

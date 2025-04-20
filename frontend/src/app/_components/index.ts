@@ -29,3 +29,7 @@ export { InputTextArea } from './ui/form/input/InputTextArea'
 export { InputText } from './ui/form/input/InputText'
 export { InputFiles } from './ui/form/input/InputFiles'
 export { FormSubmitButton } from './ui/form/FormSubmitButton'
+
+// Posts
+export { default as PostSkeleton } from './posts/PostSkeleton'
+export { default as PostSkeletonWrapper } from './posts/PostSkeletonWrapper'

@@ -1,5 +1,5 @@
-import React from "react";
-import { NewPost } from "@/app/_components";
+import React, { Suspense } from "react";
+import { NewPost, PostSkeletonWrapper } from "@/app/_components";
 import { auth } from "@/auth";
 import Posts from "../_components/posts/Posts";
 import { redirect } from "next/navigation";
@@ -15,7 +15,9 @@ const Newsfeed = async ({ communityId }: Props) => {
   return (
     <div>
       <NewPost />
-      <Posts communityId={communityId} />
+      <Suspense fallback={<PostSkeletonWrapper />}>
+        <Posts communityId={communityId} />
+      </Suspense>
     </div>
   );
 };
