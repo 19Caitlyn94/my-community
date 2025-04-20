@@ -11,6 +11,7 @@ import {
 } from "@/app/_components";
 import PostHeader from "./PostHeader";
 import { BACKEND_URL } from "@/app/_utils";
+import clsx from "clsx";
 
 type Props = {
   body?: string;
@@ -33,8 +34,9 @@ const Post = ({
   userProfileImageUrl,
   mediaUrls,
 }: Props) => {
+  const wrapperClasses = clsx(className);
   return (
-    <CardWrapper className={`${className || ""}`}>
+    <CardWrapper className={wrapperClasses}>
       <PostHeader
         userProfileImageUrl={userProfileImageUrl}
         userDisplayName={`${userFirstName}${userLastName ? ` ${userLastName}` : ""}`}

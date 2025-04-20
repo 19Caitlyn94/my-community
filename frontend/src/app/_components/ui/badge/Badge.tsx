@@ -1,6 +1,7 @@
 import React from "react";
+import clsx from "clsx";
 
-type Props = { className: string; title: string; badgeType: string };
+type Props = { className?: string; title: string; badgeType: string };
 
 export const BADGE_TYPES = {
   gray: "text-gray-600 bg-gray-300",
@@ -14,13 +15,13 @@ export const BADGE_TYPES = {
 };
 
 const Badge = ({ className, title, badgeType }: Props) => {
-  return (
-    <span
-      className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${badgeType || ""} ${className || ""} `}
-    >
-      {title}
-    </span>
+  const badgeClasses = clsx(
+    "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium",
+    badgeType,
+    className
   );
+
+  return <span className={badgeClasses}>{title}</span>;
 };
 
 export default Badge;
