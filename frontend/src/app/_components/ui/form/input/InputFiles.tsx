@@ -1,6 +1,7 @@
 import React from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import { errorMessage } from "@/app/_utils/form";
+import clsx from "clsx";
 
 type Props = {
   label: string;
@@ -45,16 +46,20 @@ export const InputFiles = ({
     },
   };
 
+  const inputClasses = clsx(
+    "file-input w-full border rounded-md p-2 bg-base-100",
+    { "border-rose-700": errors[name] }
+  );
+  const wrapperClasses = clsx("mb-5", className);
+
   return (
-    <div className={`mb-5 ${className || ""}`} data-testid={dataTestId}>
+    <div className={wrapperClasses} data-testid={dataTestId}>
       <label className="form-control w-full label-text mb-2">{label}</label>
       <input
         type="file"
         accept={accept}
         multiple={true}
-        className={`file-input w-full border rounded-md p-2 bg-base-100 ${
-          errors[name] ? "border-rose-700" : "border-gray-700"
-        }`}
+        className={inputClasses}
         {...register(name, validation)}
       />
       {errors[name] && (

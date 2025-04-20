@@ -5,6 +5,7 @@ import {
   UseFormClearErrors,
   FieldValues,
 } from "react-hook-form";
+import clsx from "clsx";
 
 interface InputTextAreaProps {
   label: string;
@@ -43,18 +44,17 @@ export const InputTextArea: React.FC<InputTextAreaProps> = ({
     }),
   };
 
+  const wrapperClasses = clsx("mb-5", className);
+  const inputClasses = clsx(
+    "w-full h-24 border border-gray-300 rounded-md p-2 bg-base-100 placeholder:text-gray-500",
+    { "border-rose-500 focus:border-rose-500": errors[name] }
+  );
+
   return (
-    <div
-      className={`mb-5 relative ${className || ""}`}
-      data-testid={dataTestId}
-    >
+    <div className={wrapperClasses} data-testid={dataTestId}>
       <label className="form-control w-full label-text mb-2">{label}</label>
       <textarea
-        className={`w-full h-24 border border-gray-300 rounded-md p-2 bg-base-100 placeholder:text-gray-500 ${
-          errors[name]
-            ? "border-rose-500 focus:border-rose-500"
-            : "border-gray-700 focus:border-gray-700"
-        }`}
+        className={inputClasses}
         placeholder={placeholder}
         onFocus={() => clearErrors(name)}
         {...register(name, validation)}

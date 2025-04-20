@@ -1,5 +1,6 @@
 import React from "react";
 import { FieldValues } from "react-hook-form";
+import clsx from "clsx";
 
 interface InputSelectProps extends FieldValues {
   options: { value: string; label: string }[];
@@ -16,15 +17,17 @@ export const InputSelect: React.FC<InputSelectProps> = ({
   errorMessage = "This field is required",
   dataTestId = "",
 }) => {
+  const wrapperClasses = clsx("mb-5", className);
+  const inputClasses = clsx(
+    "w-full border rounded-md p-2 bg-base-100 placeholder:text-gray-500 border-gray-700 focus:border-gray-700",
+    { "border-rose-500 focus:border-rose-500": errors[name] }
+  );
+
   return (
-    <div className={`mb-5 ${className || ""}`} data-testid={dataTestId}>
+    <div className={wrapperClasses} data-testid={dataTestId}>
       <label className="form-control w-full label-text mb-2">{label}</label>
       <select
-        className={`w-full border rounded-md p-2 bg-base-100 placeholder:text-gray-500 ${
-          errors[name]
-            ? "border-rose-500 focus:border-rose-500"
-            : "border-gray-700 focus:border-gray-700"
-        }`}
+        className={inputClasses}
         {...register(name, { required: required ? errorMessage : false })}
       >
         <option className="text-gray-500" value="">

@@ -1,6 +1,7 @@
 import React from "react";
 import { type FieldValues } from "react-hook-form";
 import { errorMessage } from "@/app/_utils";
+import clsx from "clsx";
 
 interface InputTextProps extends FieldValues {
   label: string;
@@ -54,16 +55,18 @@ export const InputText: React.FC<InputTextProps> = ({
         }
       : undefined;
 
+  const wrapperClasses = clsx("mb-5", className);
+  const inputClasses = clsx(
+    "w-full border rounded-md p-2 bg-base-100 placeholder:text-gray-500 border-gray-700 focus:border-gray-700",
+    { "border-rose-500": errors[name] }
+  );
+
   return (
-    <div className={`mb-5 ${className || ""}`} data-testid={dataTestId}>
+    <div className={wrapperClasses} data-testid={dataTestId}>
       <label className="form-control w-full label-text mb-2">{label}</label>
       <input
         type={type}
-        className={`w-full border rounded-md p-2 bg-base-100 placeholder:text-gray-500 ${
-          errors[name]
-            ? "border-rose-500 focus:border-rose-500"
-            : "border-gray-700 focus:border-gray-700"
-        }`}
+        className={inputClasses}
         placeholder={placeholder}
         onFocus={() => clearErrors && clearErrors(name)}
         {...(onValueChange && registerAttrs

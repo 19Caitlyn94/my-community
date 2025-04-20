@@ -43,7 +43,7 @@ function RegisterUserDetails() {
           first_name: "",
           last_name: "",
         }}
-        mode="onBlur"
+        mode="onChange"
       >
         {({ register, formState: { errors }, clearErrors }) => (
           <>
@@ -55,9 +55,6 @@ function RegisterUserDetails() {
               errors={errors}
               clearErrors={clearErrors}
               required
-              className={
-                errors.first_name ? "border-rose-700" : "border-gray-700"
-              }
             />
             <InputText
               label="Last name"
@@ -67,9 +64,6 @@ function RegisterUserDetails() {
               errors={errors}
               clearErrors={clearErrors}
               required
-              className={
-                errors.last_name ? "border-rose-700" : "border-gray-700"
-              }
             />
             <InputFiles
               label="Profile image (optional)"

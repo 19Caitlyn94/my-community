@@ -34,7 +34,6 @@ const LoginForm = () => {
               required
               pattern={validationPattern.email}
               patternMessage={errorMessage.email}
-              className={errors.email ? "border-rose-700" : "border-gray-700"}
               dataTestId="email-field"
             />
             <InputText
@@ -46,9 +45,6 @@ const LoginForm = () => {
               errors={errors}
               clearErrors={clearErrors}
               required
-              className={
-                errors.password ? "border-rose-700" : "border-gray-700"
-              }
               dataTestId="password-field"
             />
 
