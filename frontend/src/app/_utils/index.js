@@ -2,7 +2,7 @@
 export { formatRelativeDate, formattedDate } from "./date";
 
 // Function
-export { getInitials, stringToHslColor } from "./functions";
+export { getInitials, stringToHslColor, debounce } from "./functions";
 
 // Config
 export { BACKEND_URL, isDev } from "./config";

@@ -17,12 +17,17 @@ import {
 import { errorMessage, validationPattern } from "../_utils";
 import { acceptedFileTypes } from "../_utils/form";
 import { FieldValues } from "react-hook-form";
+import { SearchInput } from "@/app/_components";
 
 function UI() {
   // Mock form submit handler
   const handleSubmit = (data: FieldValues) => {
     console.log("Form submitted:", data);
     alert("Form submitted! Check console for data.");
+  };
+
+  const handleSearch = (value: string) => {
+    console.log("Search value:", value);
   };
 
   return (
@@ -193,6 +198,9 @@ function UI() {
           }}
         </Form>
       </div>
+      <div className="divider"></div>
+      <p className="text-xl mb-5">Inputs</p>
+      <SearchInput name="posts" onChange={handleSearch} />
     </div>
   );
 }
