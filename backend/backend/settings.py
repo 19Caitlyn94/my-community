@@ -113,8 +113,8 @@ DATABASES = {
         "NAME": env("DB_NAME"),
         "PASSWORD": env("DB_SECRET"),
         "USER": env("DB_USER"),
-        "PORT": "5432",
-        "HOST": "",  # "" defaults to localhost
+        "PORT": env("DB_PORT", default="5432"),
+        "HOST": env("DB_HOST", default=""),
     }
 }
 
