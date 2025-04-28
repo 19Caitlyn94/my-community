@@ -2,6 +2,6 @@
   "version": 2,
   "builds": [{ "src": "package.json", "use": "@vercel/next" }],
   "env": {
-    "NEXT_PUBLIC_API_URL": "https://mycommunity.onrender.com"
+    "NEXT_PUBLIC_BACKEND_URL": "https://mycommunity.onrender.com/"
   }
 }
