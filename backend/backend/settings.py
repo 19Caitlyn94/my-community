@@ -214,6 +214,7 @@ else:
     CORS_ALLOWED_ORIGINS = [
         "http://localhost:3000/",
         "http://127.0.0.1:3000/",
+        "https://mycommunity.onrender.com/",
     ]
 
 # Stores images from ImageField in www.yoursite.com/allmedia/path_to_image/image.png
