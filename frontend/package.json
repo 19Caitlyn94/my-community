@@ -11,6 +11,7 @@
     "cypress:run": "cypress run"
   },
   "dependencies": {
+    "@vercel/next": "^4.7.8",
     "clsx": "^2.1.1",
     "next": "^15.2.5",
     "next-auth": "5.0.0-beta.25",
