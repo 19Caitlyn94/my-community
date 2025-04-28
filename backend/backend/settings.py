@@ -215,6 +215,7 @@ else:
         "http://localhost:3000",
         "http://127.0.0.1:3000",
         "https://mycommunity.onrender.com",
+        "https://mycommunityapp.vercel.app",
     ]
 
 # Stores images from ImageField in www.yoursite.com/allmedia/path_to_image/image.png
