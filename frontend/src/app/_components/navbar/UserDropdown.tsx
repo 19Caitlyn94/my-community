@@ -28,7 +28,7 @@ const UserDropdown = async () => {
       </div>
       <ul
         tabIndex={0}
-        className="menu dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow"
+        className="menu dropdown-content bg-base-100 rounded-box w-52 p-2 shadow"
       >
         {userCommunities.map((community: Community) => (
           <li key={community.id}>
