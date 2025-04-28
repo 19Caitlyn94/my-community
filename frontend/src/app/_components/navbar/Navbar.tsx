@@ -8,8 +8,8 @@ import { ICONS } from "../ui/icon/utils";
 
 const Navbar = async () => {
   const session = await auth();
-
   const isLoggedIn = !!session;
+
   return (
     <div className="z-10 navbar sticky top-0 bg-base-100">
       <div className="navbar-start lg:hidden">

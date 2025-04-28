@@ -1,5 +1,5 @@
 import React from "react";
-import Newsfeed from "../_pages/Newsfeed";
+import Newsfeed from "@/app/_pages/Newsfeed";
 
 type Props = { params: Promise<{ communityId: string }> };
 

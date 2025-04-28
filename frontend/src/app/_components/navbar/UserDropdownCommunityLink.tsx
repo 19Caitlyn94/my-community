@@ -10,7 +10,7 @@ const UserDropdownCommunityLink = ({ community }: Props) => {
   return (
     <Link
       onClick={() => setCommunityCookie(community.id)}
-      href={`/${community.id}`}
+      href={`/community/${community.id}`}
     >
       {community.name}
     </Link>

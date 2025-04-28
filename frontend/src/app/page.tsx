@@ -15,7 +15,7 @@ export default async function Page() {
   )?.value;
 
   if (isLoggedIn) {
-    redirect(`/${lastViewedCommunity || firstCommunity}`);
+    redirect(`/community/${lastViewedCommunity || firstCommunity}`);
   }
 
   return <LandingPage />;
