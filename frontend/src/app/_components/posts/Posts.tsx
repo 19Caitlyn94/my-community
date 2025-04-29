@@ -1,5 +1,5 @@
 import React from "react";
-import { Post } from "@/app/_components";
+import { Post, NoPostsFound } from "@/app/_components";
 import { formatRelativeDate } from "@/app/_utils";
 import { getPosts } from "@/actions/posts";
 import { type PostData } from "@/types/posts";
@@ -16,19 +16,23 @@ const Posts = async ({ communityId }: Props) => {
 
   return (
     <>
-      {posts.map((p: PostData) => (
-        <Post
-          key={p.id}
-          body={p.body}
-          postTypeSlug={p.posttype}
-          updatedDate={formatRelativeDate(p.updated_at)}
-          userFirstName={p.user.first_name}
-          userLastName={p.user.last_name}
-          userProfileImageUrl={p.user.profile_image}
-          mediaUrls={p.media_urls}
-          className="mb-6"
-        />
-      ))}
+      {posts && posts.length > 0 ? (
+        posts.map((p: PostData) => (
+          <Post
+            key={p.id}
+            body={p.body}
+            postTypeSlug={p.posttype}
+            updatedDate={formatRelativeDate(p.updated_at)}
+            userFirstName={p.user.first_name}
+            userLastName={p.user.last_name}
+            userProfileImageUrl={p.user.profile_image}
+            mediaUrls={p.media_urls}
+            className="mb-6"
+          />
+        ))
+      ) : (
+        <NoPostsFound />
+      )}
     </>
   );
 };
