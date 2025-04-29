@@ -34,3 +34,4 @@ export { FormSubmitButton } from './ui/form/FormSubmitButton'
 // Posts
 export { default as PostSkeleton } from './posts/PostSkeleton'
 export { default as PostSkeletonWrapper } from './posts/PostSkeletonWrapper'
+export { default as NoPostsFound } from './posts/NoPostsFound'
