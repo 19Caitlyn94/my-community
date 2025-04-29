@@ -37,7 +37,7 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 DEBUG = env("DEBUG")
 
 if not DEBUG:
-    ALLOWED_HOSTS = ["mycommunity.onrender.com"]
+    ALLOWED_HOSTS = ["my-community.onrender.com"]
 else:
     ALLOWED_HOSTS = [
         "localhost",
@@ -212,8 +212,8 @@ if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
     CORS_ALLOWED_ORIGINS = [
+        "https://my-community.onrender.com",
         "https://mycommunity.onrender.com",
-        "https://mycommunity-backend.onrender.com",
     ]
 
 # Stores images from ImageField in www.yoursite.com/allmedia/path_to_image/image.png
