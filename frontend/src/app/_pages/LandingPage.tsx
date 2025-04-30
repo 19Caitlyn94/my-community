@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { Icon } from "@/app/_components";
 
 const LandingPage = () => {
   return (
