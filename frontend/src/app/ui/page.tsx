@@ -79,7 +79,6 @@ function UI() {
         <Avatar size={AVATAR_SIZE.md} />
         <Avatar size={AVATAR_SIZE.lg} />
       </div>
-
       <div className="divider"></div>
       <p className="text-xl mb-5">Modal</p>
       <ModalWrapper modalContent={<div>Modal Content</div>}>

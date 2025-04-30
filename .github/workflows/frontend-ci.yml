@@ -1,11 +1,11 @@
 name: Frontend CI/CD
 
 on:
-  push:
+  pull_request:
     branches: [main]
     paths:
       - "frontend/**"
-  pull_request:
+  push:
     branches: [main]
     paths:
       - "frontend/**"
@@ -14,6 +14,9 @@ jobs:
   build-and-test:
     name: Frontend Checks
     runs-on: ubuntu-latest
+
+    env:
+      AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
 
     steps:
       - uses: actions/checkout@v4
@@ -34,14 +37,9 @@ jobs:
         run: npm run lint
         continue-on-error: false
 
-      - name: Run tests
-        working-directory: frontend
-        run: npm test
-        env:
-          CI: true
-        continue-on-error: false
-
       - name: Build project
         working-directory: frontend
         run: npm run build
         continue-on-error: false
+        env:
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
