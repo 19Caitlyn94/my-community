@@ -2,7 +2,7 @@
 import React from "react";
 import { ICONS, Icon } from "@/app/_components";
 
-type Props = { closeModal: string };
+type Props = { closeModal: () => void };
 
 const ModalCloseIcon = ({ closeModal }: Props) => {
   return (
