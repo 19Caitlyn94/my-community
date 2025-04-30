@@ -6,7 +6,6 @@ import {
   AVATAR_SIZE,
   Icon,
   ICONS,
-  ModalWrapper,
   Form,
   InputText,
   InputTextArea,
@@ -18,6 +17,7 @@ import { errorMessage, validationPattern } from "../_utils";
 import { acceptedFileTypes } from "../_utils/form";
 import { FieldValues } from "react-hook-form";
 import { SearchInput } from "@/app/_components";
+import Link from "next/link";
 
 function UI() {
   // Mock form submit handler
@@ -82,9 +82,7 @@ function UI() {
 
       <div className="divider"></div>
       <p className="text-xl mb-5">Modal</p>
-      <ModalWrapper modalContent={<div>Modal Content</div>}>
-        <div>Click me</div>
-      </ModalWrapper>
+      <Link href="/ui/modal">Click me</Link>
 
       <div className="divider"></div>
       <p className="text-xl mb-5">Form Components</p>

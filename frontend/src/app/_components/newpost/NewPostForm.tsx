@@ -23,10 +23,6 @@ type FormValues = {
   media?: FileList;
 };
 
-type Props = {
-  closeModal: () => void;
-};
-
 const postTypeOptions = [
   { value: "security-alert", label: "Security alert" },
   { value: "just-for-fun", label: "Just for fun" },
@@ -35,7 +31,7 @@ const postTypeOptions = [
   { value: "more", label: "Other..." },
 ];
 
-const NewPostForm = ({ closeModal }: Props) => {
+const NewPostForm = () => {
   const { data: session } = useSession();
   const { communityId } = useParams<{ communityId: string }>();
   const router = useRouter();
@@ -64,7 +60,7 @@ const NewPostForm = ({ closeModal }: Props) => {
     } else if (data) {
       // Todo: Optimistic UI update postlist with newly returned post
       router.refresh();
-      closeModal();
+      router.push(`/community/${communityId}`);
     }
   };
 
