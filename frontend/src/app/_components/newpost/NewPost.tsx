@@ -7,7 +7,7 @@ import {
   ICONS,
 } from "@/app/_components";
 import ModalWrapper from "../ui/modal/ModalWrapper";
-import NewPostForm from "./NewPostForm";
+import NewPostModalContent from "./NewPostModalContent";
 import { getLoggedInUser } from "@/actions/users";
 
 const NewPost = async () => {
@@ -30,14 +30,7 @@ const NewPost = async () => {
 
   return (
     <>
-      <ModalWrapper
-        modalContent={
-          <div>
-            <h2 className="text-lg font-bold text-gray-400 mb-5">New post</h2>
-            <NewPostForm />
-          </div>
-        }
-      >
+      <ModalWrapper modalContent={<NewPostModalContent />}>
         <CardWrapper className="mb-6">
           <div className="flex items-center	">
             <Avatar

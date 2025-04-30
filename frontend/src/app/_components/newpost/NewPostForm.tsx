@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { errorMessage } from "@/app/_utils";
 import {
@@ -22,6 +23,10 @@ type FormValues = {
   media?: FileList;
 };
 
+type Props = {
+  closeModal: () => void;
+};
+
 const postTypeOptions = [
   { value: "security-alert", label: "Security alert" },
   { value: "just-for-fun", label: "Just for fun" },
@@ -30,7 +35,7 @@ const postTypeOptions = [
   { value: "more", label: "Other..." },
 ];
 
-const NewPostForm = () => {
+const NewPostForm = ({ closeModal }: Props) => {
   const { data: session } = useSession();
   const { communityId } = useParams<{ communityId: string }>();
   const router = useRouter();
@@ -58,8 +63,8 @@ const NewPostForm = () => {
       console.error("Error creating post:", error);
     } else if (data) {
       // Todo: Optimistic UI update postlist with newly returned post
-      // then close modal
       router.refresh();
+      closeModal();
     }
   };
 

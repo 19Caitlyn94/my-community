@@ -1,17 +1,17 @@
 "use client";
 
-import React, { useState, ReactNode } from "react";
+import React, { useState, ReactNode, ReactElement } from "react";
 import ModalContainer from "./ModalContainer";
 import ModalCloseIcon from "./ModalCloseIcon";
 
 type Props = {
   children: ReactNode;
-  modalContent: ReactNode;
+  modalContent: ReactElement<{ closeModal: () => void }>;
 };
 
 const ModalWrapper = ({ children, modalContent }: Props) => {
   const [showModal, setShowModal] = useState(false);
-  const closeModal = () => setShowModal(false);
+  const closeModal: () => void = () => setShowModal(false);
   const toggleModal = () => setShowModal(() => !showModal);
 
   return (
@@ -21,7 +21,7 @@ const ModalWrapper = ({ children, modalContent }: Props) => {
       </a>
       {showModal && (
         <ModalContainer>
-          {modalContent}
+          {React.cloneElement(modalContent, { closeModal })}
           <ModalCloseIcon closeModal={closeModal} />
         </ModalContainer>
       )}
