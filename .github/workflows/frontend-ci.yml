@@ -34,14 +34,25 @@ jobs:
         run: npm run lint
         continue-on-error: false
 
+      - name: Build project
+        working-directory: frontend
+        run: npm run build
+        continue-on-error: false
+
+      - name: Install wait-on utility
+        run: npm install -g wait-on
+
+      - name: Start Next.js server
+        working-directory: frontend
+        run: npm run dev & wait-on http://localhost:3000 -t 60000
+        env:
+          # Add any environment variables needed for the dev server
+          NODE_ENV: development
+
       - name: Run tests
         working-directory: frontend
         run: npm test
         env:
           CI: true
-        continue-on-error: false
-
-      - name: Build project
-        working-directory: frontend
-        run: npm run build
+          CYPRESS_baseUrl: http://localhost:3000
         continue-on-error: false
