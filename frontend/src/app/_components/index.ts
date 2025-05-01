@@ -5,6 +5,8 @@ export { default as DevToolbar } from './DevToolbar'
 export { default as Navbar } from './navbar/Navbar'
 export { default as Post } from './posts/Post'
 export { default as NewPost } from './newpost/NewPost'
+export { default as NewPostForm } from './newpost/NewPostForm'
+export { default as NewPostModalContent } from './newpost/NewPostModalContent'
 export { default as LoginForm } from './auth/LoginForm'
 export { default as JoinCommunityForm } from './auth/JoinCommunityForm'
 // UI
@@ -22,7 +24,8 @@ export { AVATAR_SIZE } from './ui/avatar/Avatar'
 export { default as Badge } from './ui/badge/Badge'
 export { BADGE_TYPES } from './ui/badge/Badge'
 
-export { default as ModalWrapper } from './ui/modal/ModalWrapper'
+export { default as ModalContainer } from './ui/modal/ModalContainer'
+export { default as ModalCloseIcon } from './ui/modal/ModalCloseIcon'
 
 export { Form } from './ui/form/Form'
 export { InputSelect } from './ui/form/input/InputSelect'

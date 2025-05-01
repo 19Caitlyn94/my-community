@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { errorMessage } from "@/app/_utils";
 import {
@@ -58,8 +59,8 @@ const NewPostForm = () => {
       console.error("Error creating post:", error);
     } else if (data) {
       // Todo: Optimistic UI update postlist with newly returned post
-      // then close modal
       router.refresh();
+      router.push(`/community/${communityId}`);
     }
   };
 
