@@ -1,7 +1,13 @@
 import React from "react";
 import clsx from "clsx";
+import { isLightColor } from "@/app/_utils";
 
-type Props = { className?: string; title: string; badgeType: string };
+type Props = {
+  className?: string;
+  title: string;
+  badgeType?: keyof typeof BADGE_TYPES;
+  customColor?: string;
+};
 
 export const BADGE_TYPES = {
   gray: "text-gray-600 bg-gray-300",
@@ -14,14 +20,25 @@ export const BADGE_TYPES = {
   pink: "text-pink-700 bg-pink-300",
 };
 
-const Badge = ({ className, title, badgeType }: Props) => {
+const Badge = ({ className, title, badgeType, customColor }: Props) => {
   const badgeClasses = clsx(
-    "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium",
-    badgeType,
+    "inline-flex items-center rounded-full px-2 py-1 text-xs font-semibold",
+    !customColor && (badgeType ? BADGE_TYPES[badgeType] : BADGE_TYPES.gray),
     className
   );
 
-  return <span className={badgeClasses}>{title}</span>;
+  const customStyle = customColor
+    ? {
+        backgroundColor: customColor,
+        color: isLightColor(customColor) ? "#1F2937" : "white",
+      }
+    : {};
+
+  return (
+    <span className={badgeClasses} style={customStyle}>
+      {title}
+    </span>
+  );
 };
 
 export default Badge;

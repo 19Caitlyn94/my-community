@@ -9,6 +9,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 class PostType(TimeStampedModel, models.Model):
     name = models.CharField(max_length=50)
     slug = AutoSlugField(populate_from=["name"], unique=True)
+    color = models.CharField(max_length=7, default="#000000")
 
     def __str__(self):
         return self.name

@@ -1,12 +1,6 @@
 import React from "react";
-import {
-  Avatar,
-  Icon,
-  ICONS,
-  Badge,
-  BADGE_TYPES,
-  AVATAR_SIZE,
-} from "@/app/_components";
+import { Avatar, Icon, ICONS, AVATAR_SIZE } from "@/app/_components";
+import PostTypeBadge from "./PostTypeBadge";
 
 type Props = {
   userDisplayName: string;
@@ -33,10 +27,9 @@ const PostHeader = async ({
         <p className="w-full order-2 md:order-3 text-sm text-gray-400 mb-2">
           {updatedDate}
         </p>
-        <Badge
+        <PostTypeBadge
           className="order-3 md:order-2"
-          badgeType={BADGE_TYPES.red}
-          title={postTypeSlug}
+          postTypeSlug={postTypeSlug}
         />
       </div>
 

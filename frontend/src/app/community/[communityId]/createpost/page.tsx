@@ -4,13 +4,15 @@ import {
   NewPostModalContent,
   NewPostForm,
 } from "@/app/_components";
+import { getPostTypesOptions } from "@/actions/posttypes";
 
-const Page = () => {
+const Page = async () => {
+  const postTypeOptions = await getPostTypesOptions();
   return (
     <ModalContainer>
       <ModalCloseIcon />
       <NewPostModalContent>
-        <NewPostForm />
+        <NewPostForm postTypeOptions={postTypeOptions.data} />
       </NewPostModalContent>
     </ModalContainer>
   );

@@ -25,7 +25,7 @@ MAX_FILE_NAME_LENGTH = 255
 class PostTypeSerializer(ModelSerializer):
     class Meta:
         model = PostType
-        fields = ["slug", "name"]
+        fields = ["slug", "name", "color"]
 
 
 class PostSerializer(ModelSerializer):

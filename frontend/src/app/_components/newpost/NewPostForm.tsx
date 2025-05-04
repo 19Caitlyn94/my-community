@@ -14,6 +14,7 @@ import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import { acceptedFileTypes } from "@/app/_utils/form";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { PostTypeOptions } from "@/types/posttypes";
 
 type FormValues = {
   posttype: string;
@@ -23,15 +24,11 @@ type FormValues = {
   media?: FileList;
 };
 
-const postTypeOptions = [
-  { value: "security-alert", label: "Security alert" },
-  { value: "just-for-fun", label: "Just for fun" },
-  { value: "recommendation", label: "Ask for a recommendation" },
-  { value: "lost-pet", label: "Lost pet" },
-  { value: "more", label: "Other..." },
-];
+type Props = {
+  postTypeOptions: PostTypeOptions;
+};
 
-const NewPostForm = () => {
+const NewPostForm = ({ postTypeOptions }: Props) => {
   const { data: session } = useSession();
   const { communityId } = useParams<{ communityId: string }>();
   const router = useRouter();
